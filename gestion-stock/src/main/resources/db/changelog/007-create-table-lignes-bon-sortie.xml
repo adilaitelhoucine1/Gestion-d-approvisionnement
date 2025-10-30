@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="007-create-table-lignes-bon-sortie" author="adilaitelhoucine1">
+        <comment>Création de la table lignes_bon_sortie</comment>
+
+        <createTable tableName="lignes_bon_sortie">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="pk_lignes_bon_sortie"/>
+            </column>
+
+            <column name="bon_sortie_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="produit_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="quantite_demandee" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="lignes_bon_sortie"
+                baseColumnNames="bon_sortie_id"
+                constraintName="fk_ligne_bon_sortie"
+                referencedTableName="bons_sortie"
+                referencedColumnNames="id"
+                onDelete="CASCADE"
+                onUpdate="CASCADE"/>
+
+        <addForeignKeyConstraint
+                baseTableName="lignes_bon_sortie"
+                baseColumnNames="produit_id"
+                constraintName="fk_ligne_bon_produit"
+                referencedTableName="produits"
+                referencedColumnNames="id"
+                onDelete="RESTRICT"
+                onUpdate="CASCADE"/>
+
+        <createIndex tableName="lignes_bon_sortie" indexName="idx_ligne_bon">
+            <column name="bon_sortie_id"/>
+        </createIndex>
+
+        <createIndex tableName="lignes_bon_sortie" indexName="idx_ligne_bon_produit">
+            <column name="produit_id"/>
+        </createIndex>
+
+        <sql>
+            ALTER TABLE lignes_bon_sortie
+                ADD CONSTRAINT chk_ligne_bon_quantite_positive
+                    CHECK (quantite_demandee > 0)
+        </sql>
+
+    </changeSet>
+
+</databaseChangeLog>

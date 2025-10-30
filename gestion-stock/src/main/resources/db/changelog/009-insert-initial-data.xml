@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="009-insert-initial-data" author="adilaitelhoucine1">
+        <comment>Insertion des données initiales de test</comment>
+
+        <!-- FOURNISSEURS -->
+        <insert tableName="fournisseurs">
+            <column name="raison_sociale" value="Tissu Premium Maroc"/>
+            <column name="adresse" value="Zone Industrielle Ain Sebaa, Lot 45"/>
+            <column name="ville" value="Casablanca"/>
+            <column name="personne_contact" value="Mohammed Alami"/>
+            <column name="email" value="contact@tissupremium.ma"/>
+            <column name="telephone" value="+212522334455"/>
+            <column name="ice" value="002345678901234"/>
+        </insert>
+
+        <insert tableName="fournisseurs">
+            <column name="raison_sociale" value="Mondial Tissu"/>
+            <column name="adresse" value="Boulevard Hassan II, Immeuble 12"/>
+            <column name="ville" value="Rabat"/>
+            <column name="personne_contact" value="Fatima Zahra Bennani"/>
+            <column name="email" value="info@mondialtissu.ma"/>
+            <column name="telephone" value="+212537556677"/>
+            <column name="ice" value="002999888777666"/>
+        </insert>
+
+        <insert tableName="fournisseurs">
+            <column name="raison_sociale" value="Bouton Plus"/>
+            <column name="adresse" value="Rue Mohammed V, N°234"/>
+            <column name="ville" value="Fès"/>
+            <column name="personne_contact" value="Ahmed Bennani"/>
+            <column name="email" value="contact@boutonplus.ma"/>
+            <column name="telephone" value="+212535667788"/>
+            <column name="ice" value="002111222333444"/>
+        </insert>
+
+        <!-- PRODUITS -->
+        <insert tableName="produits">
+            <column name="reference" value="TIS-001"/>
+            <column name="nom" value="Tissu Coton Bleu Marine"/>
+            <column name="description" value="Tissu 100% coton, couleur bleu marine"/>
+            <column name="prix_unitaire" value="45.00"/>
+            <column name="categorie" value="Tissus"/>
+            <column name="stock_actuel" value="0"/>
+            <column name="point_de_commande" value="100"/>
+            <column name="unite_mesure" value="mètre"/>
+        </insert>
+
+        <insert tableName="produits">
+            <column name="reference" value="TIS-002"/>
+            <column name="nom" value="Tissu Polyester Noir"/>
+            <column name="description" value="Tissu polyester noir imperméable"/>
+            <column name="prix_unitaire" value="38.50"/>
+            <column name="categorie" value="Tissus"/>
+            <column name="stock_actuel" value="0"/>
+            <column name="point_de_commande" value="80"/>
+            <column name="unite_mesure" value="mètre"/>
+        </insert>
+
+        <insert tableName="produits">
+            <column name="reference" value="BTN-015-OR"/>
+            <column name="nom" value="Bouton Doré 15mm"/>
+            <column name="description" value="Bouton doré diamètre 15mm"/>
+            <column name="prix_unitaire" value="2.50"/>
+            <column name="categorie" value="Boutons"/>
+            <column name="stock_actuel" value="0"/>
+            <column name="point_de_commande" value="500"/>
+            <column name="unite_mesure" value="unité"/>
+        </insert>
+
+        <insert tableName="produits">
+            <column name="reference" value="FIL-100-N"/>
+            <column name="nom" value="Fil à coudre noir 100m"/>
+            <column name="description" value="Fil polyester noir, bobine de 100m"/>
+            <column name="prix_unitaire" value="15.00"/>
+            <column name="categorie" value="Fils"/>
+            <column name="stock_actuel" value="0"/>
+            <column name="point_de_commande" value="100"/>
+            <column name="unite_mesure" value="bobine"/>
+        </insert>
+
+        <insert tableName="produits">
+            <column name="reference" value="FER-020"/>
+            <column name="nom" value="Fermeture éclair 20cm"/>
+            <column name="description" value="Fermeture éclair nylon 20cm"/>
+            <column name="prix_unitaire" value="3.50"/>
+            <column name="categorie" value="Fermetures"/>
+            <column name="stock_actuel" value="0"/>
+            <column name="point_de_commande" value="200"/>
+            <column name="unite_mesure" value="unité"/>
+        </insert>
+
+    </changeSet>
+
+</databaseChangeLog>

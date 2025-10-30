@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="005-create-table-lots-stock" author="adilaitelhoucine1">
+        <comment>Création de la table lots_stock (gestion FIFO)</comment>
+
+        <createTable tableName="lots_stock">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="pk_lots_stock"/>
+            </column>
+
+            <column name="numero_lot" type="VARCHAR(50)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="uk_lot_numero"/>
+            </column>
+
+            <column name="produit_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="date_entree" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="quantite_initiale" type="INT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="quantite_restante" type="INT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="prix_achat_unitaire" type="DECIMAL(10,2)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="commande_id" type="BIGINT"/>
+
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="lots_stock"
+                baseColumnNames="produit_id"
+                constraintName="fk_lot_produit"
+                referencedTableName="produits"
+                referencedColumnNames="id"
+                onDelete="CASCADE"
+                onUpdate="CASCADE"/>
+
+        <addForeignKeyConstraint
+                baseTableName="lots_stock"
+                baseColumnNames="commande_id"
+                constraintName="fk_lot_commande"
+                referencedTableName="commandes_fournisseurs"
+                referencedColumnNames="id"
+                onDelete="SET NULL"
+                onUpdate="CASCADE"/>
+
+        <createIndex tableName="lots_stock" indexName="idx_lot_numero">
+            <column name="numero_lot"/>
+        </createIndex>
+
+        <createIndex tableName="lots_stock" indexName="idx_lot_produit">
+            <column name="produit_id"/>
+        </createIndex>
+
+        <createIndex tableName="lots_stock" indexName="idx_lot_date_entree">
+            <column name="date_entree"/>
+        </createIndex>
+
+        <createIndex tableName="lots_stock" indexName="idx_lot_fifo">
+            <column name="produit_id"/>
+            <column name="date_entree"/>
+            <column name="quantite_restante"/>
+        </createIndex>
+
+        <sql>
+            ALTER TABLE lots_stock
+                ADD CONSTRAINT chk_lot_quantite_initiale_positive
+                    CHECK (quantite_initiale &gt; 0);
+
+            ALTER TABLE lots_stock
+                ADD CONSTRAINT chk_lot_quantite_restante_positive
+                    CHECK (quantite_restante &gt;= 0);
+
+            ALTER TABLE lots_stock
+                ADD CONSTRAINT chk_lot_quantite_coherente
+                    CHECK (quantite_restante &lt;= quantite_initiale);
+        </sql>
+
+    </changeSet>
+
+</databaseChangeLog>

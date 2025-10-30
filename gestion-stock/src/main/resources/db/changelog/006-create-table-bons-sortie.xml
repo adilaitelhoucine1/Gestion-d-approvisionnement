@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="006-create-table-bons-sortie" author="adilaitelhoucine1">
+        <comment>Création de la table bons_sortie</comment>
+
+        <createTable tableName="bons_sortie">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="pk_bons_sortie"/>
+            </column>
+
+            <column name="numero_bon" type="VARCHAR(50)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="uk_bon_numero"/>
+            </column>
+
+            <column name="date_sortie" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="atelier_destinataire" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="motif" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="statut" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="observations" type="TEXT"/>
+
+            <column name="date_validation" type="TIMESTAMP"/>
+
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createIndex tableName="bons_sortie" indexName="idx_bon_numero">
+            <column name="numero_bon"/>
+        </createIndex>
+
+        <createIndex tableName="bons_sortie" indexName="idx_bon_statut">
+            <column name="statut"/>
+        </createIndex>
+
+        <createIndex tableName="bons_sortie" indexName="idx_bon_atelier">
+            <column name="atelier_destinataire"/>
+        </createIndex>
+
+        <createIndex tableName="bons_sortie" indexName="idx_bon_date">
+            <column name="date_sortie"/>
+        </createIndex>
+
+        <sql>
+            ALTER TABLE bons_sortie
+                ADD CONSTRAINT chk_bon_motif
+                    CHECK (motif IN ('PRODUCTION', 'MAINTENANCE', 'AUTRE'));
+
+            ALTER TABLE bons_sortie
+                ADD CONSTRAINT chk_bon_statut
+                    CHECK (statut IN ('BROUILLON', 'VALIDE', 'ANNULE'));
+        </sql>
+
+    </changeSet>
+
+</databaseChangeLog>
