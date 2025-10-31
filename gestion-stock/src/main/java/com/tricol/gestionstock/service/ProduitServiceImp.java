@@ -10,6 +10,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 @Service
 @Transactional
@@ -25,7 +28,7 @@ public class ProduitServiceImp implements ProductSservice {
 
 
         if (produitRepository.existsByReference(createDTO.getReference())) {
-            //log.error("La reference  existe deja");
+
             throw new IllegalArgumentException(
                     "Un produit existe deja aec ce ref"
             );
@@ -36,5 +39,16 @@ public class ProduitServiceImp implements ProductSservice {
         ProduitResponseDTO produitResponseDTO = produitMapper.toResponseDTO(produit);
         log.info("Produit deja cree avecc suceees");
         return produitResponseDTO;
+    }
+    @Override
+    public List<ProduitResponseDTO> getAllProducts(){
+
+        List<Produit> produits = produitRepository.findAll();
+        List<ProduitResponseDTO> responseDTOs = produits.stream()
+                .map(produitMapper::toResponseDTO)
+                .collect(Collectors.toList());
+
+        return responseDTOs;
+
     }
 }
