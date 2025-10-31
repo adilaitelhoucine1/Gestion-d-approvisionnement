@@ -23,9 +23,9 @@ public class GestionStockApplication implements CommandLineRunner {
         System.out.println("🔍 Testing database connection...");
 
         try (Connection connection = dataSource.getConnection()) {
-            System.out.println("✅ Successfully connected to database: " + connection.getMetaData().getURL());
+            System.out.println("Successfully connected to database: " + connection.getMetaData().getURL());
         } catch (Exception e) {
-            System.err.println("❌ Database connection failed: " + e.getMessage());
+            System.err.println("Database connection failed: " + e.getMessage());
         }
     }
 }
