@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="001-create-table-fournisseurs" author="adilaitelhoucine1">
+        <comment>Création de la table fournisseurs</comment>
+
+        <createTable tableName="fournisseurs">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="pk_fournisseurs"/>
+            </column>
+
+            <column name="raison_sociale" type="VARCHAR(200)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="adresse" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="ville" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="personne_contact" type="VARCHAR(150)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="email" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="uk_fournisseur_email"/>
+            </column>
+
+            <column name="telephone" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="ice" type="VARCHAR(15)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="uk_fournisseur_ice"/>
+            </column>
+
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createIndex tableName="fournisseurs" indexName="idx_fournisseur_raison_sociale">
+            <column name="raison_sociale"/>
+        </createIndex>
+
+        <createIndex tableName="fournisseurs" indexName="idx_fournisseur_ville">
+            <column name="ville"/>
+        </createIndex>
+
+    </changeSet>
+
+</databaseChangeLog>
