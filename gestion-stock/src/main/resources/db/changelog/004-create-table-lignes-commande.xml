@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="004-create-table-lignes-commande" author="adilaitelhoucine1">
+        <comment>Création de la table lignes_commande</comment>
+
+        <createTable tableName="lignes_commande">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="pk_lignes_commande"/>
+            </column>
+
+            <column name="commande_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="produit_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="quantite" type="INT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="prix_unitaire" type="DECIMAL(10,2)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="sous_total" type="DECIMAL(12,2)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="lignes_commande"
+                baseColumnNames="commande_id"
+                constraintName="fk_ligne_commande"
+                referencedTableName="commandes_fournisseurs"
+                referencedColumnNames="id"
+                onDelete="CASCADE"
+                onUpdate="CASCADE"/>
+
+        <addForeignKeyConstraint
+                baseTableName="lignes_commande"
+                baseColumnNames="produit_id"
+                constraintName="fk_ligne_produit"
+                referencedTableName="produits"
+                referencedColumnNames="id"
+                onDelete="RESTRICT"
+                onUpdate="CASCADE"/>
+
+        <createIndex tableName="lignes_commande" indexName="idx_ligne_commande">
+            <column name="commande_id"/>
+        </createIndex>
+
+        <createIndex tableName="lignes_commande" indexName="idx_ligne_produit">
+            <column name="produit_id"/>
+        </createIndex>
+
+        <sql>
+            ALTER TABLE lignes_commande ADD CONSTRAINT chk_ligne_quantite_positive CHECK (quantite > 0)
+        </sql>
+
+    </changeSet>
+
+</databaseChangeLog>

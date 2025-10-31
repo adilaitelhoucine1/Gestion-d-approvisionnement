@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="008-create-table-mouvements-stock" author="adilaitelhoucine1">
+        <comment>Création de la table mouvements_stock (historique et traçabilité)</comment>
+
+        <createTable tableName="mouvements_stock">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="pk_mouvements_stock"/>
+            </column>
+
+            <column name="produit_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="type_mouvement" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="quantite" type="INT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="date_mouvement" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="lot_id" type="BIGINT"/>
+
+            <column name="commande_id" type="BIGINT"/>
+
+            <column name="bon_sortie_id" type="BIGINT"/>
+
+            <column name="prix_unitaire" type="DECIMAL(10,2)"/>
+
+            <column name="reference_document" type="VARCHAR(100)"/>
+
+            <column name="observation" type="TEXT"/>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="mouvements_stock"
+                baseColumnNames="produit_id"
+                constraintName="fk_mouvement_produit"
+                referencedTableName="produits"
+                referencedColumnNames="id"
+                onDelete="CASCADE"
+                onUpdate="CASCADE"/>
+
+        <addForeignKeyConstraint
+                baseTableName="mouvements_stock"
+                baseColumnNames="lot_id"
+                constraintName="fk_mouvement_lot"
+                referencedTableName="lots_stock"
+                referencedColumnNames="id"
+                onDelete="SET NULL"
+                onUpdate="CASCADE"/>
+
+        <addForeignKeyConstraint
+                baseTableName="mouvements_stock"
+                baseColumnNames="commande_id"
+                constraintName="fk_mouvement_commande"
+                referencedTableName="commandes_fournisseurs"
+                referencedColumnNames="id"
+                onDelete="SET NULL"
+                onUpdate="CASCADE"/>
+
+        <addForeignKeyConstraint
+                baseTableName="mouvements_stock"
+                baseColumnNames="bon_sortie_id"
+                constraintName="fk_mouvement_bon"
+                referencedTableName="bons_sortie"
+                referencedColumnNames="id"
+                onDelete="SET NULL"
+                onUpdate="CASCADE"/>
+
+        <createIndex tableName="mouvements_stock" indexName="idx_mouvement_produit">
+            <column name="produit_id"/>
+        </createIndex>
+
+        <createIndex tableName="mouvements_stock" indexName="idx_mouvement_type">
+            <column name="type_mouvement"/>
+        </createIndex>
+
+        <createIndex tableName="mouvements_stock" indexName="idx_mouvement_date">
+            <column name="date_mouvement"/>
+        </createIndex>
+
+        <createIndex tableName="mouvements_stock" indexName="idx_mouvement_lot">
+            <column name="lot_id"/>
+        </createIndex>
+
+        <sql>
+            ALTER TABLE mouvements_stock
+                ADD CONSTRAINT chk_mouvement_type
+                    CHECK (type_mouvement IN ('ENTREE', 'SORTIE'))
+        </sql>
+
+    </changeSet>
+
+</databaseChangeLog>

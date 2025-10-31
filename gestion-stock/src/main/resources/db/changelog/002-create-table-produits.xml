@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="002-create-table-produits" author="adilaitelhoucine1">
+        <comment>Création de la table produits</comment>
+
+        <createTable tableName="produits">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="pk_produits"/>
+            </column>
+
+            <column name="reference" type="VARCHAR(50)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="uk_produit_reference"/>
+            </column>
+
+            <column name="nom" type="VARCHAR(200)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="description" type="TEXT"/>
+
+            <column name="prix_unitaire" type="DECIMAL(10,2)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="categorie" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="stock_actuel" type="INT" defaultValueNumeric="0">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="point_de_commande" type="INT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="unite_mesure" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createIndex tableName="produits" indexName="idx_produit_reference">
+            <column name="reference"/>
+        </createIndex>
+
+        <createIndex tableName="produits" indexName="idx_produit_categorie">
+            <column name="categorie"/>
+        </createIndex>
+
+        <createIndex tableName="produits" indexName="idx_produit_nom">
+            <column name="nom"/>
+        </createIndex>
+
+        <sql>
+            ALTER TABLE produits ADD CONSTRAINT chk_produit_stock_positif CHECK (stock_actuel >= 0)
+        </sql>
+
+    </changeSet>
+
+</databaseChangeLog>
