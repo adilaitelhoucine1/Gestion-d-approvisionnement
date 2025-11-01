@@ -34,18 +34,18 @@ public class LigneCommande {
             foreignKey = @ForeignKey(name = "fk_ligne_produit"))
     private Produit produit;
 
-    @NotNull(message = "La quantité est obligatoire")
-    @Min(value = 1, message = "La quantité doit être au moins 1")
+    @NotNull(message = "La quantite est obligatoire")
+    @Min(value = 1, message = "La quantite doit être au moins 1")
     @Column(nullable = false)
     private Integer quantite;
 
     @NotNull(message = "Le prix unitaire est obligatoire")
-    @DecimalMin(value = "0.01", message = "Le prix unitaire doit être supérieur à 0")
+    @DecimalMin(value = "0.01", message = "Le prix unitaire doit être superieur a 0")
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal prixUnitaire;
 
     @NotNull
-    @DecimalMin(value = "0.0", message = "Le sous-total ne peut pas être négatif")
+    @DecimalMin(value = "0.0", message = "Le sous-total ne peut pas être negatif")
     @Column(nullable = false, precision = 12, scale = 2)
     private BigDecimal sousTotal;
 

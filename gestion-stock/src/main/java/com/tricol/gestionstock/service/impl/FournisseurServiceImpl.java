@@ -36,18 +36,18 @@ public class FournisseurServiceImpl implements FournisseurService {
             throw new DuplicateResourceException("ICE", requestDTO.getIce());
         }
 
-        // Convertir le DTO en entité bach n saviih 
+        // Convertir le DTO en entite bach n saviih 
         Fournisseur fournisseur = fournisseurMapper.toEntity(requestDTO);
         Fournisseur savedFournisseur = fournisseurRepository.save(fournisseur);
 
-        log.info("Fournisseur créé avec succès - ID: {}", savedFournisseur.getId());
+        log.info("Fournisseur cree avec succes - ID: {}", savedFournisseur.getId());
         return fournisseurMapper.toResponseDTO(savedFournisseur);
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<FournisseurResponseDTO> getAllFournisseurs() {
-        log.debug("Récupération de tous les fournisseurs");
+        log.debug("Recuperation de tous les fournisseurs");
         List<Fournisseur> fournisseurs = fournisseurRepository.findAll();
         return fournisseurMapper.toResponseDTOList(fournisseurs);
     }
@@ -55,7 +55,7 @@ public class FournisseurServiceImpl implements FournisseurService {
     @Override
     @Transactional(readOnly = true)
     public FournisseurResponseDTO getFournisseurById(Long id) {
-        log.debug("Récupération du fournisseur avec l'ID: {}", id);
+        log.debug("Recuperation du fournisseur avec l'ID: {}", id);
         Fournisseur fournisseur = fournisseurRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Fournisseur", "id", id));
         return fournisseurMapper.toResponseDTO(fournisseur);
@@ -63,7 +63,7 @@ public class FournisseurServiceImpl implements FournisseurService {
 
     @Override
     public FournisseurResponseDTO updateFournisseur(Long id, FournisseurRequestDTO requestDTO) {
-        log.debug("Mise à jour du fournisseur avec l'ID: {}", id);
+        log.debug("Mise a jour du fournisseur avec l'ID: {}", id);
 
         // kan9alb wach four kayn
         Fournisseur existingFournisseur = fournisseurRepository.findById(id)
@@ -85,7 +85,7 @@ public class FournisseurServiceImpl implements FournisseurService {
         fournisseurMapper.updateEntityFromDTO(requestDTO, existingFournisseur);
         Fournisseur updatedFournisseur = fournisseurRepository.save(existingFournisseur);
 
-        log.info("Fournisseur mis à jour avec succès - ID: {}", id);
+        log.info("Fournisseur mis a jour avec succes - ID: {}", id);
         return fournisseurMapper.toResponseDTO(updatedFournisseur);
     }
 
@@ -93,13 +93,13 @@ public class FournisseurServiceImpl implements FournisseurService {
     public void deleteFournisseur(Long id) {
         log.debug("Suppression du fournisseur avec l'ID: {}", id);
 
-        // Vérifier que le fournisseur existe
+        // Verifier que le fournisseur existe
         if (!fournisseurRepository.existsById(id)) {
             throw new ResourceNotFoundException("Fournisseur", "id", id);
         }
 
         fournisseurRepository.deleteById(id);
-        log.info("Fournisseur supprimé avec succès - ID: {}", id);
+        log.info("Fournisseur supprime avec succes - ID: {}", id);
     }
 
     @Override
@@ -121,7 +121,7 @@ public class FournisseurServiceImpl implements FournisseurService {
     @Override
     @Transactional(readOnly = true)
     public List<FournisseurResponseDTO> searchFournisseurs(String keyword) {
-        log.debug("Recherche avancée de fournisseurs avec le mot-clé: {}", keyword);
+        log.debug("Recherche avancee de fournisseurs avec le mot-cle: {}", keyword);
         List<Fournisseur> fournisseurs = fournisseurRepository.searchFournisseurs(keyword);
         return fournisseurMapper.toResponseDTOList(fournisseurs);
     }
@@ -129,7 +129,7 @@ public class FournisseurServiceImpl implements FournisseurService {
     @Override
     @Transactional(readOnly = true)
     public FournisseurResponseDTO getFournisseurByEmail(String email) {
-        log.debug("Récupération du fournisseur avec l'email: {}", email);
+        log.debug("Recuperation du fournisseur avec l'email: {}", email);
         Fournisseur fournisseur = fournisseurRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("Fournisseur", "email", email));
         return fournisseurMapper.toResponseDTO(fournisseur);
@@ -138,7 +138,7 @@ public class FournisseurServiceImpl implements FournisseurService {
     @Override
     @Transactional(readOnly = true)
     public FournisseurResponseDTO getFournisseurByIce(String ice) {
-        log.debug("Récupération du fournisseur avec l'ICE: {}", ice);
+        log.debug("Recuperation du fournisseur avec l'ICE: {}", ice);
         Fournisseur fournisseur = fournisseurRepository.findByIce(ice)
                 .orElseThrow(() -> new ResourceNotFoundException("Fournisseur", "ICE", ice));
         return fournisseurMapper.toResponseDTO(fournisseur);

@@ -32,8 +32,8 @@ public class LigneBonSortie {
             foreignKey = @ForeignKey(name = "fk_ligne_bon_produit"))
     private Produit produit;
 
-    @NotNull(message = "La quantité demandée est obligatoire")
-    @Min(value = 1, message = "La quantité demandée doit être au moins 1")
+    @NotNull(message = "La quantite demandee est obligatoire")
+    @Min(value = 1, message = "La quantite demandee doit être au moins 1")
     @Column(nullable = false)
     private Integer quantiteDemandee;
 }

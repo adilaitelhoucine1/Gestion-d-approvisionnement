@@ -32,8 +32,8 @@ public class BonSortie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Le numéro de bon est obligatoire")
-    @Size(max = 50, message = "Le numéro de bon ne doit pas dépasser 50 caractères")
+    @NotBlank(message = "Le numero de bon est obligatoire")
+    @Size(max = 50, message = "Le numero de bon ne doit pas depasser 50 caracteres")
     @Column(nullable = false, unique = true, length = 50)
     private String numeroBon;
 
@@ -42,7 +42,7 @@ public class BonSortie {
     private LocalDate dateSortie;
 
     @NotBlank(message = "L'atelier destinataire est obligatoire")
-    @Size(max = 100, message = "L'atelier destinataire ne doit pas dépasser 100 caractères")
+    @Size(max = 100, message = "L'atelier destinataire ne doit pas depasser 100 caracteres")
     @Column(nullable = false, length = 100)
     private String atelierDestinataire;
 
@@ -96,21 +96,21 @@ public class BonSortie {
     }
 
     /**
-     * Vérifie si le bon peut être modifié
+     * Verifie si le bon peut être modifie
      */
     public boolean estModifiable() {
         return statut == StatutBonSortie.BROUILLON;
     }
 
     /**
-     * Vérifie si le bon peut être validé
+     * Verifie si le bon peut être valide
      */
     public boolean peutEtreValide() {
         return statut == StatutBonSortie.BROUILLON && !lignes.isEmpty();
     }
 
     /**
-     * Initialise les valeurs par défaut
+     * Initialise les valeurs par defaut
      */
     @PrePersist
     protected void onCreate() {

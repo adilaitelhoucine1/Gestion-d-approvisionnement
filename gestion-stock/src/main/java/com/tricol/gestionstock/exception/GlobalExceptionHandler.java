@@ -38,7 +38,7 @@ public class GlobalExceptionHandler {
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .timestamp(LocalDateTime.now())
                 .status(HttpStatus.CONFLICT.value())
-                .error("Conflit de données")
+                .error("Conflit de donnees")
                 .message(ex.getMessage())
                 .path(request.getDescription(false).replace("uri=", ""))
                 .build();
@@ -62,7 +62,7 @@ public class GlobalExceptionHandler {
                 .timestamp(LocalDateTime.now())
                 .status(HttpStatus.BAD_REQUEST.value())
                 .error("Erreur de validation")
-                .message("Les données fournies sont invalides")
+                .message("Les donnees fournies sont invalides")
                 .path(request.getDescription(false).replace("uri=", ""))
                 .errors(errors)
                 .build();

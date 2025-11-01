@@ -11,7 +11,7 @@
                 <tableExists tableName="fournisseurs"/>
             </not>
         </preConditions>
-        <comment>Création de la table fournisseurs</comment>
+        <comment>Creation de la table fournisseurs</comment>
 
         <createTable tableName="fournisseurs">
             <column name="id" type="BIGINT" autoIncrement="true">

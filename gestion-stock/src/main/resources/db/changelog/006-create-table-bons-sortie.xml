@@ -6,7 +6,7 @@
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
 
     <changeSet id="006-create-table-bons-sortie" author="adilaitelhoucine1">
-        <comment>Création de la table bons_sortie</comment>
+        <comment>Creation de la table bons_sortie</comment>
 
         <createTable tableName="bons_sortie">
             <column name="id" type="BIGINT" autoIncrement="true">

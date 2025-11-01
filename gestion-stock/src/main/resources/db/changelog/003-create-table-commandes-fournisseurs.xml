@@ -6,7 +6,7 @@
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
 
     <changeSet id="003-create-table-commandes-fournisseurs" author="adilaitelhoucine1">
-        <comment>Création de la table commandes_fournisseurs</comment>
+        <comment>Creation de la table commandes_fournisseurs</comment>
 
         <createTable tableName="commandes_fournisseurs">
             <column name="id" type="BIGINT" autoIncrement="true">
