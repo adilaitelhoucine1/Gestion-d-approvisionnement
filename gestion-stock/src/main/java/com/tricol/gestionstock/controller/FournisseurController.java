@@ -47,52 +47,52 @@ public class FournisseurController {
     @GetMapping
     @Operation(summary = "Recuper tous les fournisseurs",
                description = "Retourne la liste complete de tous les fournisseurs")
-    @ApiResponse(responseCode = "200", description = "Liste des fournisseurs récupérée avec succès")
+    @ApiResponse(responseCode = "200", description = "Liste des fournisseurs recuperee avec succes")
     public ResponseEntity<List<FournisseurResponseDTO>> getAllFournisseurs() {
-        log.info("GET /api/v1/fournisseurs - Récupération de tous les fournisseurs");
+        log.info("GET /api/v1/fournisseurs - Recuperation de tous les fournisseurs");
         List<FournisseurResponseDTO> fournisseurs = fournisseurService.getAllFournisseurs();
         return ResponseEntity.ok(fournisseurs);
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Recuperer un fournisseur par ID",
-               description = "Retourne les détails d'un fournisseur spécifique")
+               description = "Retourne les details d'un fournisseur specifique")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Fournisseur trouvé",
+        @ApiResponse(responseCode = "200", description = "Fournisseur trouve",
                      content = @Content(schema = @Schema(implementation = FournisseurResponseDTO.class))),
-        @ApiResponse(responseCode = "404", description = "Fournisseur non trouvé")
+        @ApiResponse(responseCode = "404", description = "Fournisseur non trouve")
     })
     public ResponseEntity<FournisseurResponseDTO> getFournisseurById(
             @Parameter(description = "ID du fournisseur") @PathVariable Long id) {
-        log.info("GET /api/v1/fournisseurs/{} - Récupération du fournisseur", id);
+        log.info("GET /api/v1/fournisseurs/{} - Recuperation du fournisseur", id);
         FournisseurResponseDTO fournisseur = fournisseurService.getFournisseurById(id);
         return ResponseEntity.ok(fournisseur);
     }
 
     @PutMapping("/{id}")
-    @Operation(summary = "Mettre à jour un fournisseur",
-               description = "Met à jour les informations d'un fournisseur existant")
+    @Operation(summary = "Mettre a jour un fournisseur",
+               description = "Met a jour les informations d'un fournisseur existant")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Fournisseur mis à jour avec succès",
+        @ApiResponse(responseCode = "200", description = "Fournisseur mis a jour avec succes",
                      content = @Content(schema = @Schema(implementation = FournisseurResponseDTO.class))),
-        @ApiResponse(responseCode = "400", description = "Données invalides"),
-        @ApiResponse(responseCode = "404", description = "Fournisseur non trouvé"),
-        @ApiResponse(responseCode = "409", description = "Email ou ICE déjà existant")
+        @ApiResponse(responseCode = "400", description = "Donnees invalides"),
+        @ApiResponse(responseCode = "404", description = "Fournisseur non trouve"),
+        @ApiResponse(responseCode = "409", description = "Email ou ICE deja existant")
     })
     public ResponseEntity<FournisseurResponseDTO> updateFournisseur(
             @Parameter(description = "ID du fournisseur") @PathVariable Long id,
             @Valid @RequestBody FournisseurRequestDTO requestDTO) {
-        log.info("PUT /api/v1/fournisseurs/{} - Mise à jour du fournisseur", id);
+        log.info("PUT /api/v1/fournisseurs/{} - Mise a jour du fournisseur", id);
         FournisseurResponseDTO response = fournisseurService.updateFournisseur(id, requestDTO);
         return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Supprimer un fournisseur",
-               description = "Supprime un fournisseur de la base de données")
+               description = "Supprime un fournisseur de la base de donnees")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "204", description = "Fournisseur supprimé avec succès"),
-        @ApiResponse(responseCode = "404", description = "Fournisseur non trouvé")
+        @ApiResponse(responseCode = "204", description = "Fournisseur supprime avec succes"),
+        @ApiResponse(responseCode = "404", description = "Fournisseur non trouve")
     })
     public ResponseEntity<Void> deleteFournisseur(
             @Parameter(description = "ID du fournisseur") @PathVariable Long id) {
@@ -103,17 +103,17 @@ public class FournisseurController {
 
     @GetMapping("/search")
     @Operation(summary = "Rechercher des fournisseurs",
-               description = "Recherche des fournisseurs par mot-clé (raison sociale, ville, email, ICE)")
-    @ApiResponse(responseCode = "200", description = "Résultats de recherche récupérés avec succès")
+               description = "Recherche des fournisseurs par mot-cle (raison sociale, ville, email, ICE)")
+    @ApiResponse(responseCode = "200", description = "Resultats de recherche recuperes avec succes")
     public ResponseEntity<List<FournisseurResponseDTO>> searchFournisseurs(
-            @Parameter(description = "Mot-clé de recherche") 
+            @Parameter(description = "Mot-cle de recherche") 
             @RequestParam(required = false) String keyword,
             @Parameter(description = "Recherche par ville") 
             @RequestParam(required = false) String ville,
             @Parameter(description = "Recherche par raison sociale") 
             @RequestParam(required = false) String raisonSociale) {
         
-        log.info("GET /api/v1/fournisseurs/search - Recherche avec paramètres: keyword={}, ville={}, raisonSociale={}", 
+        log.info("GET /api/v1/fournisseurs/search - Recherche avec parametres: keyword={}, ville={}, raisonSociale={}", 
                  keyword, ville, raisonSociale);
         
         List<FournisseurResponseDTO> results;
@@ -132,29 +132,29 @@ public class FournisseurController {
     }
 
     @GetMapping("/email/{email}")
-    @Operation(summary = "Récupérer un fournisseur par email",
-               description = "Retourne les détails d'un fournisseur par son adresse email")
+    @Operation(summary = "Recuperer un fournisseur par email",
+               description = "Retourne les details d'un fournisseur par son adresse email")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Fournisseur trouvé"),
-        @ApiResponse(responseCode = "404", description = "Fournisseur non trouvé")
+        @ApiResponse(responseCode = "200", description = "Fournisseur trouve"),
+        @ApiResponse(responseCode = "404", description = "Fournisseur non trouve")
     })
     public ResponseEntity<FournisseurResponseDTO> getFournisseurByEmail(
             @Parameter(description = "Email du fournisseur") @PathVariable String email) {
-        log.info("GET /api/v1/fournisseurs/email/{} - Récupération du fournisseur par email", email);
+        log.info("GET /api/v1/fournisseurs/email/{} - Recuperation du fournisseur par email", email);
         FournisseurResponseDTO fournisseur = fournisseurService.getFournisseurByEmail(email);
         return ResponseEntity.ok(fournisseur);
     }
 
     @GetMapping("/ice/{ice}")
-    @Operation(summary = "Récupérer un fournisseur par ICE",
-               description = "Retourne les détails d'un fournisseur par son numéro ICE")
+    @Operation(summary = "Recuperer un fournisseur par ICE",
+               description = "Retourne les details d'un fournisseur par son numero ICE")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Fournisseur trouvé"),
-        @ApiResponse(responseCode = "404", description = "Fournisseur non trouvé")
+        @ApiResponse(responseCode = "200", description = "Fournisseur trouve"),
+        @ApiResponse(responseCode = "404", description = "Fournisseur non trouve")
     })
     public ResponseEntity<FournisseurResponseDTO> getFournisseurByIce(
-            @Parameter(description = "Numéro ICE du fournisseur") @PathVariable String ice) {
-        log.info("GET /api/v1/fournisseurs/ice/{} - Récupération du fournisseur par ICE", ice);
+            @Parameter(description = "Numero ICE du fournisseur") @PathVariable String ice) {
+        log.info("GET /api/v1/fournisseurs/ice/{} - Recuperation du fournisseur par ICE", ice);
         FournisseurResponseDTO fournisseur = fournisseurService.getFournisseurByIce(ice);
         return ResponseEntity.ok(fournisseur);
     }

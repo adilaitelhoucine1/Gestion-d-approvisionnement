@@ -6,7 +6,7 @@
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
 
     <changeSet id="004-create-table-lignes-commande" author="adilaitelhoucine1">
-        <comment>Création de la table lignes_commande</comment>
+        <comment>Creation de la table lignes_commande</comment>
 
         <createTable tableName="lignes_commande">
             <column name="id" type="BIGINT" autoIncrement="true">

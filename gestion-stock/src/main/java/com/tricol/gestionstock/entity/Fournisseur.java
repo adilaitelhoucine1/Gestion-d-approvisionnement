@@ -26,7 +26,7 @@ public class Fournisseur {
     private Long id;
 
     @NotBlank(message = "La raison sociale est obligatoire")
-    @Size(max = 200, message = "La raison sociale ne doit pas dépasser 200 caractères")
+    @Size(max = 200, message = "La raison sociale ne doit pas depasser 200 caracteres")
     @Column(nullable = false, length = 200)
     private String raisonSociale;
 
@@ -35,12 +35,12 @@ public class Fournisseur {
     private String adresse;
 
     @NotBlank(message = "La ville est obligatoire")
-    @Size(max = 100, message = "La ville ne doit pas dépasser 100 caractères")
+    @Size(max = 100, message = "La ville ne doit pas depasser 100 caracteres")
     @Column(nullable = false, length = 100)
     private String ville;
 
     @NotBlank(message = "Le nom de la personne de contact est obligatoire")
-    @Size(max = 150, message = "Le nom de la personne de contact ne doit pas dépasser 150 caractères")
+    @Size(max = 150, message = "Le nom de la personne de contact ne doit pas depasser 150 caracteres")
     @Column(nullable = false, length = 150)
     private String personneContact;
 
@@ -49,13 +49,13 @@ public class Fournisseur {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @NotBlank(message = "Le téléphone est obligatoire")
-    @Pattern(regexp = "^\\+?[0-9]{10,15}$", message = "Format de téléphone invalide")
+    @NotBlank(message = "Le telephone est obligatoire")
+    @Pattern(regexp = "^\\+?[0-9]{10,15}$", message = "Format de telephone invalide")
     @Column(nullable = false, length = 20)
     private String telephone;
 
     @NotBlank(message = "L'ICE est obligatoire")
-    @Size(min = 15, max = 15, message = "L'ICE doit contenir exactement 15 caractères")
+    @Size(min = 15, max = 15, message = "L'ICE doit contenir exactement 15 caracteres")
     @Column(nullable = false, unique = true, length = 15)
     private String ice;
 

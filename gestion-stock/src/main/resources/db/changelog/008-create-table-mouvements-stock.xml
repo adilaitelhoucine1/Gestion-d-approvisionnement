@@ -6,7 +6,7 @@
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
 
     <changeSet id="008-create-table-mouvements-stock" author="adilaitelhoucine1">
-        <comment>Création de la table mouvements_stock (historique et traçabilité)</comment>
+        <comment>Creation de la table mouvements_stock (historique et traçabilite)</comment>
 
         <createTable tableName="mouvements_stock">
             <column name="id" type="BIGINT" autoIncrement="true">
