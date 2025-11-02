@@ -60,5 +60,11 @@ public class ProduitController {
 
     }
 
+    @GetMapping("{id}/stock")
+    public  ResponseEntity<String> getProductStock(@PathVariable Long id){
+        return ResponseEntity.ok("le stock actual de ce produit est "+produitService.getProductStock(id).getStockActuel());
+
+    }
+
 
 }

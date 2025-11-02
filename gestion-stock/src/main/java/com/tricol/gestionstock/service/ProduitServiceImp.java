@@ -9,6 +9,9 @@ import com.tricol.gestionstock.repository.ProduitRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
+import org.springframework.boot.context.config.Profiles;
+import org.springframework.data.repository.core.support.RepositoryMethodInvocationListener;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +27,7 @@ public class ProduitServiceImp implements ProductSservice {
 
     private final ProduitRepository produitRepository;
     private final ProduitMapper produitMapper;
+
 
     @Override
     public ProduitResponseDTO createProduit(CreateProduitDTO createDTO) {
@@ -76,6 +80,11 @@ public class ProduitServiceImp implements ProductSservice {
     }
     public ProduitResponseDTO getProduitById(Long id){
 
+        Produit produit = produitRepository.findById(id).
+                orElseThrow(()->new IllegalArgumentException("le produit avec cet id n existe pas"));
+        return produitMapper.toResponseDTO(produit);
+    }
+    public ProduitResponseDTO getProductStock(Long id){
         Produit produit = produitRepository.findById(id).
                 orElseThrow(()->new IllegalArgumentException("le produit avec cet id n existe pas"));
         return produitMapper.toResponseDTO(produit);
