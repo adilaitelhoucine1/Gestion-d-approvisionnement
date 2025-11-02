@@ -3,6 +3,7 @@ package com.tricol.gestionstock.controller;
 
 import com.tricol.gestionstock.dto.produit.CreateProduitDTO;
 import com.tricol.gestionstock.dto.produit.ProduitResponseDTO;
+import com.tricol.gestionstock.dto.produit.UpdateProduitDTO;
 import com.tricol.gestionstock.service.ProductSservice;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -39,4 +40,25 @@ public class ProduitController {
         List<ProduitResponseDTO> productList = produitService.getAllProducts();
         return ResponseEntity.ok(productList);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ProduitResponseDTO> updateProduit(@Valid @RequestBody UpdateProduitDTO updateProduitDTO ,@PathVariable Long id){
+
+        ProduitResponseDTO updateProduit = produitService.updateProduit(updateProduitDTO, id);
+        return ResponseEntity.ok(updateProduit);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
+
+        produitService.deleteProduct(id);
+        return ResponseEntity.noContent().build();
+    }
+    @GetMapping("{id}")
+    public ResponseEntity<ProduitResponseDTO> getProductById(@PathVariable Long id){
+       return ResponseEntity.ok(produitService.getProduitById(id));
+
+    }
+
+
 }

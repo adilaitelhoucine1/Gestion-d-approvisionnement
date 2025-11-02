@@ -6,22 +6,14 @@
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
 
 
-
-
     <include file="db/changelog/001-create-table-fournisseurs.xml"/>
     <include file="db/changelog/002-create-table-produits.xml"/>
-
-    <!--  -->
     <include file="db/changelog/003-create-table-commandes-fournisseurs.xml"/>
     <include file="db/changelog/004-create-table-lignes-commande.xml"/>
     <include file="db/changelog/005-create-table-lots-stock.xml"/>
     <include file="db/changelog/006-create-table-bons-sortie.xml"/>
     <include file="db/changelog/007-create-table-lignes-bon-sortie.xml"/>
-
-    <!--  -->
     <include file="db/changelog/008-create-table-mouvements-stock.xml"/>
-
-    <!--  -->
     <include file="db/changelog/009-insert-initial-data.xml"/>
 
 </databaseChangeLog>
