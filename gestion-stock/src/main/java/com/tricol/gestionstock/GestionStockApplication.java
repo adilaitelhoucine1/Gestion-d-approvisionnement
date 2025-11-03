@@ -20,7 +20,7 @@ public class GestionStockApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        System.out.println("🔍 Testing database connection...");
+        System.out.println("Testing database connection...");
 
         try (Connection connection = dataSource.getConnection()) {
             System.out.println("Successfully connected to database: " + connection.getMetaData().getURL());

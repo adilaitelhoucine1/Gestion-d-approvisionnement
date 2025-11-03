@@ -30,8 +30,8 @@ public class LotStock {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Le numéro de lot est obligatoire")
-    @Size(max = 50, message = "Le numéro de lot ne doit pas dépasser 50 caractères")
+    @NotBlank(message = "Le numero de lot est obligatoire")
+    @Size(max = 50, message = "Le numero de lot ne doit pas depasser 50 caracteres")
     @Column(nullable = false, unique = true, length = 50)
     private String numeroLot;
 
@@ -41,22 +41,22 @@ public class LotStock {
             foreignKey = @ForeignKey(name = "fk_lot_produit"))
     private Produit produit;
 
-    @NotNull(message = "La date d'entrée est obligatoire")
+    @NotNull(message = "La date d'entree est obligatoire")
     @Column(nullable = false)
     private LocalDate dateEntree;
 
-    @NotNull(message = "La quantité initiale est obligatoire")
-    @Min(value = 1, message = "La quantité initiale doit être au moins 1")
+    @NotNull(message = "La quantite initiale est obligatoire")
+    @Min(value = 1, message = "La quantite initiale doit être au moins 1")
     @Column(nullable = false)
     private Integer quantiteInitiale;
 
     @NotNull
-    @Min(value = 0, message = "La quantité restante ne peut pas être négative")
+    @Min(value = 0, message = "La quantite restante ne peut pas être negative")
     @Column(nullable = false)
     private Integer quantiteRestante;
 
     @NotNull(message = "Le prix d'achat unitaire est obligatoire")
-    @DecimalMin(value = "0.01", message = "Le prix d'achat doit être supérieur à 0")
+    @DecimalMin(value = "0.01", message = "Le prix d'achat doit être superieur a 0")
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal prixAchatUnitaire;
 
@@ -73,20 +73,20 @@ public class LotStock {
     private LocalDateTime createdAt;
 
     /**
-     * Consomme une quantité du lot (FIFO)
+     * Consomme une quantite du lot (FIFO)
      */
     public void consommer(Integer quantite) {
         if (quantite > quantiteRestante) {
             throw new IllegalArgumentException(
-                    "Quantité insuffisante dans le lot " + numeroLot +
-                            ". Disponible: " + quantiteRestante + ", Demandé: " + quantite
+                    "Quantite insuffisante dans le lot " + numeroLot +
+                            ". Disponible: " + quantiteRestante + ", Demande: " + quantite
             );
         }
         this.quantiteRestante -= quantite;
     }
 
     /**
-     * Vérifie si le lot est épuisé
+     * Verifie si le lot est epuise
      */
     public boolean isEpuise() {
         return quantiteRestante == 0;
@@ -100,7 +100,7 @@ public class LotStock {
     }
 
     /**
-     * Initialise la quantité restante à la création
+     * Initialise la quantite restante a la creation
      */
     @PrePersist
     protected void onCreate() {
