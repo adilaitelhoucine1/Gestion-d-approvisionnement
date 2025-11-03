@@ -40,7 +40,6 @@ public class FournisseurServiceImpl implements FournisseurService {
         Fournisseur fournisseur = fournisseurMapper.toEntity(requestDTO);
         Fournisseur savedFournisseur = fournisseurRepository.save(fournisseur);
 
-        log.info("Fournisseur cree avec succes - ID: {}", savedFournisseur.getId());
         return fournisseurMapper.toResponseDTO(savedFournisseur);
     }
 
@@ -118,18 +117,11 @@ public class FournisseurServiceImpl implements FournisseurService {
         return fournisseurMapper.toResponseDTOList(fournisseurs);
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public List<FournisseurResponseDTO> searchFournisseurs(String keyword) {
-        log.debug("Recherche avancee de fournisseurs avec le mot-cle: {}", keyword);
-        List<Fournisseur> fournisseurs = fournisseurRepository.searchFournisseurs(keyword);
-        return fournisseurMapper.toResponseDTOList(fournisseurs);
-    }
+
 
     @Override
     @Transactional(readOnly = true)
     public FournisseurResponseDTO getFournisseurByEmail(String email) {
-        log.debug("Recuperation du fournisseur avec l'email: {}", email);
         Fournisseur fournisseur = fournisseurRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("Fournisseur", "email", email));
         return fournisseurMapper.toResponseDTO(fournisseur);
@@ -138,7 +130,7 @@ public class FournisseurServiceImpl implements FournisseurService {
     @Override
     @Transactional(readOnly = true)
     public FournisseurResponseDTO getFournisseurByIce(String ice) {
-        log.debug("Recuperation du fournisseur avec l'ICE: {}", ice);
+
         Fournisseur fournisseur = fournisseurRepository.findByIce(ice)
                 .orElseThrow(() -> new ResourceNotFoundException("Fournisseur", "ICE", ice));
         return fournisseurMapper.toResponseDTO(fournisseur);

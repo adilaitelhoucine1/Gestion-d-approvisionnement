@@ -29,7 +29,7 @@ public class ProduitController {
     public ResponseEntity<ProduitResponseDTO> createProduit(
             @Valid @RequestBody CreateProduitDTO createDTO) {
             ProduitResponseDTO createdProduit = produitService.createProduit(createDTO);
-            log.info("----+++++++++++  "+createDTO);
+
             return ResponseEntity
                     .status(HttpStatus.CREATED)
                     .body(createdProduit);

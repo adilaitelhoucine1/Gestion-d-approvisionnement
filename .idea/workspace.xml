@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f0aab8c4-5dfe-4656-9a8f-f351bfd01ea0" name="Changes" comment="" />
+    <list default="true" id="f0aab8c4-5dfe-4656-9a8f-f351bfd01ea0" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/entity/Produit.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/entity/Produit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/resources/application.properties" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -57,6 +63,7 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Application.Unnamed.executor&quot;: &quot;Run&quot;,
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
     &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
@@ -82,10 +89,8 @@
   }
 }</component>
   <component name="RunManager">
-    <configuration name="GestionStockApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
-      <module name="gestion-stock" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.tricol.gestionstock.GestionStockApplication" />
+    <configuration name="Unnamed" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="SPRING_BOOT_MAIN_CLASS" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -116,6 +121,12 @@
       <workItem from="1762076547849" duration="7861000" />
       <workItem from="1762087280847" duration="228000" />
       <workItem from="1762087540545" duration="5638000" />
+      <workItem from="1762160904758" duration="870000" />
+      <workItem from="1762161821847" duration="261000" />
+      <workItem from="1762162100217" duration="3116000" />
+      <workItem from="1762166439111" duration="79000" />
+      <workItem from="1762166536350" duration="822000" />
+      <workItem from="1762167389123" duration="25000" />
     </task>
     <task id="LOCAL-00001" summary="Feat : initialize the Entities &amp; Lombok dependencies">
       <option name="closed" value="true" />

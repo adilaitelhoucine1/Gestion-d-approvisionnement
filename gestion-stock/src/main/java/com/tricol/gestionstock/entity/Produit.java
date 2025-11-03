@@ -90,7 +90,7 @@ public class Produit {
         @Column(nullable = false)
         private LocalDateTime updatedAt;
 
-   /*
+
     public boolean isEnAlerte() {
         return stockActuel < pointDeCommande;
     }
@@ -109,5 +109,5 @@ public class Produit {
             );
         }
         this.stockActuel -= quantite;
-    } */
+    }
 }

@@ -33,10 +33,5 @@ public interface FournisseurRepository extends JpaRepository<Fournisseur, Long> 
     List<Fournisseur> findByRaisonSocialeContainingIgnoreCase(String raisonSociale);
 
     
-    @Query("SELECT f FROM Fournisseur f WHERE " +
-           "LOWER(f.raisonSociale) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
-           "LOWER(f.ville) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
-           "LOWER(f.email) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
-           "LOWER(f.ice) LIKE LOWER(CONCAT('%', :keyword, '%'))")
-    List<Fournisseur> searchFournisseurs(@Param("keyword") String keyword);
+
 }

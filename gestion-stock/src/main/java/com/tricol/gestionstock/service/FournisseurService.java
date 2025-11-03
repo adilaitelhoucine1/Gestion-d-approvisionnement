@@ -28,7 +28,6 @@ public interface FournisseurService {
     List<FournisseurResponseDTO> searchByRaisonSociale(String raisonSociale);
 
     
-    List<FournisseurResponseDTO> searchFournisseurs(String keyword);
 
     
     FournisseurResponseDTO getFournisseurByEmail(String email);

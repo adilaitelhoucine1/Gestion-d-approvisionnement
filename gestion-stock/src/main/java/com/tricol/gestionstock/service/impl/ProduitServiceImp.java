@@ -1,4 +1,4 @@
-package com.tricol.gestionstock.service;
+package com.tricol.gestionstock.service.impl;
 
 import com.tricol.gestionstock.dto.produit.CreateProduitDTO;
 import com.tricol.gestionstock.dto.produit.ProduitResponseDTO;
@@ -6,12 +6,9 @@ import com.tricol.gestionstock.dto.produit.UpdateProduitDTO;
 import com.tricol.gestionstock.entity.Produit;
 import com.tricol.gestionstock.mapper.ProduitMapper;
 import com.tricol.gestionstock.repository.ProduitRepository;
+import com.tricol.gestionstock.service.ProductSservice;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
-import org.springframework.boot.context.config.Profiles;
-import org.springframework.data.repository.core.support.RepositoryMethodInvocationListener;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
