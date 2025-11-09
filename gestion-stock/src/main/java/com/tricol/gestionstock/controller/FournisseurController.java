@@ -17,7 +17,6 @@ import java.util.List;
 @RequestMapping("/api/v1/fournisseurs")
 @RequiredArgsConstructor
 @Slf4j
-@Tag(name = "Fournisseurs", description = "API de gestion des fournisseurs")
 public class FournisseurController {
 
     private final FournisseurService fournisseurService;

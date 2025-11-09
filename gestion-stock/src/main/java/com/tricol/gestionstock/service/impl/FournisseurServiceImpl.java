@@ -26,7 +26,6 @@ public class FournisseurServiceImpl implements FournisseurService {
 
     @Override
     public FournisseurResponseDTO createFournisseur(FournisseurRequestDTO requestDTO) {
-        log.debug("Creation d'un nouveau fournisseur : {}", requestDTO.getRaisonSociale());
 
         if (fournisseurRepository.existsByEmail(requestDTO.getEmail())) {
             throw new DuplicateResourceException("email", requestDTO.getEmail());
