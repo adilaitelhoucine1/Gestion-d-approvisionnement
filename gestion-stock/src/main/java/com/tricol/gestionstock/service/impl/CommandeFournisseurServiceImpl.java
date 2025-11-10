@@ -49,7 +49,7 @@ public class CommandeFournisseurServiceImpl implements CommandeFournisseurServic
         Fournisseur fournisseur = fournisseurRepository.findById(requestDTO.getFournisseurId())
                 .orElseThrow(() -> new ResourceNotFoundException("Fournisseur", "id", requestDTO.getFournisseurId()));
 
-        CommandeFournisseur commande = CommandeFournisseur.builder()
+        CommandeFournisseur commande = CommandeFournisseur.builder() 
                 .numeroCommande(requestDTO.getNumeroCommande())
                 .dateCommande(requestDTO.getDateCommande())
                 .fournisseur(fournisseur)
@@ -182,7 +182,7 @@ public class CommandeFournisseurServiceImpl implements CommandeFournisseurServic
 
     @Override
     public CommandeFournisseurResponseDTO receptionnerCommande(Long id, ReceptionCommandeDTO receptionDTO) {
-        log.info("Reception de la commande avec ID: {}", id);
+
 
         CommandeFournisseur commande = commandeRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("CommandeFournisseur", "id", id));
@@ -231,12 +231,10 @@ public class CommandeFournisseurServiceImpl implements CommandeFournisseurServic
             ligne.getProduit().incrementerStock(ligne.getQuantite());
             produitRepository.save(ligne.getProduit());
 
-            log.info("Lot cree: {} - Quantite: {} - Produit: {}",
-                    numeroLot, ligne.getQuantite(), ligne.getProduit().getNom());
+
         }
 
         CommandeFournisseur updatedCommande = commandeRepository.save(commande);
-        log.info("Commande receptionnee avec succes: ID={}", updatedCommande.getId());
 
         return mapper.toResponseDTO(updatedCommande);
     }

@@ -6,7 +6,7 @@
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
 
     <changeSet id="009-insert-initial-data" author="adilaitelhoucine1">
-        <comment>Insertion des donnees initiales de test</comment>
+        <comment>Insertion des données initiales de test</comment>
 
         <!-- FOURNISSEURS -->
         <insert tableName="fournisseurs">
@@ -32,7 +32,7 @@
         <insert tableName="fournisseurs">
             <column name="raison_sociale" value="Bouton Plus"/>
             <column name="adresse" value="Rue Mohammed V, N°234"/>
-            <column name="ville" value="Fes"/>
+            <column name="ville" value="Fès"/>
             <column name="personne_contact" value="Ahmed Bennani"/>
             <column name="email" value="contact@boutonplus.ma"/>
             <column name="telephone" value="+212535667788"/>
@@ -48,34 +48,34 @@
             <column name="categorie" value="Tissus"/>
             <column name="stock_actuel" value="0"/>
             <column name="point_de_commande" value="100"/>
-            <column name="unite_mesure" value="metre"/>
+            <column name="unite_mesure" value="mètre"/>
         </insert>
 
         <insert tableName="produits">
             <column name="reference" value="TIS-002"/>
             <column name="nom" value="Tissu Polyester Noir"/>
-            <column name="description" value="Tissu polyester noir impermeable"/>
+            <column name="description" value="Tissu polyester noir imperméable"/>
             <column name="prix_unitaire" value="38.50"/>
             <column name="categorie" value="Tissus"/>
             <column name="stock_actuel" value="0"/>
             <column name="point_de_commande" value="80"/>
-            <column name="unite_mesure" value="metre"/>
+            <column name="unite_mesure" value="mètre"/>
         </insert>
 
         <insert tableName="produits">
             <column name="reference" value="BTN-015-OR"/>
-            <column name="nom" value="Bouton Dore 15mm"/>
-            <column name="description" value="Bouton dore diametre 15mm"/>
+            <column name="nom" value="Bouton Doré 15mm"/>
+            <column name="description" value="Bouton doré diamètre 15mm"/>
             <column name="prix_unitaire" value="2.50"/>
             <column name="categorie" value="Boutons"/>
             <column name="stock_actuel" value="0"/>
             <column name="point_de_commande" value="500"/>
-            <column name="unite_mesure" value="unite"/>
+            <column name="unite_mesure" value="unité"/>
         </insert>
 
         <insert tableName="produits">
             <column name="reference" value="FIL-100-N"/>
-            <column name="nom" value="Fil a coudre noir 100m"/>
+            <column name="nom" value="Fil à coudre noir 100m"/>
             <column name="description" value="Fil polyester noir, bobine de 100m"/>
             <column name="prix_unitaire" value="15.00"/>
             <column name="categorie" value="Fils"/>
@@ -86,13 +86,13 @@
 
         <insert tableName="produits">
             <column name="reference" value="FER-020"/>
-            <column name="nom" value="Fermeture eclair 20cm"/>
-            <column name="description" value="Fermeture eclair nylon 20cm"/>
+            <column name="nom" value="Fermeture éclair 20cm"/>
+            <column name="description" value="Fermeture éclair nylon 20cm"/>
             <column name="prix_unitaire" value="3.50"/>
             <column name="categorie" value="Fermetures"/>
             <column name="stock_actuel" value="0"/>
             <column name="point_de_commande" value="200"/>
-            <column name="unite_mesure" value="unite"/>
+            <column name="unite_mesure" value="unité"/>
         </insert>
 
     </changeSet>

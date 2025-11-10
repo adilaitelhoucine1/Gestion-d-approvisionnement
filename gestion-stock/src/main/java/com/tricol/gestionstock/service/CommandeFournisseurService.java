@@ -37,6 +37,5 @@ public interface CommandeFournisseurService {
 
     CommandeFournisseurResponseDTO annulerCommande(Long id);
 
-
     CommandeFournisseurResponseDTO validerCommande(Long id);
 }
