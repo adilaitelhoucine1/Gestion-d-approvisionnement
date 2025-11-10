@@ -36,8 +36,8 @@ public class MouvementStock {
     @Column(nullable = false, length = 20)
     private TypeMouvement typeMouvement;
 
-    @NotNull(message = "La quantité est obligatoire")
-    @Min(value = 1, message = "La quantité doit être au moins 1")
+    @NotNull(message = "La quantite est obligatoire")
+    @Min(value = 1, message = "La quantite doit être au moins 1")
     @Column(nullable = false)
     private Integer quantite;
 
@@ -57,11 +57,11 @@ public class MouvementStock {
     @JoinColumn(name = "bon_sortie_id", foreignKey = @ForeignKey(name = "fk_mouvement_bon"))
     private BonSortie bonSortie;
 
-    @DecimalMin(value = "0.0", message = "Le prix unitaire ne peut pas être négatif")
+    @DecimalMin(value = "0.0", message = "Le prix unitaire ne peut pas être negatif")
     @Column(precision = 10, scale = 2)
     private BigDecimal prixUnitaire;
 
-    @Size(max = 100, message = "La référence ne doit pas dépasser 100 caractères")
+    @Size(max = 100, message = "La reference ne doit pas depasser 100 caracteres")
     @Column(length = 100)
     private String referenceDocument;
 
@@ -69,7 +69,7 @@ public class MouvementStock {
     private String observation;
 
     /**
-     * Initialise la date du mouvement à la création
+     * Initialise la date du mouvement a la creation
      */
     @PrePersist
     protected void onCreate() {

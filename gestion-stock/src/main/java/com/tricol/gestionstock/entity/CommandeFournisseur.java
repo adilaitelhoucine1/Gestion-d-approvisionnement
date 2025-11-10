@@ -32,8 +32,8 @@ public class CommandeFournisseur {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Le numéro de commande est obligatoire")
-    @Size(max = 50, message = "Le numéro de commande ne doit pas dépasser 50 caractères")
+    @NotBlank(message = "Le numero de commande est obligatoire")
+    @Size(max = 50, message = "Le numero de commande ne doit pas depasser 50 caracteres")
     @Column(nullable = false, unique = true, length = 50)
     private String numeroCommande;
 
@@ -61,7 +61,7 @@ public class CommandeFournisseur {
     private List<LigneCommande> lignesCommande = new ArrayList<>();
 
     @NotNull
-    @DecimalMin(value = "0.0", message = "Le montant total ne peut pas être négatif")
+    @DecimalMin(value = "0.0", message = "Le montant total ne peut pas être negatif")
     @Column(nullable = false, precision = 12, scale = 2)
     @Builder.Default
     private BigDecimal montantTotal = BigDecimal.ZERO;
@@ -105,14 +105,14 @@ public class CommandeFournisseur {
     }
 
     /**
-     * Vérifie si la commande peut être modifiée
+     * Verifie si la commande peut être modifiee
      */
     public boolean estModifiable() {
         return statut == StatutCommande.EN_ATTENTE || statut == StatutCommande.VALIDEE;
     }
 
     /**
-     * Vérifie si la commande peut être réceptionnée
+     * Verifie si la commande peut être receptionnee
      */
     public boolean peutEtreReceptionnee() {
         return statut == StatutCommande.VALIDEE;

@@ -3,6 +3,8 @@ package com.tricol.gestionstock.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -80,31 +82,25 @@ public class Produit {
     @Builder.Default
     private List<MouvementStock> mouvements = new ArrayList<>();
 
-    @CreatedDate
+    @CreationTimestamp
     @Column(nullable = false, updatable = false)
-    private LocalDateTime createdAt;
+        private LocalDateTime createdAt;
 
-    @LastModifiedDate
-    @Column(nullable = false)
-    private LocalDateTime updatedAt;
+    @UpdateTimestamp
+        @Column(nullable = false)
+        private LocalDateTime updatedAt;
 
-    /**
-     * Vérifie si le produit est en alerte (stock < seuil)
-     */
+
     public boolean isEnAlerte() {
         return stockActuel < pointDeCommande;
     }
 
-    /**
-     * Incrémente le stock
-     */
+
     public void incrementerStock(Integer quantite) {
         this.stockActuel += quantite;
     }
 
-    /**
-     * Décrémente le stock
-     */
+
     public void decrementerStock(Integer quantite) {
         if (this.stockActuel < quantite) {
             throw new IllegalArgumentException(
