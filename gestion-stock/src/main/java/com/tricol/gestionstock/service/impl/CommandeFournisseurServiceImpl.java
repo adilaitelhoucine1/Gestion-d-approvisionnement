@@ -49,7 +49,7 @@ public class CommandeFournisseurServiceImpl implements CommandeFournisseurServic
         Fournisseur fournisseur = fournisseurRepository.findById(requestDTO.getFournisseurId())
                 .orElseThrow(() -> new ResourceNotFoundException("Fournisseur", "id", requestDTO.getFournisseurId()));
 
-        CommandeFournisseur commande = CommandeFournisseur.builder()
+        CommandeFournisseur commande = CommandeFournisseur.builder() 
                 .numeroCommande(requestDTO.getNumeroCommande())
                 .dateCommande(requestDTO.getDateCommande())
                 .fournisseur(fournisseur)
