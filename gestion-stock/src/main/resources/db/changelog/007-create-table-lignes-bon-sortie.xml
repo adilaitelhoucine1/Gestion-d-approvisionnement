@@ -6,7 +6,7 @@
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
 
     <changeSet id="007-create-table-lignes-bon-sortie" author="adilaitelhoucine1">
-        <comment>Creation de la table lignes_bon_sortie</comment>
+        <comment>Création de la table lignes_bon_sortie</comment>
 
         <createTable tableName="lignes_bon_sortie">
             <column name="id" type="BIGINT" autoIncrement="true">

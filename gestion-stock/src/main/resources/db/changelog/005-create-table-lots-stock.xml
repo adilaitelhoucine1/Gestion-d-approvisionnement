@@ -6,7 +6,7 @@
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
 
     <changeSet id="005-create-table-lots-stock" author="adilaitelhoucine1">
-        <comment>Creation de la table lots_stock (gestion FIFO)</comment>
+        <comment>Création de la table lots_stock (gestion FIFO)</comment>
 
         <createTable tableName="lots_stock">
             <column name="id" type="BIGINT" autoIncrement="true">
