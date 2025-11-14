@@ -4,53 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f0aab8c4-5dfe-4656-9a8f-f351bfd01ea0" name="Changes" comment="Fix Some issues">
+    <list default="true" id="f0aab8c4-5dfe-4656-9a8f-f351bfd01ea0" name="Changes" comment="feat: add new DTOs and services for stock management, including filtering capabilities">
       <changelist_data name="Abd Elkouddous El Alami" email="151691642+abdelkouddousalami@users.noreply.github.com" automatic="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/Gestion-d-approvisionnement.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/controller/StockController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/dto/stock/AlerteStockDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/dto/stock/EtatStockDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/dto/stock/LotStockDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/dto/stock/MouvementStockDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/dto/stock/StockProduitDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/exception/CommandeNotReceptionnableException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/mapper/StockMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/service/MouvementService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/service/StockService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/service/impl/MouvementServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/service/impl/StockServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/controller/CommandeFournisseurController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/controller/CommandeFournisseurController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/controller/FournisseurController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/controller/FournisseurController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/controller/ProduitController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/controller/ProduitController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/dto/commande/CommandeFournisseurResponseDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/dto/commande/CommandeFournisseurResponseDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/entity/BonSortie.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/entity/BonSortie.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/entity/CommandeFournisseur.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/entity/CommandeFournisseur.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/entity/LigneCommande.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/entity/LigneCommande.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/entity/LotStock.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/entity/LotStock.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/entity/MouvementStock.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/entity/MouvementStock.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/entity/Produit.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/entity/Produit.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/exception/ErrorResponse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/exception/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/exception/GlobalExceptionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/exception/ValidationErrorResponse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/mapper/CommandeFournisseurMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/mapper/CommandeFournisseurMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/mapper/FournisseurMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/mapper/FournisseurMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/repository/BonSortieRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/repository/BonSortieRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/repository/CommandeFournisseurRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/repository/CommandeFournisseurRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/repository/LotStockRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/repository/LotStockRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/service/CommandeFournisseurService.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/service/CommandeFournisseurService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/service/FournisseurService.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/service/FournisseurService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/service/impl/BonSortieServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/service/impl/BonSortieServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/service/impl/CommandeFournisseurServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/service/impl/CommandeFournisseurServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/service/impl/FournisseurServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/service/impl/FournisseurServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/service/impl/ProduitServiceImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/service/impl/ProduitServiceImp.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -190,7 +146,7 @@
       <workItem from="1763050405157" duration="2236000" />
       <workItem from="1763063710090" duration="3267000" />
       <workItem from="1763107409600" duration="9651000" />
-      <workItem from="1763128505322" duration="4006000" />
+      <workItem from="1763128505322" duration="4625000" />
     </task>
     <task id="LOCAL-00001" summary="Feat : initialize the Entities &amp; Lombok dependencies">
       <option name="closed" value="true" />
@@ -266,7 +222,8 @@
     <MESSAGE value="Feat : initialize the Entities &amp; Lombok dependencies" />
     <MESSAGE value="Merge pull request #7 from adilaitelhoucine1/dev&#10;&#10;Dev" />
     <MESSAGE value="Fix Some issues" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix Some issues" />
+    <MESSAGE value="feat: add new DTOs and services for stock management, including filtering capabilities" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: add new DTOs and services for stock management, including filtering capabilities" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
