@@ -23,19 +23,16 @@ public interface CommandeFournisseurService {
 
     List<CommandeFournisseurResponseDTO> getCommandesByFournisseur(Long fournisseurId);
 
-    List<CommandeFournisseurResponseDTO> getCommandesByStatut(StatutCommande statut);
 
  
     CommandeFournisseurResponseDTO receptionnerCommande(Long id, ReceptionCommandeDTO receptionDTO);
 
-    List<CommandeFournisseurResponseDTO> searchCommandes(
-            Long fournisseurId,
-            StatutCommande statut,
-            LocalDate dateDebut,
-            LocalDate dateFin
-    );
+
 
     CommandeFournisseurResponseDTO annulerCommande(Long id);
 
     CommandeFournisseurResponseDTO validerCommande(Long id);
+
+
+
 }

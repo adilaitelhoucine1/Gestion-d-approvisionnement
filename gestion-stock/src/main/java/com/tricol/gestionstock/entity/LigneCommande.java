@@ -49,14 +49,15 @@ public class LigneCommande {
     @Column(nullable = false, precision = 12, scale = 2)
     private BigDecimal sousTotal;
 
-    /**
-     * Calcule automatiquement le sous-total avant persistence/update
-     */
+
     @PrePersist
     @PreUpdate
-    protected void calculerSousTotal() {
+    public void calculerSousTotal() {
         if (quantite != null && prixUnitaire != null) {
             this.sousTotal = prixUnitaire.multiply(BigDecimal.valueOf(quantite));
+        }else{
+            this.sousTotal = BigDecimal.ZERO;
+
         }
     }
 }

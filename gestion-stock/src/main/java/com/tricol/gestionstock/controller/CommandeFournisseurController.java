@@ -43,7 +43,7 @@ public class CommandeFournisseurController {
     @GetMapping("/{id}")
 
     public ResponseEntity<CommandeFournisseurResponseDTO> getCommandeById(
-            @Parameter(description = "ID de la commande") @PathVariable Long id) {
+           @PathVariable Long id) {
         CommandeFournisseurResponseDTO commande = commandeService.getCommandeById(id);
         return ResponseEntity.ok(commande);
     }
@@ -80,34 +80,6 @@ public class CommandeFournisseurController {
             @Valid @RequestBody ReceptionCommandeDTO receptionDTO) {
         CommandeFournisseurResponseDTO response = commandeService.receptionnerCommande(id, receptionDTO);
         return ResponseEntity.ok(response);
-    }
-
-    @GetMapping("/search")
-
-    public ResponseEntity<List<CommandeFournisseurResponseDTO>> searchCommandes(
-
-            @RequestParam(required = false) Long fournisseurId,
-
-            @RequestParam(required = false) StatutCommande statut,
-
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateDebut,
-
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFin) {
-
-
-        List<CommandeFournisseurResponseDTO> results = commandeService.searchCommandes(
-                fournisseurId, statut, dateDebut, dateFin
-        );
-
-        return ResponseEntity.ok(results);
-    }
-
-    @GetMapping("/statut/{statut}")
-
-    public ResponseEntity<List<CommandeFournisseurResponseDTO>> getCommandesByStatut(
-            @PathVariable StatutCommande statut) {
-        List<CommandeFournisseurResponseDTO> commandes = commandeService.getCommandesByStatut(statut);
-        return ResponseEntity.ok(commandes);
     }
 
     @PutMapping("/{id}/annuler")

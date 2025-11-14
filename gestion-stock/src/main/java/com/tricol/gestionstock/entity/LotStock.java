@@ -72,40 +72,31 @@ public class LotStock {
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
-    /**
-     * Consomme une quantite du lot (FIFO)
-     */
+
     public void consommer(Integer quantite) {
         if (quantite > quantiteRestante) {
             throw new IllegalArgumentException(
-                    "Quantite insuffisante dans le lot " + numeroLot +
-                            ". Disponible: " + quantiteRestante + ", Demande: " + quantite
+                    "Quantite insuffisante dans le lot"
             );
         }
         this.quantiteRestante -= quantite;
     }
 
-    /**
-     * Verifie si le lot est epuise
-     */
     public boolean isEpuise() {
         return quantiteRestante == 0;
     }
 
-    /**
-     * Calcule la valorisation actuelle du lot
-     */
+
     public BigDecimal getValorisation() {
         return prixAchatUnitaire.multiply(BigDecimal.valueOf(quantiteRestante));
     }
 
-    /**
-     * Initialise la quantite restante a la creation
-     */
+
     @PrePersist
     protected void onCreate() {
         if (quantiteRestante == null) {
             quantiteRestante = quantiteInitiale;
         }
+
     }
 }

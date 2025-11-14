@@ -58,7 +58,6 @@ public class ProduitServiceImp implements ProductSservice {
 
         Produit existingProduit = produitRepository.findById(id)
                 .orElseThrow(() -> {
-                    log.error("Produit non touve");
                     return new IllegalArgumentException("produit non trouve");
                 });
         if (updateDTO.getReference() != null &&
@@ -86,4 +85,8 @@ public class ProduitServiceImp implements ProductSservice {
                 orElseThrow(()->new IllegalArgumentException("le produit avec cet id n existe pas"));
         return produitMapper.toResponseDTO(produit);
     }
+
+
+
+
 }

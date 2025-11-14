@@ -7,6 +7,7 @@ import com.tricol.gestionstock.dto.commande.ReceptionCommandeDTO;
 import com.tricol.gestionstock.entity.*;
 import com.tricol.gestionstock.entity.Enums.StatutCommande;
 import com.tricol.gestionstock.entity.Enums.TypeMouvement;
+import com.tricol.gestionstock.exception.CommandeNotReceptionnableException;
 import com.tricol.gestionstock.exception.DuplicateResourceException;
 import com.tricol.gestionstock.exception.ResourceNotFoundException;
 import com.tricol.gestionstock.mapper.CommandeFournisseurMapper;
@@ -40,7 +41,6 @@ public class CommandeFournisseurServiceImpl implements CommandeFournisseurServic
 
     @Override
     public CommandeFournisseurResponseDTO createCommande(CommandeFournisseurRequestDTO requestDTO) {
-        log.info("Creation d'une nouvelle commande: {}", requestDTO.getNumeroCommande());
 
         if (commandeRepository.existsByNumeroCommande(requestDTO.getNumeroCommande())) {
             throw new DuplicateResourceException("numeroCommande", requestDTO.getNumeroCommande());
@@ -67,23 +67,22 @@ public class CommandeFournisseurServiceImpl implements CommandeFournisseurServic
                     .produit(produit)
                     .quantite(ligneDTO.getQuantite())
                     .prixUnitaire(ligneDTO.getPrixUnitaire())
-                    .build();
 
+                  //  .sousTotal(BigDecimal.ZERO)
+                    .build();
+            ligne.calculerSousTotal();
             commande.ajouterLigneCommande(ligne);
         }
 
-        commande.calculerMontantTotal();
+    //    commande.calculerMontantTotal();
 
         CommandeFournisseur savedCommande = commandeRepository.save(commande);
-        log.info("Commande creee avec succes: ID={}", savedCommande.getId());
-
         return mapper.toResponseDTO(savedCommande);
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<CommandeFournisseurResponseDTO> getAllCommandes() {
-        log.info("Recuperation de toutes les commandes");
         List<CommandeFournisseur> commandes = commandeRepository.findAllByOrderByDateCommandeDesc();
         return mapper.toResponseDTOList(commandes);
     }
@@ -91,7 +90,6 @@ public class CommandeFournisseurServiceImpl implements CommandeFournisseurServic
     @Override
     @Transactional(readOnly = true)
     public CommandeFournisseurResponseDTO getCommandeById(Long id) {
-        log.info("Recuperation de la commande avec ID: {}", id);
         CommandeFournisseur commande = commandeRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("CommandeFournisseur", "id", id));
         return mapper.toResponseDTO(commande);
@@ -99,7 +97,6 @@ public class CommandeFournisseurServiceImpl implements CommandeFournisseurServic
 
     @Override
     public CommandeFournisseurResponseDTO updateCommande(Long id, CommandeFournisseurRequestDTO requestDTO) {
-        log.info("Mise a jour de la commande avec ID: {}", id);
 
         CommandeFournisseur commande = commandeRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("CommandeFournisseur", "id", id));
@@ -131,38 +128,35 @@ public class CommandeFournisseurServiceImpl implements CommandeFournisseurServic
                     .produit(produit)
                     .quantite(ligneDTO.getQuantite())
                     .prixUnitaire(ligneDTO.getPrixUnitaire())
+                   // .sousTotal(BigDecimal.ZERO)
                     .build();
-
+            ligne.calculerSousTotal();
             commande.ajouterLigneCommande(ligne);
         }
 
         commande.calculerMontantTotal();
 
         CommandeFournisseur updatedCommande = commandeRepository.save(commande);
-        log.info("Commande mise a jour avec succes: ID={}", updatedCommande.getId());
 
         return mapper.toResponseDTO(updatedCommande);
     }
 
     @Override
     public void deleteCommande(Long id) {
-        log.info("Suppression de la commande avec ID: {}", id);
 
         CommandeFournisseur commande = commandeRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("CommandeFournisseur", "id", id));
 
-        if (commande.getStatut() == StatutCommande.LIVREE) {
+        if (commande.getStatut()==StatutCommande.LIVREE) {
             throw new IllegalStateException("Impossible de supprimer une commande deja livree");
         }
 
         commandeRepository.delete(commande);
-        log.info("Commande supprimee avec succes: ID={}", id);
-    }
+     }
 
     @Override
     @Transactional(readOnly = true)
     public List<CommandeFournisseurResponseDTO> getCommandesByFournisseur(Long fournisseurId) {
-        log.info("Recuperation des commandes du fournisseur: {}", fournisseurId);
 
         if (!fournisseurRepository.existsById(fournisseurId)) {
             throw new ResourceNotFoundException("Fournisseur", "id", fournisseurId);
@@ -172,13 +166,7 @@ public class CommandeFournisseurServiceImpl implements CommandeFournisseurServic
         return mapper.toResponseDTOList(commandes);
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public List<CommandeFournisseurResponseDTO> getCommandesByStatut(StatutCommande statut) {
-        log.info("Recuperation des commandes avec statut: {}", statut);
-        List<CommandeFournisseur> commandes = commandeRepository.findByStatutOrderByDateCommandeDesc(statut);
-        return mapper.toResponseDTOList(commandes);
-    }
+
 
     @Override
     public CommandeFournisseurResponseDTO receptionnerCommande(Long id, ReceptionCommandeDTO receptionDTO) {
@@ -187,8 +175,9 @@ public class CommandeFournisseurServiceImpl implements CommandeFournisseurServic
         CommandeFournisseur commande = commandeRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("CommandeFournisseur", "id", id));
 
+
         if (!commande.peutEtreReceptionnee()) {
-            throw new IllegalStateException("La commande ne peut pas être receptionnee (statut: " + commande.getStatut() + ")");
+            throw new CommandeNotReceptionnableException("La commande ne peut pas être receptionnee ");
         }
 
         commande.setStatut(StatutCommande.LIVREE);
@@ -239,26 +228,10 @@ public class CommandeFournisseurServiceImpl implements CommandeFournisseurServic
         return mapper.toResponseDTO(updatedCommande);
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public List<CommandeFournisseurResponseDTO> searchCommandes(
-            Long fournisseurId,
-            StatutCommande statut,
-            LocalDate dateDebut,
-            LocalDate dateFin) {
-        log.info("Recherche de commandes avec filtres: fournisseur={}, statut={}, periode={} a {}",
-                fournisseurId, statut, dateDebut, dateFin);
 
-        List<CommandeFournisseur> commandes = commandeRepository.findByFilters(
-                fournisseurId, statut, dateDebut, dateFin
-        );
-
-        return mapper.toResponseDTOList(commandes);
-    }
 
     @Override
     public CommandeFournisseurResponseDTO annulerCommande(Long id) {
-        log.info("Annulation de la commande avec ID: {}", id);
 
         CommandeFournisseur commande = commandeRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("CommandeFournisseur", "id", id));
@@ -273,25 +246,23 @@ public class CommandeFournisseurServiceImpl implements CommandeFournisseurServic
 
         commande.setStatut(StatutCommande.ANNULEE);
         CommandeFournisseur updatedCommande = commandeRepository.save(commande);
-        log.info("Commande annulee avec succes: ID={}", updatedCommande.getId());
 
         return mapper.toResponseDTO(updatedCommande);
     }
 
     @Override
     public CommandeFournisseurResponseDTO validerCommande(Long id) {
-        log.info("Validation de la commande avec ID: {}", id);
+
 
         CommandeFournisseur commande = commandeRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("CommandeFournisseur", "id", id));
 
-        if (commande.getStatut() != StatutCommande.EN_ATTENTE) {
+            if (commande.getStatut() != StatutCommande.EN_ATTENTE) {
             throw new IllegalStateException("Seules les commandes en attente peuvent être validees");
         }
 
         commande.setStatut(StatutCommande.VALIDEE);
         CommandeFournisseur updatedCommande = commandeRepository.save(commande);
-        log.info("Commande validee avec succes: ID={}", updatedCommande.getId());
 
         return mapper.toResponseDTO(updatedCommande);
     }
@@ -310,4 +281,11 @@ public class CommandeFournisseurServiceImpl implements CommandeFournisseurServic
                 commandeNum,
                 System.currentTimeMillis() % 10000);
     }
+
+    public List<CommandeFournisseurResponseDTO> getfiltered(){
+        return this.getAllCommandes().stream()
+                .filter(c->c.getStatut()==StatutCommande.EN_ATTENTE).toList();
+    }
+
+
 }

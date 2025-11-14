@@ -123,7 +123,7 @@ public class BonSortieServiceImpl implements BonSortieService {
                 .orElseThrow(() -> new ResourceNotFoundException("BonSortie", "id", id));
 
         if (!bonSortie.peutEtreValide()) {
-            throw new IllegalStateException("Le bon de sortie ne peut pas être valide");
+            throw new IllegalStateException("Le bon de sortie ne peut pas etre valide");
         }
 
         for (LigneBonSortie ligne : bonSortie.getLignes()) {
@@ -158,50 +158,49 @@ public class BonSortieServiceImpl implements BonSortieService {
         return mapper.toResponseDTOList(bonsSortie);
     }
 
+
+
     private void traiterSortieFIFO(BonSortie bonSortie, LigneBonSortie ligne) {
         Produit produit = ligne.getProduit();
-        int quantiteAPrelever = ligne.getQuantiteDemandee();
+        int quantiteRestante = ligne.getQuantiteDemandee();
 
-        if (produit.getStockActuel() < quantiteAPrelever) {
-            throw new IllegalStateException(
-                    String.format("Stock insuffisant pour le produit %s. Disponible: %d, Demande: %d",
-                            produit.getNom(), produit.getStockActuel(), quantiteAPrelever)
-            );
+
+        if (produit.getStockActuel() < quantiteRestante) {
+            throw new IllegalStateException("Stock insuffisant pour " + produit.getNom());
         }
 
-        List<LotStock> lotsDisponibles = lotStockRepository.findLotsDisponiblesByProduitFIFO(produit.getId());
 
-        if (lotsDisponibles.isEmpty()) {
-            throw new IllegalStateException("Aucun lot disponible pour le produit: " + produit.getNom());
+        List<LotStock> lots = lotStockRepository.findLotsDisponiblesByProduitFIFO(produit.getId());
+        if (lots.isEmpty()) {
+            throw new IllegalStateException("Aucun lot disponible pour " + produit.getNom());
         }
 
-        for (LotStock lot : lotsDisponibles) {
-            if (quantiteAPrelever <= 0) {
-                break;
-            }
+         // FIIIIIIIIIIIIFFFFFFFFFFPPOOOOOOOOOOOOOOOO
+        for (LotStock lot : lots) {
+            if (quantiteRestante <= 0) break;
 
-            int quantiteAPreleverDuLot = Math.min(quantiteAPrelever, lot.getQuantiteRestante());
+            int quantite = Math.min(quantiteRestante, lot.getQuantiteRestante());
 
-            lot.consommer(quantiteAPreleverDuLot);
+
+            lot.consommer(quantite);
             lotStockRepository.save(lot);
 
-            MouvementStock mouvement = MouvementStock.builder()
+
+            mouvementStockRepository.save(MouvementStock.builder()
                     .produit(produit)
                     .typeMouvement(TypeMouvement.SORTIE)
-                    .quantite(quantiteAPreleverDuLot)
+                    .quantite(quantite)
                     .dateMouvement(LocalDateTime.now())
                     .lot(lot)
                     .bonSortie(bonSortie)
                     .prixUnitaire(lot.getPrixAchatUnitaire())
                     .referenceDocument(bonSortie.getNumeroBon())
-                    .observation(String.format("Sortie vers atelier %s - Lot %s",
-                            bonSortie.getAtelierDestinataire(), lot.getNumeroLot()))
-                    .build();
+                    .observation("Sortie vers atelier " + bonSortie.getAtelierDestinataire() + " - Lot " + lot.getNumeroLot())
+                    .build());
 
-            mouvementStockRepository.save(mouvement);
-
-            quantiteAPrelever -= quantiteAPreleverDuLot;
+            quantiteRestante -= quantite;
         }
+
 
         produit.decrementerStock(ligne.getQuantiteDemandee());
         produitRepository.save(produit);

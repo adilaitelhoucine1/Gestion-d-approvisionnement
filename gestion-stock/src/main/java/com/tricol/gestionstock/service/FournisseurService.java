@@ -34,4 +34,7 @@ public interface FournisseurService {
 
    
     FournisseurResponseDTO getFournisseurByIce(String ice);
+
+
+    List<FournisseurResponseDTO>filtered();
 }

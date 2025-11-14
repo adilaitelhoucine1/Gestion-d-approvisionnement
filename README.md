@@ -1,3 +1,0 @@
-# Gestion-d-approvisionnement
-
-.

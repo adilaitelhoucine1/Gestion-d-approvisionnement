@@ -16,7 +16,8 @@ public interface LotStockRepository extends JpaRepository<LotStock, Long> {
     Optional<LotStock> findByNumeroLot(String numeroLot);
 
    
-    @Query("SELECT l FROM LotStock l WHERE l.produit.id = :produitId AND l.quantiteRestante > 0 ORDER BY l.dateEntree ASC")
+    @Query("SELECT l FROM LotStock l WHERE l.produit.id = :produitId " +
+            "AND l.quantiteRestante > 0 ORDER BY l.dateEntree ASC")
     List<LotStock> findLotsDisponiblesByProduitFIFO(@Param("produitId") Long produitId);
 
    

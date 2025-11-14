@@ -14,7 +14,7 @@ public interface FournisseurMapper {
     FournisseurResponseDTO toResponseDTO(Fournisseur fournisseur);
 
    
-    List<FournisseurResponseDTO> toResponseDTOList(List<Fournisseur> fournisseurs);
+    List<FournisseurResponseDTO>     toResponseDTOList(List<Fournisseur> fournisseurs);
 
    
     @Mapping(target = "id", ignore = true)
@@ -27,6 +27,6 @@ public interface FournisseurMapper {
     @Mapping(target = "commandes", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+        @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateEntityFromDTO(FournisseurRequestDTO requestDTO, @MappingTarget Fournisseur fournisseur);
 }

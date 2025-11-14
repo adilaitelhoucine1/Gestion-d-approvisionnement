@@ -92,6 +92,7 @@ public class Produit {
 
 
     public boolean isEnAlerte() {
+
         return stockActuel < pointDeCommande;
     }
 

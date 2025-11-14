@@ -77,43 +77,25 @@ public class CommandeFournisseur {
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
-    /**
-     * Calcule le montant total de la commande
-     */
+
     public void calculerMontantTotal() {
         this.montantTotal = lignesCommande.stream()
                 .map(LigneCommande::getSousTotal)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
-    /**
-     * Ajoute une ligne de commande
-     */
+
     public void ajouterLigneCommande(LigneCommande ligne) {
         lignesCommande.add(ligne);
         ligne.setCommande(this);
         calculerMontantTotal();
     }
 
-    /**
-     * Retire une ligne de commande
-     */
-    public void retirerLigneCommande(LigneCommande ligne) {
-        lignesCommande.remove(ligne);
-        ligne.setCommande(null);
-        calculerMontantTotal();
-    }
-
-    /**
-     * Verifie si la commande peut être modifiee
-     */
     public boolean estModifiable() {
         return statut == StatutCommande.EN_ATTENTE || statut == StatutCommande.VALIDEE;
     }
 
-    /**
-     * Verifie si la commande peut être receptionnee
-     */
+
     public boolean peutEtreReceptionnee() {
         return statut == StatutCommande.VALIDEE;
     }

@@ -25,7 +25,7 @@ public class FournisseurController {
     public ResponseEntity<FournisseurResponseDTO> createFournisseur(@Valid @RequestBody FournisseurRequestDTO requestDTO) {
 
         FournisseurResponseDTO response = fournisseurService.createFournisseur(requestDTO);
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping
@@ -85,5 +85,10 @@ public class FournisseurController {
     public ResponseEntity<FournisseurResponseDTO> getFournisseurByIce(@PathVariable String ice) {
         FournisseurResponseDTO fournisseur = fournisseurService.getFournisseurByIce(ice);
         return ResponseEntity.ok(fournisseur);
+    }
+
+    @GetMapping("/test")
+    public ResponseEntity<List<FournisseurResponseDTO> >test(){
+        return ResponseEntity.ok(fournisseurService.filtered());
     }
 }

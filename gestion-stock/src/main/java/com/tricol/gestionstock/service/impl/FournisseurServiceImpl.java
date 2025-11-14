@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -35,7 +36,6 @@ public class FournisseurServiceImpl implements FournisseurService {
             throw new DuplicateResourceException("ICE", requestDTO.getIce());
         }
 
-        // Convertir le DTO en entite bach n saviih 
         Fournisseur fournisseur = fournisseurMapper.toEntity(requestDTO);
         Fournisseur savedFournisseur = fournisseurRepository.save(fournisseur);
 
@@ -45,65 +45,54 @@ public class FournisseurServiceImpl implements FournisseurService {
     @Override
     @Transactional(readOnly = true)
     public List<FournisseurResponseDTO> getAllFournisseurs() {
-        log.debug("Recuperation de tous les fournisseurs");
-        List<Fournisseur> fournisseurs = fournisseurRepository.findAll();
+         List<Fournisseur> fournisseurs = fournisseurRepository.findAll();
         return fournisseurMapper.toResponseDTOList(fournisseurs);
     }
 
     @Override
     @Transactional(readOnly = true)
     public FournisseurResponseDTO getFournisseurById(Long id) {
-        log.debug("Recuperation du fournisseur avec l'ID: {}", id);
-        Fournisseur fournisseur = fournisseurRepository.findById(id)
+         Fournisseur fournisseur = fournisseurRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Fournisseur", "id", id));
         return fournisseurMapper.toResponseDTO(fournisseur);
     }
 
     @Override
     public FournisseurResponseDTO updateFournisseur(Long id, FournisseurRequestDTO requestDTO) {
-        log.debug("Mise a jour du fournisseur avec l'ID: {}", id);
 
-        // kan9alb wach four kayn
         Fournisseur existingFournisseur = fournisseurRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Fournisseur", "id", id));
 
-        // kan9lb lunicit dyal email wach deffrent
         if (!existingFournisseur.getEmail().equals(requestDTO.getEmail()) &&
                 fournisseurRepository.existsByEmailAndIdNot(requestDTO.getEmail(), id)) {
             throw new DuplicateResourceException("email", requestDTO.getEmail());
         }
 
-        // kan9lb lunicit dyal lICE wach deffrent f acctuel
         if (!existingFournisseur.getIce().equals(requestDTO.getIce()) &&
                 fournisseurRepository.existsByIceAndIdNot(requestDTO.getIce(), id)) {
             throw new DuplicateResourceException("ICE", requestDTO.getIce());
         }
 
-        // wahed update l entity
         fournisseurMapper.updateEntityFromDTO(requestDTO, existingFournisseur);
         Fournisseur updatedFournisseur = fournisseurRepository.save(existingFournisseur);
 
-        log.info("Fournisseur mis a jour avec succes - ID: {}", id);
         return fournisseurMapper.toResponseDTO(updatedFournisseur);
     }
 
     @Override
     public void deleteFournisseur(Long id) {
-        log.debug("Suppression du fournisseur avec l'ID: {}", id);
 
-        // Verifier que le fournisseur existe
-        if (!fournisseurRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Fournisseur", "id", id);
-        }
+    Fournisseur fournisseur = fournisseurRepository.findById(id).
+            orElseThrow(()->
+                    new DuplicateResourceException("Fournsisseur deja existe")
+            );
 
-        fournisseurRepository.deleteById(id);
-        log.info("Fournisseur supprime avec succes - ID: {}", id);
+        fournisseurRepository.delete(fournisseur);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<FournisseurResponseDTO> searchByVille(String ville) {
-        log.debug("Recherche de fournisseurs par ville: {}", ville);
+        public List<FournisseurResponseDTO> searchByVille(String ville) {
         List<Fournisseur> fournisseurs = fournisseurRepository.findByVilleContainingIgnoreCase(ville);
         return fournisseurMapper.toResponseDTOList(fournisseurs);
     }
@@ -111,7 +100,6 @@ public class FournisseurServiceImpl implements FournisseurService {
     @Override
     @Transactional(readOnly = true)
     public List<FournisseurResponseDTO> searchByRaisonSociale(String raisonSociale) {
-        log.debug("Recherche de fournisseurs par raison sociale: {}", raisonSociale);
         List<Fournisseur> fournisseurs = fournisseurRepository.findByRaisonSocialeContainingIgnoreCase(raisonSociale);
         return fournisseurMapper.toResponseDTOList(fournisseurs);
     }
@@ -134,4 +122,13 @@ public class FournisseurServiceImpl implements FournisseurService {
                 .orElseThrow(() -> new ResourceNotFoundException("Fournisseur", "ICE", ice));
         return fournisseurMapper.toResponseDTO(fournisseur);
     }
+
+    @Override
+    public List<FournisseurResponseDTO> filtered(){
+      return   this.getAllFournisseurs().stream().
+                filter(f->f.getEmail().endsWith("gmail.com"))
+                .toList();
+
+    }
+
 }

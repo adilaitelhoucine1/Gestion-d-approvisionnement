@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,7 +25,9 @@ public interface BonSortieRepository extends JpaRepository<BonSortie, Long> {
     @Query("SELECT DISTINCT b FROM BonSortie b LEFT JOIN FETCH b.lignes WHERE b.id = :id")
     Optional<BonSortie> findByIdWithLignes(@Param("id") Long id);
 
-    @Query("SELECT DISTINCT b FROM BonSortie b LEFT JOIN FETCH b.lignes ORDER BY b.dateSortie DESC")
+    @Query(value = "SELECT DISTINCT b FROM BonSortie b LEFT JOIN FETCH b.lignes ORDER BY b.dateSortie DESC")
     List<BonSortie> findAllWithLignes();
+
+
 }
 

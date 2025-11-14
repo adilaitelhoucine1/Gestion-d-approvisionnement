@@ -68,9 +68,7 @@ public class MouvementStock {
     @Column(columnDefinition = "TEXT")
     private String observation;
 
-    /**
-     * Initialise la date du mouvement a la creation
-     */
+
     @PrePersist
     protected void onCreate() {
         if (dateMouvement == null) {

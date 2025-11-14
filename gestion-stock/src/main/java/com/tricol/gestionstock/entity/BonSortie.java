@@ -79,39 +79,24 @@ public class BonSortie {
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
-    /**
-     * Ajoute une ligne au bon de sortie
-     */
+
     public void ajouterLigne(LigneBonSortie ligne) {
         lignes.add(ligne);
         ligne.setBonSortie(this);
     }
 
-    /**
-     * Retire une ligne du bon de sortie
-     */
-    public void retirerLigne(LigneBonSortie ligne) {
-        lignes.remove(ligne);
-        ligne.setBonSortie(null);
-    }
 
-    /**
-     * Verifie si le bon peut être modifie
-     */
+
     public boolean estModifiable() {
         return statut == StatutBonSortie.BROUILLON;
     }
 
-    /**
-     * Verifie si le bon peut être valide
-     */
+
     public boolean peutEtreValide() {
         return statut == StatutBonSortie.BROUILLON && !lignes.isEmpty();
     }
 
-    /**
-     * Initialise les valeurs par defaut
-     */
+
     @PrePersist
     protected void onCreate() {
         if (statut == null) {

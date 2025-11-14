@@ -29,9 +29,9 @@ public class CommandeFournisseurResponseDTO {
     private String fournisseurEmail;
     private String fournisseurTelephone;
     
-    // Lignes dyal commande
 
-    //builder dertha bach npassiw param l construct b . bhal stram d blasst maykon ldakhel 
+
+
     @Builder.Default
     private List<LigneCommandeDTO> lignesCommande = new ArrayList<>();
 

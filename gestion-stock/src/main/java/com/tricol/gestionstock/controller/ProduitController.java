@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +36,6 @@ public class ProduitController {
                     .body(createdProduit);
     }
     @GetMapping
-
     public ResponseEntity<List<ProduitResponseDTO>> getAllProducts(){
         List<ProduitResponseDTO> productList = produitService.getAllProducts();
         return ResponseEntity.ok(productList);
@@ -49,10 +49,10 @@ public class ProduitController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
+    public ResponseEntity<Map<String,String>> deleteProduct(@PathVariable Long id) {
 
         produitService.deleteProduct(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().body(Map.of("Message" , "Deleted successfuLy"));
     }
     @GetMapping("{id}")
     public ResponseEntity<ProduitResponseDTO> getProductById(@PathVariable Long id){
@@ -61,8 +61,8 @@ public class ProduitController {
     }
 
     @GetMapping("{id}/stock")
-    public  ResponseEntity<String> getProductStock(@PathVariable Long id){
-        return ResponseEntity.ok("le stock actual de ce produit est "+produitService.getProductStock(id).getStockActuel());
+    public  ResponseEntity<Map<String,Integer>> getProductStock(@PathVariable Long id){
+        return ResponseEntity.ok(Map.of("Stock Actuel ",produitService.getProductStock(id).getStockActuel()));
 
     }
 
