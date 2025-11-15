@@ -4,13 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f0aab8c4-5dfe-4656-9a8f-f351bfd01ea0" name="Changes" comment="feat: add new DTOs and services for stock management, including filtering capabilities">
-      <change afterPath="$PROJECT_DIR$/.idea/copilotDiffState.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gestion-stock/src/test/java/com/tricol/gestionstock/service/BonSortieServiceFifoTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gestion-stock/src/test/java/com/tricol/gestionstock/service/CommandeFournisseurServiceTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gestion-stock/src/test/java/com/tricol/gestionstock/service/StockServiceTest.java" afterDir="false" />
+    <list default="true" id="f0aab8c4-5dfe-4656-9a8f-f351bfd01ea0" name="Changes" comment="test: add unit tests for stock management services including FIFO valuation and command reception">
+      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/dto/stock/MouvementStockSearchCriteria.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/specification/MouvementStockSpecification.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gestion-stock/src/test/java/com/tricol/gestionstock/service/MouvementServiceAdvancedSearchTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/copilotDiffState.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/mvnw" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/mvnw" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/controller/StockController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/controller/StockController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/repository/MouvementStockRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/repository/MouvementStockRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/service/MouvementService.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/service/MouvementService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/service/impl/MouvementServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/service/impl/MouvementServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,7 +103,7 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="JUnit.GestionStockApplicationTests">
+  <component name="RunManager" selected="Spring Boot.GestionStockApplication">
     <configuration name="GestionStockApplicationTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="gestion-stock" />
       <extension name="coverage">
@@ -173,7 +176,7 @@
       <workItem from="1763063710090" duration="3267000" />
       <workItem from="1763107409600" duration="9651000" />
       <workItem from="1763128505322" duration="6468000" />
-      <workItem from="1763226223530" duration="1857000" />
+      <workItem from="1763226223530" duration="9363000" />
     </task>
     <task id="LOCAL-00001" summary="Feat : initialize the Entities &amp; Lombok dependencies">
       <option name="closed" value="true" />
@@ -191,7 +194,15 @@
       <option name="project" value="LOCAL" />
       <updated>1763134107047</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="test: add unit tests for stock management services including FIFO valuation and command reception">
+      <option name="closed" value="true" />
+      <created>1763228098267</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1763228098267</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -258,7 +269,8 @@
     <MESSAGE value="Merge pull request #7 from adilaitelhoucine1/dev&#10;&#10;Dev" />
     <MESSAGE value="Fix Some issues" />
     <MESSAGE value="feat: add new DTOs and services for stock management, including filtering capabilities" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: add new DTOs and services for stock management, including filtering capabilities" />
+    <MESSAGE value="test: add unit tests for stock management services including FIFO valuation and command reception" />
+    <option name="LAST_COMMIT_MESSAGE" value="test: add unit tests for stock management services including FIFO valuation and command reception" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
