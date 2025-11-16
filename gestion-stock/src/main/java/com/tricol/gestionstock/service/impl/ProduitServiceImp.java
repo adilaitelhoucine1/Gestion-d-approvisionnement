@@ -30,6 +30,7 @@ public class ProduitServiceImp implements ProductSservice {
     public ProduitResponseDTO createProduit(CreateProduitDTO createDTO) {
 
 
+
         if (produitRepository.existsByReference(createDTO.getReference())) {
             throw new IllegalArgumentException(
                     "Un produit existe deja aec ce ref"

@@ -1,5 +1,6 @@
 package com.tricol.gestionstock.dto.produit;
 
+
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,6 +23,7 @@ public class CreateProduitDTO {
 
     @NotBlank(message = "Le nom du produit est obligatoire")
     @Size(min = 3, max = 200, message = "Le nom doit contenir entre 3 et 200 caractères")
+
     private String nom;
 
     @Size(max = 1000, message = "La description ne peut pas dépasser 1000 caractères")
