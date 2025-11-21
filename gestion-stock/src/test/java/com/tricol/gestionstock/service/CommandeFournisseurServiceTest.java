@@ -11,8 +11,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -44,15 +42,18 @@ class CommandeFournisseurServiceTest {
     @InjectMocks
     private CommandeFournisseurServiceImpl commandeService;
 
-    @Captor
-    private ArgumentCaptor<LotStock> lotStockCaptor;
-
     private CommandeFournisseur commande;
     private Produit produit;
+    private LotStock lotCapture;
 
     @BeforeEach
     void setUp() {
-        produit = Produit.builder().id(1L).reference("PROD-001").nom("Produit Test").stockActuel(0).build();
+        produit = Produit.builder()
+                .id(1L)
+                .reference("PROD-001")
+                .nom("Produit Test")
+                .stockActuel(0)
+                .build();
 
         commande = CommandeFournisseur.builder()
                 .id(1L)
@@ -63,67 +64,76 @@ class CommandeFournisseurServiceTest {
                 .build();
 
         when(commandeRepository.findById(1L)).thenReturn(Optional.of(commande));
-        when(lotStockRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
-        when(mouvementStockRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
-        when(produitRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
         when(commandeRepository.save(any())).thenReturn(commande);
+        when(produitRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
+        when(mouvementStockRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
         when(mapper.toResponseDTO(any())).thenReturn(new CommandeFournisseurResponseDTO());
+
+        when(lotStockRepository.save(any(LotStock.class))).thenAnswer(inv -> {
+            lotCapture = inv.getArgument(0);
+            return lotCapture;
+        });
     }
 
     @Test
     @DisplayName("B.1 - Réception de commande validée crée automatiquement un lot de stock traçable")
     void testReceptionCreeLotAutomatiquement() {
+
         commande.getLignesCommande().add(LigneCommande.builder()
-                .id(1L).produit(produit).quantite(100)
-                .prixUnitaire(new BigDecimal("10.00")).commande(commande).build());
+                .id(1L)
+                .produit(produit)
+                .quantite(100)
+                .prixUnitaire(new BigDecimal("10.00"))
+                .commande(commande)
+                .build());
 
-        commandeService.receptionnerCommande(1L, ReceptionCommandeDTO.builder()
-                .dateReception(LocalDate.now()).build());
 
-        verify(lotStockRepository).save(lotStockCaptor.capture());
-        LotStock lot = lotStockCaptor.getValue();
+        commandeService.receptionnerCommande(1L,
+                ReceptionCommandeDTO.builder().dateReception(LocalDate.now()).build());
 
-        assertNotNull(lot);
-        assertEquals(produit, lot.getProduit());
-        assertEquals(100, lot.getQuantiteInitiale());
-        assertEquals(100, lot.getQuantiteRestante());
+        assertNotNull(lotCapture, "Un lot doit être créé");
+        assertEquals(produit, lotCapture.getProduit());
+        assertEquals(100, lotCapture.getQuantiteInitiale());
+        assertEquals(100, lotCapture.getQuantiteRestante());
     }
 
     @Test
     @DisplayName("B.2 - Génération du numéro de lot, date d'entrée et prix d'achat unitaire")
     void testGenerationNumeroLotDatePrix() {
         LocalDate dateReception = LocalDate.of(2024, 11, 15);
+
         commande.getLignesCommande().add(LigneCommande.builder()
-                .id(1L).produit(produit).quantite(50)
-                .prixUnitaire(new BigDecimal("15.50")).commande(commande).build());
+                .id(1L)
+                .produit(produit)
+                .quantite(50)
+                .prixUnitaire(new BigDecimal("15.50"))
+                .commande(commande)
+                .build());
 
-        commandeService.receptionnerCommande(1L, ReceptionCommandeDTO.builder()
-                .dateReception(dateReception).build());
+        commandeService.receptionnerCommande(1L,
+                ReceptionCommandeDTO.builder().dateReception(dateReception).build());
 
-        verify(lotStockRepository).save(lotStockCaptor.capture());
-        LotStock lot = lotStockCaptor.getValue();
-
-        assertNotNull(lot.getNumeroLot());
-        assertTrue(lot.getNumeroLot().startsWith("LOT-"));
-        assertEquals(dateReception, lot.getDateEntree());
-        assertEquals(new BigDecimal("15.50"), lot.getPrixAchatUnitaire());
+        assertNotNull(lotCapture.getNumeroLot(), "Le numéro de lot doit être généré");
+        assertTrue(lotCapture.getNumeroLot().startsWith("LOT-"), "Le numéro doit commencer par LOT-");
+        assertEquals(dateReception, lotCapture.getDateEntree());
+        assertEquals(new BigDecimal("15.50"), lotCapture.getPrixAchatUnitaire());
     }
 
     @Test
     @DisplayName("B.3 - Lien entre le lot créé et la réception fournisseur")
     void testLienLotReceptionFournisseur() {
         commande.getLignesCommande().add(LigneCommande.builder()
-                .id(1L).produit(produit).quantite(75)
-                .prixUnitaire(new BigDecimal("12.00")).commande(commande).build());
+                .id(1L)
+                .produit(produit)
+                .quantite(75)
+                .prixUnitaire(new BigDecimal("12.00"))
+                .commande(commande)
+                .build());
 
-        commandeService.receptionnerCommande(1L, ReceptionCommandeDTO.builder()
-                .dateReception(LocalDate.now()).build());
+        commandeService.receptionnerCommande(1L,
+                ReceptionCommandeDTO.builder().dateReception(LocalDate.now()).build());
 
-        verify(lotStockRepository).save(lotStockCaptor.capture());
-        LotStock lot = lotStockCaptor.getValue();
-
-        assertEquals(commande, lot.getCommande());
-        assertEquals("CMD-2024-001", lot.getCommande().getNumeroCommande());
+        assertEquals(commande, lotCapture.getCommande(), "Le lot doit être lié à la commande");
+        assertEquals("CMD-2024-001", lotCapture.getCommande().getNumeroCommande());
     }
 }
-

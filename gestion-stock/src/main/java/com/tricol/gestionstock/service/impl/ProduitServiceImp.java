@@ -1,6 +1,7 @@
 package com.tricol.gestionstock.service.impl;
 
 import com.tricol.gestionstock.dto.produit.CreateProduitDTO;
+import com.tricol.gestionstock.dto.produit.ProductSearchCriteria;
 import com.tricol.gestionstock.dto.produit.ProduitResponseDTO;
 import com.tricol.gestionstock.dto.produit.UpdateProduitDTO;
 import com.tricol.gestionstock.entity.Produit;
@@ -9,6 +10,7 @@ import com.tricol.gestionstock.repository.ProduitRepository;
 import com.tricol.gestionstock.service.ProductSservice;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.query.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

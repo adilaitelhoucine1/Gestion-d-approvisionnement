@@ -12,7 +12,7 @@ public interface FournisseurMapper {
 
    
     FournisseurResponseDTO toResponseDTO(Fournisseur fournisseur);
-
+    FournisseurRequestDTO  toRequestDTO(Fournisseur fournisseur);
    
     List<FournisseurResponseDTO>     toResponseDTOList(List<Fournisseur> fournisseurs);
 

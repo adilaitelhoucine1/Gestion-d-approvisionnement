@@ -4,12 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f0aab8c4-5dfe-4656-9a8f-f351bfd01ea0" name="Changes" comment="feat: implement advanced search functionality for MouvementStock with pagination support">
+    <list default="true" id="f0aab8c4-5dfe-4656-9a8f-f351bfd01ea0" name="Changes" comment="fix: fix some issues in test senarios">
+      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/dto/produit/ProductSearchCriteria.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gestion-stock/src/test/java/com/tricol/gestionstock/service/FOurnisseurTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/dto/produit/CreateProduitDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/dto/produit/CreateProduitDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/controller/ProduitController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/controller/ProduitController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/mapper/FournisseurMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/mapper/FournisseurMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/service/ProductSservice.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/service/ProductSservice.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/service/impl/ProduitServiceImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/service/impl/ProduitServiceImp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/specification/MouvementStockSpecification.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/specification/MouvementStockSpecification.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gestion-stock/src/test/java/com/tricol/gestionstock/service/BonSortieServiceFifoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/test/java/com/tricol/gestionstock/service/BonSortieServiceFifoTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gestion-stock/src/test/java/com/tricol/gestionstock/service/CommandeFournisseurServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/test/java/com/tricol/gestionstock/service/CommandeFournisseurServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gestion-stock/src/test/java/com/tricol/gestionstock/service/MouvementServiceAdvancedSearchTest.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/gestion-stock/src/test/java/com/tricol/gestionstock/service/StockServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/test/java/com/tricol/gestionstock/service/StockServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -68,39 +74,56 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Unnamed.executor": "Run",
-    "JUnit.GestionStockApplicationTests.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "Notification.DisplayName-DoNotAsk-DatabaseConfigFileWatcher.found": "New/updated database configurations found",
-    "Notification.DoNotAsk-DatabaseConfigFileWatcher.found": "true",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Spring Boot.GestionStockApplication.executor": "Run",
-    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultAutoModeForALLUsers.v1": "true",
-    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "main",
-    "junie.onboarding.icon.badge.shown": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/ad/Desktop/Gestion-d-approvisionnement/gestion-stock/pom.xml",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "to.speed.mode.migration.done": "true",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Unnamed.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CommandeFournisseurServiceTest.testReceptionCreeLotAutomatiquement.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.GestionStockApplicationTests.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Notification.DisplayName-DoNotAsk-DatabaseConfigFileWatcher.found&quot;: &quot;New/updated database configurations found&quot;,
+    &quot;Notification.DoNotAsk-DatabaseConfigFileWatcher.found&quot;: &quot;true&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Spring Boot.GestionStockApplication.executor&quot;: &quot;Run&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultAutoModeForALLUsers.v1&quot;: &quot;true&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/ad/Desktop/Gestion-d-approvisionnement/gestion-stock/pom.xml&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Spring Boot.GestionStockApplication">
+    <configuration name="CommandeFournisseurServiceTest.testReceptionCreeLotAutomatiquement" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="gestion-stock" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.tricol.gestionstock.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.tricol.gestionstock.service" />
+      <option name="MAIN_CLASS_NAME" value="com.tricol.gestionstock.service.CommandeFournisseurServiceTest" />
+      <option name="METHOD_NAME" value="testReceptionCreeLotAutomatiquement" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="GestionStockApplicationTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="gestion-stock" />
       <extension name="coverage">
@@ -126,6 +149,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.CommandeFournisseurServiceTest.testReceptionCreeLotAutomatiquement" />
         <item itemvalue="JUnit.GestionStockApplicationTests" />
       </list>
     </recent_temporary>
@@ -175,7 +199,15 @@
       <workItem from="1763128505322" duration="6468000" />
       <workItem from="1763226223530" duration="9550000" />
       <workItem from="1763285693284" duration="4748000" />
-      <workItem from="1763292966668" duration="13766000" />
+      <workItem from="1763292966668" duration="14085000" />
+      <workItem from="1763312702647" duration="4000" />
+      <workItem from="1763367106236" duration="2610000" />
+      <workItem from="1763548792854" duration="1423000" />
+      <workItem from="1763634480485" duration="609000" />
+      <workItem from="1763635113991" duration="715000" />
+      <workItem from="1763636286756" duration="359000" />
+      <workItem from="1763718256779" duration="11303000" />
+      <workItem from="1763732414471" duration="1970000" />
     </task>
     <task id="LOCAL-00001" summary="Feat : initialize the Entities &amp; Lombok dependencies">
       <option name="closed" value="true" />
@@ -209,7 +241,15 @@
       <option name="project" value="LOCAL" />
       <updated>1763237401537</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="fix: fix some issues in test senarios">
+      <option name="closed" value="true" />
+      <created>1763311879002</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1763311879002</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -278,7 +318,8 @@
     <MESSAGE value="feat: add new DTOs and services for stock management, including filtering capabilities" />
     <MESSAGE value="test: add unit tests for stock management services including FIFO valuation and command reception" />
     <MESSAGE value="feat: implement advanced search functionality for MouvementStock with pagination support" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: implement advanced search functionality for MouvementStock with pagination support" />
+    <MESSAGE value="fix: fix some issues in test senarios" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: fix some issues in test senarios" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

@@ -45,7 +45,6 @@ class BonSortieServiceFifoTest {
                 .quantiteInitiale(50).quantiteRestante(50)
                 .prixAchatUnitaire(new BigDecimal("10.00")).build();
 
-        // Bon de sortie en BROUILLON avec 1 ligne demandant 30
         LigneBonSortie ligne = LigneBonSortie.builder()
                 .id(100L).produit(produit).quantiteDemandee(30).build();
 

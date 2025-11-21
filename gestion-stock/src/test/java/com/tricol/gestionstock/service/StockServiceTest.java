@@ -85,17 +85,11 @@ class StockServiceTest {
         lenient().when(mapper.toResponseDTO(any(BonSortie.class))).thenReturn(null);
     }
 
-    /**
-     * TEST 1 : Validation d'un bon de sortie simple avec un seul lot
-     * Vérifie que la validation déclenche :
-     * - La création d'un mouvement de stock
-     * - La mise à jour de la quantité restante du lot
-     * - L'enregistrement de la date de validation
-     */
+
     @Test
     @DisplayName("Test 1: Validation simple avec un seul lot")
     void testValidationBonSortieAvecUnSeulLot() {
-        // ARRANGE
+
         LotStock lot = LotStock.builder()
                 .id(1L)
                 .numeroLot("LOT-001")
@@ -125,7 +119,6 @@ class StockServiceTest {
         assertEquals(70, lot.getQuantiteRestante(),
                 "La quantité restante doit être mise à jour (100 - 30 = 70)");
 
-        // ASSERT - Vérification de la création du mouvement
         verify(mouvementStockRepository, times(1)).save(argThat(mouvement ->
                 mouvement.getTypeMouvement() == TypeMouvement.SORTIE &&
                         mouvement.getQuantite() == 30 &&
@@ -135,10 +128,7 @@ class StockServiceTest {
         ));
     }
 
-    /**
-     * TEST 2 : Validation avec plusieurs lots (FIFO)
-     * Vérifie que la méthode FIFO consomme d'abord les lots les plus anciens
-     */
+
     @Test
     @DisplayName("Test 2: Validation FIFO avec plusieurs lots")
     void testValidationBonSortieAvecPlusieursLotsFIFO() {
@@ -156,7 +146,7 @@ class StockServiceTest {
                 .prixAchatUnitaire(new BigDecimal("10.00"))
                 .build();
 
-        // Lot plus récent
+
         LotStock lot2 = LotStock.builder()
                 .id(2L)
                 .numeroLot("LOT-002")
@@ -169,45 +159,36 @@ class StockServiceTest {
 
         when(bonSortieRepository.findByIdWithLignes(1L)).thenReturn(Optional.of(bonSortie));
         when(lotStockRepository.findLotsDisponiblesByProduitFIFO(produit.getId()))
-                .thenReturn(List.of(lot1, lot2)); // Retour dans l'ordre FIFO
+                .thenReturn(List.of(lot1, lot2));
         when(lotStockRepository.save(any(LotStock.class))).thenAnswer(invocation -> invocation.getArgument(0));
         when(mouvementStockRepository.save(any(MouvementStock.class))).thenAnswer(invocation -> invocation.getArgument(0));
         when(produitRepository.save(any(Produit.class))).thenAnswer(invocation -> invocation.getArgument(0));
         when(bonSortieRepository.save(any(BonSortie.class))).thenReturn(bonSortie);
 
-        // ACT
+
         bonSortieService.validerBonSortie(1L);
 
-        // ASSERT - Le lot 1 doit être complètement épuisé
-        assertEquals(0, lot1.getQuantiteRestante(),
+         assertEquals(0, lot1.getQuantiteRestante(),
                 "Le lot le plus ancien doit être complètement consommé (50 unités)");
 
-        // ASSERT - Le lot 2 doit être partiellement consommé
-        assertEquals(30, lot2.getQuantiteRestante(),
+         assertEquals(30, lot2.getQuantiteRestante(),
                 "Le lot récent doit avoir 30 unités restantes (60 - 30 = 30)");
 
-        // ASSERT - Deux mouvements de stock doivent être créés
-        verify(mouvementStockRepository, times(2)).save(any(MouvementStock.class));
+         verify(mouvementStockRepository, times(2)).save(any(MouvementStock.class));
 
-        // ASSERT - Vérification du premier mouvement (lot1 : 50 unités)
-        verify(mouvementStockRepository).save(argThat(mouvement ->
+         verify(mouvementStockRepository).save(argThat(mouvement ->
                 mouvement.getLot().equals(lot1) && mouvement.getQuantite() == 50
         ));
 
-        // ASSERT - Vérification du second mouvement (lot2 : 30 unités)
-        verify(mouvementStockRepository).save(argThat(mouvement ->
+         verify(mouvementStockRepository).save(argThat(mouvement ->
                 mouvement.getLot().equals(lot2) && mouvement.getQuantite() == 30
         ));
     }
 
-    /**
-     * TEST 3 : Validation avec informations complètes du mouvement
-     * Vérifie que tous les champs du mouvement sont correctement renseignés
-     */
+
     @Test
     @DisplayName("Test 3: Vérification des informations complètes du mouvement")
     void testValidationAvecInformationsCompletesMouvement() {
-        // ARRANGE
         LotStock lot = LotStock.builder()
                 .id(1L)
                 .numeroLot("LOT-001")
@@ -226,11 +207,9 @@ class StockServiceTest {
         when(produitRepository.save(any(Produit.class))).thenAnswer(invocation -> invocation.getArgument(0));
         when(bonSortieRepository.save(any(BonSortie.class))).thenReturn(bonSortie);
 
-        // ACT
-        bonSortieService.validerBonSortie(1L);
+         bonSortieService.validerBonSortie(1L);
 
-        // ASSERT - Vérification détaillée du mouvement créé
-        verify(mouvementStockRepository).save(argThat(mouvement ->
+         verify(mouvementStockRepository).save(argThat(mouvement ->
                 mouvement.getProduit().equals(produit)
                 && mouvement.getTypeMouvement() == TypeMouvement.SORTIE
                 && mouvement.getQuantite() == 30
@@ -247,27 +226,23 @@ class StockServiceTest {
     @Test
     @DisplayName("Test 4: Impossible de valider un bon déjà validé")
     void testImpossibleDeValiderBonDejaValide() {
-        // ARRANGE
+
         bonSortie.setStatut(StatutBonSortie.VALIDE);
 
         when(bonSortieRepository.findByIdWithLignes(1L)).thenReturn(Optional.of(bonSortie));
 
-        // ACT & ASSERT
+
         assertThrows(IllegalStateException.class, () -> bonSortieService.validerBonSortie(1L),
                 "La validation d'un bon déjà validé doit lever une exception");
 
-        // Vérifier qu'aucun mouvement n'a été créé
+
         verify(mouvementStockRepository, never()).save(any(MouvementStock.class));
     }
 
-    /**
-     * TEST 5 : Validation avec plusieurs lignes
-     * Vérifie que toutes les lignes sont traitées et génèrent des mouvements
-     */
+
     @Test
     @DisplayName("Test 5: Validation avec plusieurs lignes de produits")
     void testValidationAvecPlusieursLignes() {
-        // ARRANGE
         Produit produit2 = Produit.builder()
                 .id(2L)
                 .reference("PROD-002")
@@ -315,14 +290,12 @@ class StockServiceTest {
         when(produitRepository.save(any(Produit.class))).thenAnswer(invocation -> invocation.getArgument(0));
         when(bonSortieRepository.save(any(BonSortie.class))).thenReturn(bonSortie);
 
-        // ACT
+
         bonSortieService.validerBonSortie(1L);
 
-        // ASSERT - Deux mouvements doivent être créés (un par ligne)
-        verify(mouvementStockRepository, times(2)).save(any(MouvementStock.class));
+         verify(mouvementStockRepository, times(2)).save(any(MouvementStock.class));
 
-        // ASSERT - Vérification de la mise à jour des deux lots
-        assertEquals(70, lot1.getQuantiteRestante(),
+         assertEquals(70, lot1.getQuantiteRestante(),
                 "Le lot du produit 1 doit avoir 70 unités restantes");
         assertEquals(30, lot2.getQuantiteRestante(),
                 "Le lot du produit 2 doit avoir 30 unités restantes");
