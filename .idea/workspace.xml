@@ -4,19 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f0aab8c4-5dfe-4656-9a8f-f351bfd01ea0" name="Changes" comment="fix: fix some issues in test senarios">
-      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/dto/produit/ProductSearchCriteria.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gestion-stock/src/test/java/com/tricol/gestionstock/service/FOurnisseurTest.java" afterDir="false" />
+    <list default="true" id="f0aab8c4-5dfe-4656-9a8f-f351bfd01ea0" name="Changes" comment="refactor: clean up test code and improve readability in BonSortie and CommandeFournisseur tests">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/controller/ProduitController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/controller/ProduitController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/mapper/FournisseurMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/mapper/FournisseurMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/service/ProductSservice.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/service/ProductSservice.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/service/impl/ProduitServiceImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/service/impl/ProduitServiceImp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/specification/MouvementStockSpecification.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/specification/MouvementStockSpecification.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/test/java/com/tricol/gestionstock/service/BonSortieServiceFifoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/test/java/com/tricol/gestionstock/service/BonSortieServiceFifoTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/test/java/com/tricol/gestionstock/service/CommandeFournisseurServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/test/java/com/tricol/gestionstock/service/CommandeFournisseurServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/test/java/com/tricol/gestionstock/service/MouvementServiceAdvancedSearchTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/test/java/com/tricol/gestionstock/service/StockServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/test/java/com/tricol/gestionstock/service/StockServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,13 +85,13 @@
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/ad/Desktop/Gestion-d-approvisionnement/gestion-stock/pom.xml&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/ad/Desktop/Youcode Project/Gestion-d-approvisionnement&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;advanced.settings&quot;,
     &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -207,7 +196,14 @@
       <workItem from="1763635113991" duration="715000" />
       <workItem from="1763636286756" duration="359000" />
       <workItem from="1763718256779" duration="11303000" />
-      <workItem from="1763732414471" duration="1970000" />
+      <workItem from="1763732414471" duration="2363000" />
+      <workItem from="1763735410576" duration="3000" />
+      <workItem from="1764084791410" duration="843000" />
+      <workItem from="1764145397837" duration="3203000" />
+      <workItem from="1766391073495" duration="4955000" />
+      <workItem from="1766439089125" duration="755000" />
+      <workItem from="1766441450932" duration="765000" />
+      <workItem from="1766565084175" duration="910000" />
     </task>
     <task id="LOCAL-00001" summary="Feat : initialize the Entities &amp; Lombok dependencies">
       <option name="closed" value="true" />
@@ -249,7 +245,15 @@
       <option name="project" value="LOCAL" />
       <updated>1763311879002</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="refactor: clean up test code and improve readability in BonSortie and CommandeFournisseur tests">
+      <option name="closed" value="true" />
+      <created>1763734739860</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1763734739861</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -319,7 +323,8 @@
     <MESSAGE value="test: add unit tests for stock management services including FIFO valuation and command reception" />
     <MESSAGE value="feat: implement advanced search functionality for MouvementStock with pagination support" />
     <MESSAGE value="fix: fix some issues in test senarios" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: fix some issues in test senarios" />
+    <MESSAGE value="refactor: clean up test code and improve readability in BonSortie and CommandeFournisseur tests" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor: clean up test code and improve readability in BonSortie and CommandeFournisseur tests" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
