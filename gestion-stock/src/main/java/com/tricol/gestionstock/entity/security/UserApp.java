@@ -4,20 +4,23 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "users")
-@EntityListeners(AuditingEntityListener.class)
-@Getter
-@Setter
+@Table(name = "users", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "username"),
+        @UniqueConstraint(columnNames = "email")
+})
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -27,68 +30,84 @@ public class UserApp {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Le nom d'utilisateur est obligatoire")
-    @Size(min = 3, max = 50, message = "Le nom d'utilisateur doit contenir entre 3 et 50 caractères")
-    @Column(nullable = false, unique = true, length = 50)
+    @NotBlank
+    @Size(max = 50)
+    @Column(nullable = false, unique = true)
     private String username;
 
-    @NotBlank(message = "L'email est obligatoire")
-    @Email(message = "Format d'email invalide")
+    @NotBlank
+    @Size(max = 100)
+    @Email
     @Column(nullable = false, unique = true)
     private String email;
 
-    @NotBlank(message = "Le mot de passe est obligatoire")
+    @NotBlank
+    @Size(max = 255)
     @Column(nullable = false)
     private String password;
+
+    @NotBlank
+    @Size(max = 50)
+    @Column(name = "first_name", nullable = false)
+    private String firstName;
+
+    @NotBlank
+    @Size(max = 50)
+    @Column(name = "last_name", nullable = false)
+    private String lastName;
 
     @Column(nullable = false)
     @Builder.Default
     private Boolean enabled = true;
 
-    @Column(nullable = false)
-    @Builder.Default
-    private Boolean accountNonLocked = true;
-
-    @Column(nullable = false)
+    @Column(name = "account_non_expired", nullable = false)
     @Builder.Default
     private Boolean accountNonExpired = true;
 
-    @Column(nullable = false)
+    @Column(name = "account_non_locked", nullable = false)
+    @Builder.Default
+    private Boolean accountNonLocked = true;
+
+    @Column(name = "credentials_non_expired", nullable = false)
     @Builder.Default
     private Boolean credentialsNonExpired = true;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-    @Builder.Default
-    private Set<RoleApp> roles = new HashSet<>();
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "role_id")
+    private RoleApp role;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @Builder.Default
-    private Set<UserPermission> customPermissions = new HashSet<>();
+    private Set<UserPermission> userPermissions = new HashSet<>();
 
-    @CreatedDate
-    @Column(updatable = false)
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
-    @LastModifiedDate
+    @UpdateTimestamp
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @Column
-    private LocalDateTime lastLoginAt;
+    @Column(name = "last_login")
+    private LocalDateTime lastLogin;
 
-    // Helper methods for managing custom permissions
-    public void addCustomPermission(UserPermission userPermission) {
-        this.customPermissions.add(userPermission);
-        userPermission.setUser(this);
+    // Helper methods
+    public Set<Permission> getPermissions() {
+        Set<Permission> permissions = new HashSet<>();
+        userPermissions.forEach(up -> permissions.add(up.getPermission()));
+        return permissions;
     }
 
-    public void removeCustomPermission(UserPermission userPermission) {
-        this.customPermissions.remove(userPermission);
-        userPermission.setUser(null);
+    public void addPermission(Permission permission, Boolean isGranted) {
+        UserPermission userPermission = new UserPermission();
+        userPermission.setUser(this);
+        userPermission.setPermission(permission);
+        userPermission.setGranted(isGranted);
+        userPermissions.add(userPermission);
+    }
+
+    public void removePermission(Permission permission) {
+        userPermissions.removeIf(up -> up.getPermission().equals(permission));
     }
 }
 

@@ -16,4 +16,13 @@
     <include file="db/changelog/008-create-table-mouvements-stock.xml"/>
     <include file="db/changelog/009-insert-initial-data.xml"/>
 
+    <!-- Security tables -->
+    <include file="db/changelog/010-create-table-roles.xml"/>
+    <include file="db/changelog/011-create-table-permissions.xml"/>
+    <include file="db/changelog/012-create-table-role-permissions.xml"/>
+    <include file="db/changelog/013-create-table-users.xml"/>
+    <include file="db/changelog/014-create-table-user-permissions.xml"/>
+    <include file="db/changelog/015-insert-initial-roles-and-permissions.xml"/>
+    <include file="db/changelog/016-insert-default-admin-user.xml"/>
+
 </databaseChangeLog>

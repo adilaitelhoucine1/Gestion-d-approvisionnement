@@ -1,51 +1,45 @@
 package com.tricol.gestionstock.entity.security;
 
 import jakarta.persistence.*;
-import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "user_permissions")
-@EntityListeners(AuditingEntityListener.class)
-@Getter
-@Setter
+@Table(name = "user_permissions", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"user_id", "permission_id"})
+})
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class UserPermission {
 
-    @EmbeddedId
-    private UserPermissionId id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("userId")
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private UserApp user;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @MapsId("permissionId")
-    @JoinColumn(name = "permission_id")
+    @JoinColumn(name = "permission_id", nullable = false)
     private Permission permission;
 
     @Column(nullable = false)
     @Builder.Default
-    private Boolean enabled = true; // true = granted, false = denied
+    private Boolean granted = true; // true = granted, false = revoked
 
-    @Column(length = 255)
-    private String reason; // Why this permission was customized
+    @CreationTimestamp
+    @Column(name = "assigned_at", nullable = false, updatable = false)
+    private LocalDateTime assignedAt;
 
-    @CreatedDate
-    @Column(updatable = false)
-    private LocalDateTime createdAt;
-
-    @LastModifiedDate
-    private LocalDateTime updatedAt;
-
-    @Column(length = 100)
-    private String modifiedBy; // Username of admin who modified this permission
+    @Column(name = "assigned_by")
+    private String assignedBy; // Username of admin who assigned this permission
 }
 

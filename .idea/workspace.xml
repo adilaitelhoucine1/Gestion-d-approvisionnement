@@ -4,16 +4,33 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f0aab8c4-5dfe-4656-9a8f-f351bfd01ea0" name="Changes" comment="refactor: clean up test code and improve readability in BonSortie and CommandeFournisseur tests">
+    <list default="true" id="f0aab8c4-5dfe-4656-9a8f-f351bfd01ea0" name="Changes" comment="feat: Add JWT authentication components and configuration">
+      <change afterPath="$PROJECT_DIR$/gestion-stock/AUTH_SERVICE_README.md" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/gestion-stock/JWT_AUTHENTICATION_README.md" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/gestion-stock/SPRING_SECURITY_CONFIG_README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/security/SecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/controller/AuthController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/repository/security/PermissionRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/repository/security/RoleAppRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/repository/security/UserAppRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/repository/security/UserPermissionRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/security/CustomUserDetails.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/security/CustomUserDetailsService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/service/auth/AuthService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/resources/db/changelog/010-create-table-roles.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/resources/db/changelog/011-create-table-permissions.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/resources/db/changelog/012-create-table-role-permissions.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/resources/db/changelog/013-create-table-users.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/resources/db/changelog/014-create-table-user-permissions.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/resources/db/changelog/015-insert-initial-roles-and-permissions.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/resources/db/changelog/016-insert-default-admin-user.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/security/jwt/JwtAuthenticationEntryPoint.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/security/jwt/JwtAuthenticationEntryPoint.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/security/jwt/JwtAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/security/jwt/JwtAuthenticationFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/security/jwt/JwtUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/security/jwt/JwtUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/dto/auth/MessageResponseDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/dto/auth/MessageResponseDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/entity/security/Permission.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/entity/security/Permission.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/entity/security/RoleApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/entity/security/RoleApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/entity/security/UserApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/entity/security/UserApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/entity/security/UserPermission.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/entity/security/UserPermission.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/resources/db/changelog/db.changelog-master.xml" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/resources/db/changelog/db.changelog-master.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -212,7 +229,7 @@
       <workItem from="1766439089125" duration="755000" />
       <workItem from="1766441450932" duration="765000" />
       <workItem from="1766565084175" duration="5475000" />
-      <workItem from="1766575404872" duration="6551000" />
+      <workItem from="1766575404872" duration="9558000" />
     </task>
     <task id="LOCAL-00001" summary="Feat : initialize the Entities &amp; Lombok dependencies">
       <option name="closed" value="true" />
@@ -262,7 +279,15 @@
       <option name="project" value="LOCAL" />
       <updated>1763734739861</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="feat: Add JWT authentication components and configuration">
+      <option name="closed" value="true" />
+      <created>1766611820614</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1766611820614</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -333,7 +358,8 @@
     <MESSAGE value="feat: implement advanced search functionality for MouvementStock with pagination support" />
     <MESSAGE value="fix: fix some issues in test senarios" />
     <MESSAGE value="refactor: clean up test code and improve readability in BonSortie and CommandeFournisseur tests" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor: clean up test code and improve readability in BonSortie and CommandeFournisseur tests" />
+    <MESSAGE value="feat: Add JWT authentication components and configuration" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: Add JWT authentication components and configuration" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

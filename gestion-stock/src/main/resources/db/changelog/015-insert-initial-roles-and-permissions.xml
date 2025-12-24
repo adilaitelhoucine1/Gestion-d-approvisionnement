@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="015-insert-initial-roles-and-permissions" author="tricol">
+
+        <!-- Insert Roles -->
+        <insert tableName="roles">
+            <column name="id" valueNumeric="1"/>
+            <column name="name" value="ADMIN"/>
+            <column name="description" value="Administrator - Full access to all features"/>
+        </insert>
+        <insert tableName="roles">
+            <column name="id" valueNumeric="2"/>
+            <column name="name" value="RESPONSABLE_ACHATS"/>
+            <column name="description" value="Purchasing Manager - Manages suppliers, products, and purchase orders"/>
+        </insert>
+        <insert tableName="roles">
+            <column name="id" valueNumeric="3"/>
+            <column name="name" value="MAGASINIER"/>
+            <column name="description" value="Warehouse Keeper - Manages stock, receives orders, handles outbound deliveries"/>
+        </insert>
+        <insert tableName="roles">
+            <column name="id" valueNumeric="4"/>
+            <column name="name" value="CHEF_ATELIER"/>
+            <column name="description" value="Workshop Manager - Views stock and creates outbound delivery requests"/>
+        </insert>
+
+        <!-- Insert Permissions - FOURNISSEURS -->
+        <insert tableName="permissions">
+            <column name="id" valueNumeric="1"/>
+            <column name="name" value="CREER_FOURNISSEUR"/>
+            <column name="description" value="Create new suppliers"/>
+            <column name="category" value="FOURNISSEURS"/>
+        </insert>
+        <insert tableName="permissions">
+            <column name="id" valueNumeric="2"/>
+            <column name="name" value="MODIFIER_FOURNISSEUR"/>
+            <column name="description" value="Modify existing suppliers"/>
+            <column name="category" value="FOURNISSEURS"/>
+        </insert>
+        <insert tableName="permissions">
+            <column name="id" valueNumeric="3"/>
+            <column name="name" value="SUPPRIMER_FOURNISSEUR"/>
+            <column name="description" value="Delete suppliers"/>
+            <column name="category" value="FOURNISSEURS"/>
+        </insert>
+        <insert tableName="permissions">
+            <column name="id" valueNumeric="4"/>
+            <column name="name" value="CONSULTER_FOURNISSEUR"/>
+            <column name="description" value="View suppliers"/>
+            <column name="category" value="FOURNISSEURS"/>
+        </insert>
+
+        <!-- Insert Permissions - PRODUITS -->
+        <insert tableName="permissions">
+            <column name="id" valueNumeric="5"/>
+            <column name="name" value="CREER_PRODUIT"/>
+            <column name="description" value="Create new products"/>
+            <column name="category" value="PRODUITS"/>
+        </insert>
+        <insert tableName="permissions">
+            <column name="id" valueNumeric="6"/>
+            <column name="name" value="MODIFIER_PRODUIT"/>
+            <column name="description" value="Modify existing products"/>
+            <column name="category" value="PRODUITS"/>
+        </insert>
+        <insert tableName="permissions">
+            <column name="id" valueNumeric="7"/>
+            <column name="name" value="SUPPRIMER_PRODUIT"/>
+            <column name="description" value="Delete products"/>
+            <column name="category" value="PRODUITS"/>
+        </insert>
+        <insert tableName="permissions">
+            <column name="id" valueNumeric="8"/>
+            <column name="name" value="CONSULTER_PRODUIT"/>
+            <column name="description" value="View products"/>
+            <column name="category" value="PRODUITS"/>
+        </insert>
+        <insert tableName="permissions">
+            <column name="id" valueNumeric="9"/>
+            <column name="name" value="CONFIGURER_SEUILS"/>
+            <column name="description" value="Configure alert thresholds"/>
+            <column name="category" value="PRODUITS"/>
+        </insert>
+
+        <!-- Insert Permissions - COMMANDES FOURNISSEURS -->
+        <insert tableName="permissions">
+            <column name="id" valueNumeric="10"/>
+            <column name="name" value="CREER_COMMANDE"/>
+            <column name="description" value="Create purchase orders"/>
+            <column name="category" value="COMMANDES"/>
+        </insert>
+        <insert tableName="permissions">
+            <column name="id" valueNumeric="11"/>
+            <column name="name" value="MODIFIER_COMMANDE"/>
+            <column name="description" value="Modify purchase orders"/>
+            <column name="category" value="COMMANDES"/>
+        </insert>
+        <insert tableName="permissions">
+            <column name="id" valueNumeric="12"/>
+            <column name="name" value="VALIDER_COMMANDE"/>
+            <column name="description" value="Validate purchase orders"/>
+            <column name="category" value="COMMANDES"/>
+        </insert>
+        <insert tableName="permissions">
+            <column name="id" valueNumeric="13"/>
+            <column name="name" value="ANNULER_COMMANDE"/>
+            <column name="description" value="Cancel purchase orders"/>
+            <column name="category" value="COMMANDES"/>
+        </insert>
+        <insert tableName="permissions">
+            <column name="id" valueNumeric="14"/>
+            <column name="name" value="RECEPTIONNER_COMMANDE"/>
+            <column name="description" value="Receive purchase orders"/>
+            <column name="category" value="COMMANDES"/>
+        </insert>
+        <insert tableName="permissions">
+            <column name="id" valueNumeric="15"/>
+            <column name="name" value="CONSULTER_COMMANDE"/>
+            <column name="description" value="View purchase orders"/>
+            <column name="category" value="COMMANDES"/>
+        </insert>
+
+        <!-- Insert Permissions - STOCK & LOTS -->
+        <insert tableName="permissions">
+            <column name="id" valueNumeric="16"/>
+            <column name="name" value="CONSULTER_STOCK"/>
+            <column name="description" value="View stock and lots"/>
+            <column name="category" value="STOCK"/>
+        </insert>
+        <insert tableName="permissions">
+            <column name="id" valueNumeric="17"/>
+            <column name="name" value="VOIR_VALORISATION"/>
+            <column name="description" value="View FIFO valuation"/>
+            <column name="category" value="STOCK"/>
+        </insert>
+        <insert tableName="permissions">
+            <column name="id" valueNumeric="18"/>
+            <column name="name" value="CONSULTER_MOUVEMENTS"/>
+            <column name="description" value="View stock movement history"/>
+            <column name="category" value="STOCK"/>
+        </insert>
+
+        <!-- Insert Permissions - BONS DE SORTIE -->
+        <insert tableName="permissions">
+            <column name="id" valueNumeric="19"/>
+            <column name="name" value="CREER_BON_SORTIE"/>
+            <column name="description" value="Create outbound delivery (draft)"/>
+            <column name="category" value="BONS_SORTIE"/>
+        </insert>
+        <insert tableName="permissions">
+            <column name="id" valueNumeric="20"/>
+            <column name="name" value="VALIDER_BON_SORTIE"/>
+            <column name="description" value="Validate outbound delivery"/>
+            <column name="category" value="BONS_SORTIE"/>
+        </insert>
+        <insert tableName="permissions">
+            <column name="id" valueNumeric="21"/>
+            <column name="name" value="ANNULER_BON_SORTIE"/>
+            <column name="description" value="Cancel outbound delivery"/>
+            <column name="category" value="BONS_SORTIE"/>
+        </insert>
+        <insert tableName="permissions">
+            <column name="id" valueNumeric="22"/>
+            <column name="name" value="CONSULTER_BON_SORTIE"/>
+            <column name="description" value="View outbound deliveries"/>
+            <column name="category" value="BONS_SORTIE"/>
+        </insert>
+
+        <!-- Insert Permissions - ADMINISTRATION -->
+        <insert tableName="permissions">
+            <column name="id" valueNumeric="23"/>
+            <column name="name" value="GERER_UTILISATEURS"/>
+            <column name="description" value="Manage users"/>
+            <column name="category" value="ADMINISTRATION"/>
+        </insert>
+        <insert tableName="permissions">
+            <column name="id" valueNumeric="24"/>
+            <column name="name" value="VOIR_LOGS_AUDIT"/>
+            <column name="description" value="View audit logs"/>
+            <column name="category" value="ADMINISTRATION"/>
+        </insert>
+
+        <!-- Role-Permission Mappings: ADMIN (All permissions) -->
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="1"/>
+            <column name="permission_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="1"/>
+            <column name="permission_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="1"/>
+            <column name="permission_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="1"/>
+            <column name="permission_id" valueNumeric="4"/>
+        </insert>
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="1"/>
+            <column name="permission_id" valueNumeric="5"/>
+        </insert>
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="1"/>
+            <column name="permission_id" valueNumeric="6"/>
+        </insert>
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="1"/>
+            <column name="permission_id" valueNumeric="7"/>
+        </insert>
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="1"/>
+            <column name="permission_id" valueNumeric="8"/>
+        </insert>
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="1"/>
+            <column name="permission_id" valueNumeric="9"/>
+        </insert>
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="1"/>
+            <column name="permission_id" valueNumeric="10"/>
+        </insert>
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="1"/>
+            <column name="permission_id" valueNumeric="11"/>
+        </insert>
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="1"/>
+            <column name="permission_id" valueNumeric="12"/>
+        </insert>
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="1"/>
+            <column name="permission_id" valueNumeric="13"/>
+        </insert>
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="1"/>
+            <column name="permission_id" valueNumeric="14"/>
+        </insert>
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="1"/>
+            <column name="permission_id" valueNumeric="15"/>
+        </insert>
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="1"/>
+            <column name="permission_id" valueNumeric="16"/>
+        </insert>
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="1"/>
+            <column name="permission_id" valueNumeric="17"/>
+        </insert>
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="1"/>
+            <column name="permission_id" valueNumeric="18"/>
+        </insert>
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="1"/>
+            <column name="permission_id" valueNumeric="19"/>
+        </insert>
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="1"/>
+            <column name="permission_id" valueNumeric="20"/>
+        </insert>
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="1"/>
+            <column name="permission_id" valueNumeric="21"/>
+        </insert>
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="1"/>
+            <column name="permission_id" valueNumeric="22"/>
+        </insert>
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="1"/>
+            <column name="permission_id" valueNumeric="23"/>
+        </insert>
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="1"/>
+            <column name="permission_id" valueNumeric="24"/>
+        </insert>
+
+        <!-- Role-Permission Mappings: RESPONSABLE_ACHATS -->
+        <!-- Fournisseurs: Create, Modify, Delete, Consult -->
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="2"/>
+            <column name="permission_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="2"/>
+            <column name="permission_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="2"/>
+            <column name="permission_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="2"/>
+            <column name="permission_id" valueNumeric="4"/>
+        </insert>
+        <!-- Produits: Create, Modify, Delete, Consult, Configure thresholds -->
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="2"/>
+            <column name="permission_id" valueNumeric="5"/>
+        </insert>
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="2"/>
+            <column name="permission_id" valueNumeric="6"/>
+        </insert>
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="2"/>
+            <column name="permission_id" valueNumeric="7"/>
+        </insert>
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="2"/>
+            <column name="permission_id" valueNumeric="8"/>
+        </insert>
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="2"/>
+            <column name="permission_id" valueNumeric="9"/>
+        </insert>
+        <!-- Commandes: Create, Modify, Validate, Cancel, Consult -->
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="2"/>
+            <column name="permission_id" valueNumeric="10"/>
+        </insert>
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="2"/>
+            <column name="permission_id" valueNumeric="11"/>
+        </insert>
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="2"/>
+            <column name="permission_id" valueNumeric="12"/>
+        </insert>
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="2"/>
+            <column name="permission_id" valueNumeric="13"/>
+        </insert>
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="2"/>
+            <column name="permission_id" valueNumeric="15"/>
+        </insert>
+        <!-- Stock: Consult stock, View valuation, Consult movements -->
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="2"/>
+            <column name="permission_id" valueNumeric="16"/>
+        </insert>
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="2"/>
+            <column name="permission_id" valueNumeric="17"/>
+        </insert>
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="2"/>
+            <column name="permission_id" valueNumeric="18"/>
+        </insert>
+        <!-- Bons de sortie: Consult -->
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="2"/>
+            <column name="permission_id" valueNumeric="22"/>
+        </insert>
+
+        <!-- Role-Permission Mappings: MAGASINIER -->
+        <!-- Fournisseurs: Consult only -->
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="3"/>
+            <column name="permission_id" valueNumeric="4"/>
+        </insert>
+        <!-- Produits: Consult only -->
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="3"/>
+            <column name="permission_id" valueNumeric="8"/>
+        </insert>
+        <!-- Commandes: Receive, Consult -->
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="3"/>
+            <column name="permission_id" valueNumeric="14"/>
+        </insert>
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="3"/>
+            <column name="permission_id" valueNumeric="15"/>
+        </insert>
+        <!-- Stock: Consult stock, View valuation, Consult movements -->
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="3"/>
+            <column name="permission_id" valueNumeric="16"/>
+        </insert>
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="3"/>
+            <column name="permission_id" valueNumeric="17"/>
+        </insert>
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="3"/>
+            <column name="permission_id" valueNumeric="18"/>
+        </insert>
+        <!-- Bons de sortie: Create, Validate, Cancel, Consult -->
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="3"/>
+            <column name="permission_id" valueNumeric="19"/>
+        </insert>
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="3"/>
+            <column name="permission_id" valueNumeric="20"/>
+        </insert>
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="3"/>
+            <column name="permission_id" valueNumeric="21"/>
+        </insert>
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="3"/>
+            <column name="permission_id" valueNumeric="22"/>
+        </insert>
+
+        <!-- Role-Permission Mappings: CHEF_ATELIER -->
+        <!-- Produits: Consult only -->
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="4"/>
+            <column name="permission_id" valueNumeric="8"/>
+        </insert>
+        <!-- Stock: Consult stock, Consult movements -->
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="4"/>
+            <column name="permission_id" valueNumeric="16"/>
+        </insert>
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="4"/>
+            <column name="permission_id" valueNumeric="18"/>
+        </insert>
+        <!-- Bons de sortie: Create (draft), Consult -->
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="4"/>
+            <column name="permission_id" valueNumeric="19"/>
+        </insert>
+        <insert tableName="role_permissions">
+            <column name="role_id" valueNumeric="4"/>
+            <column name="permission_id" valueNumeric="22"/>
+        </insert>
+
+        <rollback>
+            <delete tableName="role_permissions"/>
+            <delete tableName="permissions"/>
+            <delete tableName="roles"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>
+
