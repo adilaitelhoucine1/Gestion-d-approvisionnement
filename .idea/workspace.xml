@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="f0aab8c4-5dfe-4656-9a8f-f351bfd01ea0" name="Changes" comment="refactor: clean up test code and improve readability in BonSortie and CommandeFournisseur tests">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/entity/Enums/ResourceType.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/entity/Enums/ResourceType.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -205,7 +204,7 @@
       <workItem from="1766439089125" duration="755000" />
       <workItem from="1766441450932" duration="765000" />
       <workItem from="1766565084175" duration="5475000" />
-      <workItem from="1766575404872" duration="769000" />
+      <workItem from="1766575404872" duration="2488000" />
     </task>
     <task id="LOCAL-00001" summary="Feat : initialize the Entities &amp; Lombok dependencies">
       <option name="closed" value="true" />
