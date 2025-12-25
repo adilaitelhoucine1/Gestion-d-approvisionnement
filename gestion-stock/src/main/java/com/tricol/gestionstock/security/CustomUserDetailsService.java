@@ -26,14 +26,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         return CustomUserDetails.build(user);
     }
 
-    @Transactional(readOnly = true)
-    public UserDetails loadUserById(Long id) {
-        UserApp user = userAppRepository.findById(id)
-                .orElseThrow(() -> new UsernameNotFoundException(
-                        "User not found with id: " + id
-                ));
 
-        return CustomUserDetails.build(user);
-    }
+
 }
 

@@ -3,12 +3,14 @@ package com.tricol.gestionstock.controller;
 import com.tricol.gestionstock.dto.fournisseur.FournisseurRequestDTO;
 import com.tricol.gestionstock.dto.fournisseur.FournisseurResponseDTO;
 import com.tricol.gestionstock.service.FournisseurService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,52 +19,55 @@ import java.util.List;
 @RequestMapping("/api/v1/fournisseurs")
 @RequiredArgsConstructor
 @Slf4j
+@Tag(name = "Fournisseurs", description = "Gestion des fournisseurs")
 public class FournisseurController {
 
     private final FournisseurService fournisseurService;
 
     @PostMapping
+    @PreAuthorize("hasAuthority('CREER_FOURNISSEUR')")
+    @Operation(summary = "Créer un fournisseur", description = "Requiert la permission CREER_FOURNISSEUR")
     public ResponseEntity<FournisseurResponseDTO> createFournisseur(@Valid @RequestBody FournisseurRequestDTO requestDTO) {
-
         FournisseurResponseDTO response = fournisseurService.createFournisseur(requestDTO);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping
-
+    @PreAuthorize("hasAuthority('CONSULTER_FOURNISSEUR')")
+    @Operation(summary = "Lister tous les fournisseurs", description = "Requiert la permission CONSULTER_FOURNISSEUR")
     public ResponseEntity<List<FournisseurResponseDTO>> getAllFournisseurs() {
-
         List<FournisseurResponseDTO> fournisseurs = fournisseurService.getAllFournisseurs();
         return ResponseEntity.ok(fournisseurs);
     }
 
     @GetMapping("/{id}")
-
+    @PreAuthorize("hasAuthority('CONSULTER_FOURNISSEUR')")
+    @Operation(summary = "Obtenir un fournisseur par ID", description = "Requiert la permission CONSULTER_FOURNISSEUR")
     public ResponseEntity<FournisseurResponseDTO> getFournisseurById(@PathVariable Long id) {
-
         FournisseurResponseDTO fournisseur = fournisseurService.getFournisseurById(id);
         return ResponseEntity.ok(fournisseur);
     }
 
     @PutMapping("/{id}")
-
+    @PreAuthorize("hasAuthority('MODIFIER_FOURNISSEUR')")
+    @Operation(summary = "Modifier un fournisseur", description = "Requiert la permission MODIFIER_FOURNISSEUR")
     public ResponseEntity<FournisseurResponseDTO> updateFournisseur(@PathVariable Long id, @Valid @RequestBody FournisseurRequestDTO requestDTO) {
-
         FournisseurResponseDTO response = fournisseurService.updateFournisseur(id, requestDTO);
         return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('SUPPRIMER_FOURNISSEUR')")
+    @Operation(summary = "Supprimer un fournisseur", description = "Requiert la permission SUPPRIMER_FOURNISSEUR")
     public ResponseEntity<Void> deleteFournisseur(@PathVariable Long id) {
-
         fournisseurService.deleteFournisseur(id);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/search")
-
+    @PreAuthorize("hasAuthority('CONSULTER_FOURNISSEUR')")
+    @Operation(summary = "Rechercher des fournisseurs", description = "Requiert la permission CONSULTER_FOURNISSEUR")
     public ResponseEntity<List<FournisseurResponseDTO>> searchFournisseurs(@RequestParam(required = false) String ville, @RequestParam(required = false) String raisonSociale) {
-
         List<FournisseurResponseDTO> results;
 
         if (ville != null && !ville.trim().isEmpty()) {
@@ -76,19 +81,24 @@ public class FournisseurController {
     }
 
     @GetMapping("/email/{email}")
+    @PreAuthorize("hasAuthority('CONSULTER_FOURNISSEUR')")
+    @Operation(summary = "Obtenir un fournisseur par email", description = "Requiert la permission CONSULTER_FOURNISSEUR")
     public ResponseEntity<FournisseurResponseDTO> getFournisseurByEmail(@PathVariable String email) {
         FournisseurResponseDTO fournisseur = fournisseurService.getFournisseurByEmail(email);
         return ResponseEntity.ok(fournisseur);
     }
 
     @GetMapping("/ice/{ice}")
+    @PreAuthorize("hasAuthority('CONSULTER_FOURNISSEUR')")
+    @Operation(summary = "Obtenir un fournisseur par ICE", description = "Requiert la permission CONSULTER_FOURNISSEUR")
     public ResponseEntity<FournisseurResponseDTO> getFournisseurByIce(@PathVariable String ice) {
         FournisseurResponseDTO fournisseur = fournisseurService.getFournisseurByIce(ice);
         return ResponseEntity.ok(fournisseur);
     }
 
     @GetMapping("/test")
-    public ResponseEntity<List<FournisseurResponseDTO> >test(){
+    @PreAuthorize("hasAuthority('CONSULTER_FOURNISSEUR')")
+    public ResponseEntity<List<FournisseurResponseDTO>> test() {
         return ResponseEntity.ok(fournisseurService.filtered());
     }
 }

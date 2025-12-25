@@ -5,32 +5,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f0aab8c4-5dfe-4656-9a8f-f351bfd01ea0" name="Changes" comment="feat: Add JWT authentication components and configuration">
-      <change afterPath="$PROJECT_DIR$/gestion-stock/AUTH_SERVICE_README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gestion-stock/JWT_AUTHENTICATION_README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gestion-stock/SPRING_SECURITY_CONFIG_README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/controller/AuthController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/repository/security/PermissionRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/repository/security/RoleAppRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/repository/security/UserAppRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/repository/security/UserPermissionRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/security/CustomUserDetails.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/security/CustomUserDetailsService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/service/auth/AuthService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/resources/db/changelog/010-create-table-roles.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/resources/db/changelog/011-create-table-permissions.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/resources/db/changelog/012-create-table-role-permissions.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/resources/db/changelog/013-create-table-users.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/resources/db/changelog/014-create-table-user-permissions.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/resources/db/changelog/015-insert-initial-roles-and-permissions.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/resources/db/changelog/016-insert-default-admin-user.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/documentation/PERMISSIONS_README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/controller/AdminController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/dto/admin/AssignRoleRequestDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/dto/admin/PermissionDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/dto/admin/RoleDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/dto/admin/UpdateUserPermissionRequestDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/dto/admin/UserPermissionDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/dto/admin/UserResponseDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/mapper/PermissionMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/mapper/RoleMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/mapper/UserMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/mapper/UserPermissionMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/service/AdminService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/service/impl/AdminServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/copilotDiffState.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/copilotDiffState.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/dto/auth/MessageResponseDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/dto/auth/MessageResponseDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/entity/security/Permission.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/entity/security/Permission.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/entity/security/RoleApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/entity/security/RoleApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/entity/security/UserApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/entity/security/UserApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/entity/security/UserPermission.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/entity/security/UserPermission.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/resources/db/changelog/db.changelog-master.xml" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/resources/db/changelog/db.changelog-master.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gestion-stock/AUTH_SERVICE_README.md" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/documentation/AUTH_SERVICE_README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gestion-stock/JWT_AUTHENTICATION_README.md" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/documentation/JWT_AUTHENTICATION_README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gestion-stock/SPRING_SECURITY_CONFIG_README.md" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/documentation/SPRING_SECURITY_CONFIG_README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/controller/BonSortieController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/controller/BonSortieController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/controller/CommandeFournisseurController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/controller/CommandeFournisseurController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/controller/FournisseurController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/controller/FournisseurController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/controller/ProduitController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/controller/ProduitController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/controller/StockController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/controller/StockController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/security/CustomUserDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/security/CustomUserDetails.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/security/CustomUserDetailsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/security/CustomUserDetailsService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -121,6 +121,11 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/gestion-stock/src/main/documentation" />
+    </key>
+  </component>
   <component name="RunManager" selected="Spring Boot.GestionStockApplication">
     <configuration name="CommandeFournisseurServiceTest.testReceptionCreeLotAutomatiquement" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="gestion-stock" />
@@ -229,7 +234,8 @@
       <workItem from="1766439089125" duration="755000" />
       <workItem from="1766441450932" duration="765000" />
       <workItem from="1766565084175" duration="5475000" />
-      <workItem from="1766575404872" duration="9558000" />
+      <workItem from="1766575404872" duration="10040000" />
+      <workItem from="1766650798979" duration="7119000" />
     </task>
     <task id="LOCAL-00001" summary="Feat : initialize the Entities &amp; Lombok dependencies">
       <option name="closed" value="true" />

@@ -35,26 +35,26 @@ public class CustomUserDetails implements UserDetails {
     public static CustomUserDetails build(UserApp user) {
         List<GrantedAuthority> authorities = new ArrayList<>();
 
-        // Add role if exists
+
         if (user.getRole() != null) {
-            // Add role as authority (Spring Security expects "ROLE_" prefix)
+
             authorities.add(new SimpleGrantedAuthority("ROLE_" + user.getRole().getName()));
 
-            // Add default permissions from role
+
             Set<Permission> rolePermissions = user.getRole().getPermissions();
             rolePermissions.forEach(permission ->
                     authorities.add(new SimpleGrantedAuthority(permission.getName()))
             );
         }
 
-        // Add or override with custom user permissions
+
         Set<UserPermission> userPermissions = user.getUserPermissions();
         userPermissions.forEach(userPermission -> {
             Permission permission = userPermission.getPermission();
             SimpleGrantedAuthority authority = new SimpleGrantedAuthority(permission.getName());
 
             if (userPermission.getGranted()) {
-                // Grant permission (add if not exists)
+
                 if (!authorities.contains(authority)) {
                     authorities.add(authority);
                 }
