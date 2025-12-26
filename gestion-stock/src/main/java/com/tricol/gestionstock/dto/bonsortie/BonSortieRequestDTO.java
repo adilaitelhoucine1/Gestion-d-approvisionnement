@@ -1,6 +1,7 @@
 package com.tricol.gestionstock.dto.bonsortie;
 
 import com.tricol.gestionstock.entity.Enums.MotifSortie;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lombok.*;
@@ -17,6 +18,7 @@ import java.util.List;
 public class BonSortieRequestDTO {
 
     @NotBlank(message = "Le numero de bon est obligatoire")
+    @Schema(description = "test")
     @Size(max = 50, message = "Le numero de bon ne doit pas depasser 50 caracteres")
     private String numeroBon;
 

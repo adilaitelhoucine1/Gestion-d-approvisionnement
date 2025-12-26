@@ -30,7 +30,6 @@ import java.util.Map;
 @RequestMapping("/api/produits")
 @RequiredArgsConstructor
 @Slf4j
-@CrossOrigin(origins = "*")
 @Tag(name = "Produits", description = "Gestion des produits")
 public class ProduitController {
 

@@ -10,7 +10,6 @@ import com.tricol.gestionstock.mapper.UserPermissionMapper;
 import com.tricol.gestionstock.repository.security.*;
 import com.tricol.gestionstock.service.AdminService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -21,7 +20,6 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 @Transactional
 public class AdminServiceImpl implements AdminService {
 
@@ -40,14 +38,12 @@ public class AdminServiceImpl implements AdminService {
     @Override
     @Transactional(readOnly = true)
     public List<UserResponseDTO> getAllUsers() {
-        log.info("Fetching all users");
         return userMapper.toDTOList(userRepository.findAll());
     }
 
     @Override
     @Transactional(readOnly = true)
     public UserResponseDTO getUserById(Long userId) {
-        log.info("Fetching user with ID: {}", userId);
         UserApp user = findUserById(userId);
         return userMapper.toDTO(user);
     }
@@ -55,7 +51,6 @@ public class AdminServiceImpl implements AdminService {
     @Override
     @Transactional(readOnly = true)
     public UserResponseDTO getUserByUsername(String username) {
-        log.info("Fetching user with username: {}", username);
         UserApp user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("Utilisateur non trouvé avec le username: " + username));
         return userMapper.toDTO(user);
@@ -63,28 +58,22 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void deleteUser(Long userId) {
-        log.info("Deleting user with ID: {}", userId);
         UserApp user = findUserById(userId);
         userRepository.delete(user);
-        log.info("User deleted successfully: {}", userId);
     }
 
     @Override
     public void enableUser(Long userId) {
-        log.info("Enabling user with ID: {}", userId);
         UserApp user = findUserById(userId);
         user.setEnabled(true);
         userRepository.save(user);
-        log.info("User enabled successfully: {}", userId);
     }
 
     @Override
     public void disableUser(Long userId) {
-        log.info("Disabling user with ID: {}", userId);
         UserApp user = findUserById(userId);
         user.setEnabled(false);
         userRepository.save(user);
-        log.info("User disabled successfully: {}", userId);
     }
 
 
@@ -92,30 +81,25 @@ public class AdminServiceImpl implements AdminService {
     @Override
     @Transactional(readOnly = true)
     public List<RoleDTO> getAllRoles() {
-        log.info("Fetching all roles");
         return roleMapper.toDTOList(roleRepository.findAll());
     }
 
     @Override
     public UserResponseDTO assignRoleToUser(Long userId, String roleName) {
-        log.info("Assigning role {} to user {}", roleName, userId);
         UserApp user = findUserById(userId);
         RoleApp role = roleRepository.findByName(roleName)
                 .orElseThrow(() -> new ResourceNotFoundException("Rôle non trouvé: " + roleName));
 
         user.setRole(role);
         UserApp savedUser = userRepository.save(user);
-        log.info("Role {} assigned to user {} successfully", roleName, userId);
         return userMapper.toDTO(savedUser);
     }
 
     @Override
     public UserResponseDTO removeRoleFromUser(Long userId) {
-        log.info("Removing role from user {}", userId);
         UserApp user = findUserById(userId);
         user.setRole(null);
         UserApp savedUser = userRepository.save(user);
-        log.info("Role removed from user {} successfully", userId);
         return userMapper.toDTO(savedUser);
     }
 
@@ -123,21 +107,17 @@ public class AdminServiceImpl implements AdminService {
     @Override
     @Transactional(readOnly = true)
     public List<PermissionDTO> getAllPermissions() {
-        log.info("Fetching all permissions");
         return permissionMapper.toDTOList(permissionRepository.findAll());
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<PermissionDTO> getPermissionsByCategory(String category) {
-        log.info("Fetching permissions by category: {}", category);
         return permissionMapper.toDTOList(permissionRepository.findByCategory(category));
     }
 
     @Override
     public UserResponseDTO updateUserPermission(Long userId, String permissionName, Boolean granted) {
-        log.info("Updating permission {} for user {} to granted={}", permissionName, userId, granted);
-
         UserApp user = findUserById(userId);
         Permission permission = permissionRepository.findByName(permissionName)
                 .orElseThrow(() -> new ResourceNotFoundException("Permission non trouvée: " + permissionName));
@@ -166,14 +146,11 @@ public class AdminServiceImpl implements AdminService {
             user.getUserPermissions().add(newUserPermission);
         }
 
-        log.info("Permission {} updated for user {} successfully", permissionName, userId);
         return userMapper.toDTO(userRepository.findById(userId).orElseThrow());
     }
 
     @Override
     public UserResponseDTO removeUserCustomPermission(Long userId, String permissionName) {
-        log.info("Removing custom permission {} from user {}", permissionName, userId);
-
         UserApp user = findUserById(userId);
         Permission permission = permissionRepository.findByName(permissionName)
                 .orElseThrow(() -> new ResourceNotFoundException("Permission non trouvée: " + permissionName));
@@ -184,7 +161,6 @@ public class AdminServiceImpl implements AdminService {
         if (existingPermission.isPresent()) {
             user.getUserPermissions().remove(existingPermission.get());
             userPermissionRepository.delete(existingPermission.get());
-            log.info("Custom permission {} removed from user {} successfully", permissionName, userId);
         }
 
         return userMapper.toDTO(userRepository.findById(userId).orElseThrow());
@@ -193,7 +169,6 @@ public class AdminServiceImpl implements AdminService {
     @Override
     @Transactional(readOnly = true)
     public List<UserPermissionDTO> getUserCustomPermissions(Long userId) {
-        log.info("Fetching custom permissions for user {}", userId);
         findUserById(userId); // Validate user exists
 
         return userPermissionMapper.toDTOList(userPermissionRepository.findByUserId(userId));
@@ -202,7 +177,6 @@ public class AdminServiceImpl implements AdminService {
     @Override
     @Transactional(readOnly = true)
     public List<PermissionDTO> getUserEffectivePermissions(Long userId) {
-        log.info("Calculating effective permissions for user {}", userId);
         UserApp user = findUserById(userId);
 
         // Start with role permissions
@@ -239,4 +213,3 @@ public class AdminServiceImpl implements AdminService {
         return authentication != null ? authentication.getName() : "SYSTEM";
     }
 }
-
