@@ -4,7 +4,9 @@ target/
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-!**/src/documentation
+
+### Documentation ###
+src/documentation/
 
 ### STS ###
 .apt_generated
@@ -33,5 +35,11 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Docker ###
+.env
+docker-compose.override.yml
+backups/
+*.sql
 
 

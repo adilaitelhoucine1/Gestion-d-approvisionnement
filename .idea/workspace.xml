@@ -4,18 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f0aab8c4-5dfe-4656-9a8f-f351bfd01ea0" name="Changes" comment="feat: Add JWT authentication components and configuration">
-      <change afterPath="$PROJECT_DIR$/.idea/copilotDiffState.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gestion-stock/src/documentation/CORS_CONFIGURATION_README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gestion-stock/src/documentation/USERDETAILS_VS_USERDETAILSSERVICE_README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/config/CorsConfig.java" afterDir="false" />
+    <list default="true" id="f0aab8c4-5dfe-4656-9a8f-f351bfd01ea0" name="Changes" comment="feat: Implement CORS configuration to restrict allowed origins and methods">
+      <change afterPath="$PROJECT_DIR$/gestion-stock/.dockerignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gestion-stock/.env.example" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gestion-stock/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gestion-stock/docker-compose.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/resources/application-docker.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/controller/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/controller/AdminController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/controller/ProduitController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/controller/ProduitController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/dto/bonsortie/BonSortieRequestDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/dto/bonsortie/BonSortieRequestDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/security/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/service/impl/AdminServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/service/impl/AdminServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gestion-stock/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/.gitignore" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,6 +57,9 @@
     <option name="FILTER_INFO" value="true" />
     <option name="FILTER_DEBUG" value="true" />
     <option name="CUSTOM_FILTER" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 2
@@ -223,7 +222,7 @@
       <workItem from="1766575404872" duration="10040000" />
       <workItem from="1766650798979" duration="7622000" />
       <workItem from="1766736033003" duration="6738000" />
-      <workItem from="1766763137893" duration="1011000" />
+      <workItem from="1766763137893" duration="6938000" />
     </task>
     <task id="LOCAL-00001" summary="Feat : initialize the Entities &amp; Lombok dependencies">
       <option name="closed" value="true" />
@@ -281,7 +280,15 @@
       <option name="project" value="LOCAL" />
       <updated>1766611820614</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="feat: Implement CORS configuration to restrict allowed origins and methods">
+      <option name="closed" value="true" />
+      <created>1766764381761</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1766764381761</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -353,7 +360,8 @@
     <MESSAGE value="fix: fix some issues in test senarios" />
     <MESSAGE value="refactor: clean up test code and improve readability in BonSortie and CommandeFournisseur tests" />
     <MESSAGE value="feat: Add JWT authentication components and configuration" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: Add JWT authentication components and configuration" />
+    <MESSAGE value="feat: Implement CORS configuration to restrict allowed origins and methods" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: Implement CORS configuration to restrict allowed origins and methods" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
