@@ -9,10 +9,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 
-/**
- * Configuration CORS pour limiter les origines approuvées
- * Cette configuration centralisée remplace les annotations @CrossOrigin dispersées
- */
+
 @Configuration
 public class CorsConfig {
 
@@ -31,37 +28,33 @@ public class CorsConfig {
     @Value("${app.cors.max-age}")
     private long maxAge;
 
-    /**
-     * Configure la source de configuration CORS
-     * @return CorsConfigurationSource configuré avec les origines approuvées
-     */
+
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        // Origines approuvées (configurables via application.properties)
+
         configuration.setAllowedOrigins(Arrays.asList(allowedOrigins));
 
-        // Méthodes HTTP autorisées
+
         configuration.setAllowedMethods(Arrays.asList(allowedMethods));
 
-        // En-têtes autorisés
+
         configuration.setAllowedHeaders(Arrays.asList(allowedHeaders));
 
-        // En-têtes exposés au client
+
         configuration.setExposedHeaders(Arrays.asList(
                 "Authorization",
                 "Content-Type",
                 "X-Total-Count"
         ));
 
-        // Autoriser l'envoi de credentials (cookies, authorization headers)
         configuration.setAllowCredentials(allowCredentials);
 
-        // Durée de mise en cache de la réponse preflight (en secondes)
+
         configuration.setMaxAge(maxAge);
 
-        // Appliquer cette configuration à tous les chemins
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
 

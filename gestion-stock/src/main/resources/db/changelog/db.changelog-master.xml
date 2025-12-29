@@ -25,4 +25,7 @@
     <include file="db/changelog/015-insert-initial-roles-and-permissions.xml"/>
     <include file="db/changelog/016-insert-default-admin-user.xml"/>
 
+    <!-- Audit tables -->
+    <include file="db/changelog/017-create-table-auth-audit-logs.xml"/>
+
 </databaseChangeLog>

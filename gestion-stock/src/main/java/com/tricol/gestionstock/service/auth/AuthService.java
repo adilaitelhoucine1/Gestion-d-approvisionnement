@@ -37,40 +37,47 @@ public class AuthService {
     @Autowired
     private JwtUtils jwtUtils;
 
+    @Autowired
+    private AuthAuditService auditService;
+
     @Transactional
     public AuthResponseDTO login(LoginRequestDTO loginRequest) {
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            loginRequest.getUsername(),
+                            loginRequest.getPassword()
+                    )
+            );
 
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginRequest.getUsername(),
-                        loginRequest.getPassword()
-                )
-        );
+            SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+            CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
+            String accessToken = jwtUtils.generateAccessToken(userDetails.getUsername());
+            String refreshToken = jwtUtils.generateRefreshToken(userDetails.getUsername());
 
-        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-
-
-        String accessToken = jwtUtils.generateAccessToken(userDetails.getUsername());
-        String refreshToken = jwtUtils.generateRefreshToken(userDetails.getUsername());
-
-
-        UserApp user = userAppRepository.findByUsername(userDetails.getUsername())
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        user.setLastLogin(LocalDateTime.now());
-        userAppRepository.save(user);
+            UserApp user = userAppRepository.findByUsername(userDetails.getUsername())
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+            user.setLastLogin(LocalDateTime.now());
+            userAppRepository.save(user);
 
 
-        UserInfoDTO userInfo = buildUserInfo(userDetails, user);
+            auditService.logLoginSuccess(userDetails.getUsername());
 
-        return AuthResponseDTO.builder()
-                .accessToken(accessToken)
-                .refreshToken(refreshToken)
-                .expiresIn(jwtUtils.getJwtExpirationMs())
-                .user(userInfo)
-                .build();
+            UserInfoDTO userInfo = buildUserInfo(userDetails, user);
+
+            return AuthResponseDTO.builder()
+                    .accessToken(accessToken)
+                    .refreshToken(refreshToken)
+                    .expiresIn(jwtUtils.getJwtExpirationMs())
+                    .user(userInfo)
+                    .build();
+        } catch (Exception e) {
+            // Audit log: failed login
+            auditService.logLoginFailure(loginRequest.getUsername(), e.getMessage());
+            throw e;
+        }
     }
 
     @Transactional
@@ -100,6 +107,9 @@ public class AuthService {
 
          userAppRepository.save(user);
 
+        // Audit log: user registration
+        auditService.logRegistration(registerRequest.getUsername());
+
         return MessageResponseDTO.builder()
                 .message("User registered successfully! Please wait for an administrator to assign you a role.")
                 .build();
@@ -124,6 +134,9 @@ public class AuthService {
 
         String newAccessToken = jwtUtils.generateAccessToken(username);
         String newRefreshToken = jwtUtils.generateRefreshToken(username);
+
+        // Audit log: token refresh
+        auditService.logTokenRefresh(username);
 
         return TokenRefreshResponseDTO.builder()
                 .accessToken(newAccessToken)

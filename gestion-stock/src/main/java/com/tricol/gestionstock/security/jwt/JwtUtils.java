@@ -32,10 +32,10 @@ public class JwtUtils {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public String generateAccessToken(Authentication authentication) {
-        UserDetails userPrincipal = (UserDetails) authentication.getPrincipal();
-        return generateAccessToken(userPrincipal.getUsername());
-    }
+//    public String generateAccessToken(Authentication authentication) {
+//        UserDetails userPrincipal = (UserDetails) authentication.getPrincipal();
+//        return generateAccessToken(userPrincipal.getUsername());
+//    }
 
     public String generateAccessToken(String username) {
         return Jwts.builder()
@@ -73,6 +73,26 @@ public class JwtUtils {
             return true;
         } catch (MalformedJwtException e) {
             logger.error("Invalid JWT token: {}", e.getMessage());
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
         } catch (ExpiredJwtException e) {
             logger.error("JWT token is expired: {}", e.getMessage());
         } catch (UnsupportedJwtException e) {

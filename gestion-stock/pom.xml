@@ -108,9 +108,7 @@
             <artifactId>liquibase-core</artifactId>
         </dependency>
 
-        <!-- ========================================= -->
-        <!-- LOMBOK (⭐ AJOUTe ICI ⭐)                  -->
-        <!-- ========================================= -->
+
 
         <dependency>
             <groupId>org.projectlombok</groupId>
