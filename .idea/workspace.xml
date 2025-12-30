@@ -4,23 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f0aab8c4-5dfe-4656-9a8f-f351bfd01ea0" name="Changes" comment="feat: Add Docker configuration files and environment setup">
-      <change afterPath="$PROJECT_DIR$/gestion-stock/AUTH_AUDIT_SYSTEM.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/dto/audit/AuthAuditLogDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/entity/AuthAuditLog.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/mapper/AuthAuditMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/repository/AuthAuditLogRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/service/auth/AuthAuditService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/resources/db/changelog/017-create-table-auth-audit-logs.xml" afterDir="false" />
+    <list default="true" id="f0aab8c4-5dfe-4656-9a8f-f351bfd01ea0" name="Changes" comment="feat: implement authentication audit logging system with async service, entity, repository, and documentation">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/config/CorsConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/config/CorsConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/security/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/security/jwt/JwtAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/security/jwt/JwtAuthenticationFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/security/jwt/JwtUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/security/jwt/JwtUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/service/auth/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/service/auth/AuthService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/resources/db/changelog/db.changelog-master.xml" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/resources/db/changelog/db.changelog-master.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/exception/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/exception/GlobalExceptionHandler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -237,7 +223,9 @@
       <workItem from="1767020592199" duration="305000" />
       <workItem from="1767021104978" duration="17000" />
       <workItem from="1767021155407" duration="34000" />
-      <workItem from="1767031038159" duration="377000" />
+      <workItem from="1767031038159" duration="849000" />
+      <workItem from="1767032245178" duration="101000" />
+      <workItem from="1767081742361" duration="6703000" />
     </task>
     <task id="LOCAL-00001" summary="Feat : initialize the Entities &amp; Lombok dependencies">
       <option name="closed" value="true" />
@@ -311,7 +299,15 @@
       <option name="project" value="LOCAL" />
       <updated>1766773049857</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="feat: implement authentication audit logging system with async service, entity, repository, and documentation">
+      <option name="closed" value="true" />
+      <created>1767031596212</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1767031596212</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -385,7 +381,8 @@
     <MESSAGE value="feat: Add JWT authentication components and configuration" />
     <MESSAGE value="feat: Implement CORS configuration to restrict allowed origins and methods" />
     <MESSAGE value="feat: Add Docker configuration files and environment setup" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: Add Docker configuration files and environment setup" />
+    <MESSAGE value="feat: implement authentication audit logging system with async service, entity, repository, and documentation" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: implement authentication audit logging system with async service, entity, repository, and documentation" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
