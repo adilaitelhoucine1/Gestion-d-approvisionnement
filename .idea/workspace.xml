@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f0aab8c4-5dfe-4656-9a8f-f351bfd01ea0" name="Changes" comment="feat: implement authentication audit logging system with async service, entity, repository, and documentation">
+    <list default="true" id="f0aab8c4-5dfe-4656-9a8f-f351bfd01ea0" name="Changes" comment="feat: add runtime exception handler">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/exception/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/exception/GlobalExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gestion-stock/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,7 +55,7 @@
     <option name="CUSTOM_FILTER" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="ProjectErrors" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 2
@@ -225,7 +226,8 @@
       <workItem from="1767021155407" duration="34000" />
       <workItem from="1767031038159" duration="849000" />
       <workItem from="1767032245178" duration="101000" />
-      <workItem from="1767081742361" duration="6703000" />
+      <workItem from="1767081742361" duration="8846000" />
+      <workItem from="1767101086758" duration="19000" />
     </task>
     <task id="LOCAL-00001" summary="Feat : initialize the Entities &amp; Lombok dependencies">
       <option name="closed" value="true" />
@@ -307,7 +309,15 @@
       <option name="project" value="LOCAL" />
       <updated>1767031596212</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="feat: add runtime exception handler">
+      <option name="closed" value="true" />
+      <created>1767090228690</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1767090228690</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -382,7 +392,8 @@
     <MESSAGE value="feat: Implement CORS configuration to restrict allowed origins and methods" />
     <MESSAGE value="feat: Add Docker configuration files and environment setup" />
     <MESSAGE value="feat: implement authentication audit logging system with async service, entity, repository, and documentation" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: implement authentication audit logging system with async service, entity, repository, and documentation" />
+    <MESSAGE value="feat: add runtime exception handler" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: add runtime exception handler" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

@@ -1,0 +1,652 @@
+{
+  "info": {
+    "name": "Gestion Stock API",
+    "description": "Complete API endpoints collection for Gestion d'approvisionnement system",
+    "version": "1.0.0",
+    "baseUrl": "http://localhost:8080"
+  },
+  "endpoints": [
+    {
+      "group": "Authentication",
+      "endpoints": [
+        {
+          "name": "User Login",
+          "method": "POST",
+          "path": "/api/auth/login",
+          "description": "Authenticate user and return JWT tokens",
+          "requiresAuth": false,
+          "requestBody": {
+            "username": "string",
+            "password": "string"
+          }
+        },
+        {
+          "name": "User Registration",
+          "method": "POST",
+          "path": "/api/auth/register",
+          "description": "Register a new user (no role assigned by default)",
+          "requiresAuth": false,
+          "requestBody": {
+            "username": "string",
+            "email": "string",
+            "password": "string"
+          }
+        },
+        {
+          "name": "Refresh Token",
+          "method": "POST",
+          "path": "/api/auth/refresh",
+          "description": "Get new access token using refresh token",
+          "requiresAuth": false,
+          "requestBody": {
+            "refreshToken": "string"
+          }
+        },
+        {
+          "name": "Get Current User",
+          "method": "GET",
+          "path": "/api/auth/me",
+          "description": "Get information about currently authenticated user",
+          "requiresAuth": true
+        }
+      ]
+    },
+    {
+      "group": "Administration - User Management",
+      "endpoints": [
+        {
+          "name": "List All Users",
+          "method": "GET",
+          "path": "/api/v1/admin/users",
+          "description": "List all users",
+          "requiresAuth": true,
+          "permission": "GERER_UTILISATEURS"
+        },
+        {
+          "name": "Get User by ID",
+          "method": "GET",
+          "path": "/api/v1/admin/users/{userId}",
+          "description": "Get user by ID",
+          "requiresAuth": true,
+          "permission": "GERER_UTILISATEURS",
+          "pathParams": ["userId"]
+        },
+        {
+          "name": "Get User by Username",
+          "method": "GET",
+          "path": "/api/v1/admin/users/username/{username}",
+          "description": "Get user by username",
+          "requiresAuth": true,
+          "permission": "GERER_UTILISATEURS",
+          "pathParams": ["username"]
+        },
+        {
+          "name": "Delete User",
+          "method": "DELETE",
+          "path": "/api/v1/admin/users/{userId}",
+          "description": "Delete a user",
+          "requiresAuth": true,
+          "permission": "GERER_UTILISATEURS",
+          "pathParams": ["userId"]
+        },
+        {
+          "name": "Enable User",
+          "method": "PUT",
+          "path": "/api/v1/admin/users/{userId}/enable",
+          "description": "Enable a user",
+          "requiresAuth": true,
+          "permission": "GERER_UTILISATEURS",
+          "pathParams": ["userId"]
+        },
+        {
+          "name": "Disable User",
+          "method": "PUT",
+          "path": "/api/v1/admin/users/{userId}/disable",
+          "description": "Disable a user",
+          "requiresAuth": true,
+          "permission": "GERER_UTILISATEURS",
+          "pathParams": ["userId"]
+        },
+        {
+          "name": "List All Roles",
+          "method": "GET",
+          "path": "/api/v1/admin/users/roles",
+          "description": "List all available roles",
+          "requiresAuth": true,
+          "permission": "GERER_UTILISATEURS"
+        },
+        {
+          "name": "Assign Role to User",
+          "method": "PUT",
+          "path": "/api/v1/admin/users/{userId}/role",
+          "description": "Assign a role to a user",
+          "requiresAuth": true,
+          "permission": "GERER_UTILISATEURS",
+          "pathParams": ["userId"],
+          "requestBody": {
+            "roleName": "string"
+          }
+        },
+        {
+          "name": "Remove Role from User",
+          "method": "DELETE",
+          "path": "/api/v1/admin/users/{userId}/role",
+          "description": "Remove role from a user",
+          "requiresAuth": true,
+          "permission": "GERER_UTILISATEURS",
+          "pathParams": ["userId"]
+        },
+        {
+          "name": "List All Permissions",
+          "method": "GET",
+          "path": "/api/v1/admin/users/permissions",
+          "description": "List all available permissions",
+          "requiresAuth": true,
+          "permission": "GERER_UTILISATEURS"
+        },
+        {
+          "name": "List Permissions by Category",
+          "method": "GET",
+          "path": "/api/v1/admin/users/permissions/category/{category}",
+          "description": "List permissions by category",
+          "requiresAuth": true,
+          "permission": "GERER_UTILISATEURS",
+          "pathParams": ["category"]
+        },
+        {
+          "name": "Update User Permission",
+          "method": "PUT",
+          "path": "/api/v1/admin/users/{userId}/permissions",
+          "description": "Grant or revoke a specific permission for a user",
+          "requiresAuth": true,
+          "permission": "GERER_UTILISATEURS",
+          "pathParams": ["userId"],
+          "requestBody": {
+            "permissionName": "string",
+            "granted": "boolean"
+          }
+        },
+        {
+          "name": "Remove User Custom Permission",
+          "method": "DELETE",
+          "path": "/api/v1/admin/users/{userId}/permissions/{permissionName}",
+          "description": "Remove custom permission from a user",
+          "requiresAuth": true,
+          "permission": "GERER_UTILISATEURS",
+          "pathParams": ["userId", "permissionName"]
+        },
+        {
+          "name": "Get User Custom Permissions",
+          "method": "GET",
+          "path": "/api/v1/admin/users/{userId}/permissions/custom",
+          "description": "Get custom permissions for a user",
+          "requiresAuth": true,
+          "permission": "GERER_UTILISATEURS",
+          "pathParams": ["userId"]
+        },
+        {
+          "name": "Get User Effective Permissions",
+          "method": "GET",
+          "path": "/api/v1/admin/users/{userId}/permissions/effective",
+          "description": "Get all effective permissions for a user",
+          "requiresAuth": true,
+          "permission": "GERER_UTILISATEURS",
+          "pathParams": ["userId"]
+        }
+      ]
+    },
+    {
+      "group": "Audit",
+      "endpoints": [
+        {
+          "name": "Get Audit Logs by Username",
+          "method": "GET",
+          "path": "/api/audit/user/{username}",
+          "description": "Retrieve audit logs for a specific user",
+          "requiresAuth": true,
+          "permission": "GERER_UTILISATEURS or VIEW_AUDIT_LOGS",
+          "pathParams": ["username"],
+          "queryParams": {
+            "page": "int (default: 0)",
+            "size": "int (default: 20)"
+          }
+        }
+      ]
+    },
+    {
+      "group": "Bons de Sortie",
+      "endpoints": [
+        {
+          "name": "Create Bon de Sortie",
+          "method": "POST",
+          "path": "/api/v1/bons-sortie",
+          "description": "Create a bon de sortie (draft)",
+          "requiresAuth": true,
+          "permission": "CREER_BON_SORTIE",
+          "requestBody": {
+            "atelier": "string",
+            "lignes": "array"
+          }
+        },
+        {
+          "name": "List All Bons de Sortie",
+          "method": "GET",
+          "path": "/api/v1/bons-sortie",
+          "description": "List all bons de sortie",
+          "requiresAuth": true,
+          "permission": "CONSULTER_BON_SORTIE"
+        },
+        {
+          "name": "Get Bon de Sortie by ID",
+          "method": "GET",
+          "path": "/api/v1/bons-sortie/{id}",
+          "description": "Get bon de sortie by ID",
+          "requiresAuth": true,
+          "permission": "CONSULTER_BON_SORTIE",
+          "pathParams": ["id"]
+        },
+        {
+          "name": "Update Bon de Sortie",
+          "method": "PUT",
+          "path": "/api/v1/bons-sortie/{id}",
+          "description": "Update a bon de sortie",
+          "requiresAuth": true,
+          "permission": "CREER_BON_SORTIE",
+          "pathParams": ["id"],
+          "requestBody": {
+            "atelier": "string",
+            "lignes": "array"
+          }
+        },
+        {
+          "name": "Validate Bon de Sortie",
+          "method": "PUT",
+          "path": "/api/v1/bons-sortie/{id}/valider",
+          "description": "Validate a bon de sortie",
+          "requiresAuth": true,
+          "permission": "VALIDER_BON_SORTIE",
+          "pathParams": ["id"]
+        },
+        {
+          "name": "Cancel Bon de Sortie",
+          "method": "PUT",
+          "path": "/api/v1/bons-sortie/{id}/annuler",
+          "description": "Cancel a bon de sortie",
+          "requiresAuth": true,
+          "permission": "ANNULER_BON_SORTIE",
+          "pathParams": ["id"]
+        },
+        {
+          "name": "Get Bons de Sortie by Atelier",
+          "method": "GET",
+          "path": "/api/v1/bons-sortie/atelier/{atelier}",
+          "description": "Get bons de sortie by atelier",
+          "requiresAuth": true,
+          "permission": "CONSULTER_BON_SORTIE",
+          "pathParams": ["atelier"]
+        }
+      ]
+    },
+    {
+      "group": "Commandes Fournisseurs",
+      "endpoints": [
+        {
+          "name": "Create Commande",
+          "method": "POST",
+          "path": "/api/v1/commandes",
+          "description": "Create a supplier order",
+          "requiresAuth": true,
+          "permission": "CREER_COMMANDE",
+          "requestBody": {
+            "fournisseurId": "long",
+            "dateCommande": "date",
+            "lignes": "array"
+          }
+        },
+        {
+          "name": "List All Commandes",
+          "method": "GET",
+          "path": "/api/v1/commandes",
+          "description": "List all supplier orders",
+          "requiresAuth": true,
+          "permission": "CONSULTER_COMMANDE"
+        },
+        {
+          "name": "Get Commande by ID",
+          "method": "GET",
+          "path": "/api/v1/commandes/{id}",
+          "description": "Get supplier order by ID",
+          "requiresAuth": true,
+          "permission": "CONSULTER_COMMANDE",
+          "pathParams": ["id"]
+        },
+        {
+          "name": "Update Commande",
+          "method": "PUT",
+          "path": "/api/v1/commandes/{id}",
+          "description": "Update a supplier order",
+          "requiresAuth": true,
+          "permission": "MODIFIER_COMMANDE",
+          "pathParams": ["id"],
+          "requestBody": {
+            "fournisseurId": "long",
+            "dateCommande": "date",
+            "lignes": "array"
+          }
+        },
+        {
+          "name": "Delete Commande",
+          "method": "DELETE",
+          "path": "/api/v1/commandes/{id}",
+          "description": "Delete a supplier order",
+          "requiresAuth": true,
+          "permission": "ANNULER_COMMANDE",
+          "pathParams": ["id"]
+        },
+        {
+          "name": "Get Commandes by Fournisseur",
+          "method": "GET",
+          "path": "/api/v1/commandes/fournisseur/{id}",
+          "description": "Get orders by supplier",
+          "requiresAuth": true,
+          "permission": "CONSULTER_COMMANDE",
+          "pathParams": ["id"]
+        },
+        {
+          "name": "Receive Commande",
+          "method": "PUT",
+          "path": "/api/v1/commandes/{id}/reception",
+          "description": "Receive a supplier order",
+          "requiresAuth": true,
+          "permission": "RECEPTIONNER_COMMANDE",
+          "pathParams": ["id"],
+          "requestBody": {
+            "dateReception": "date",
+            "lignesRecues": "array"
+          }
+        },
+        {
+          "name": "Cancel Commande",
+          "method": "PUT",
+          "path": "/api/v1/commandes/{id}/annuler",
+          "description": "Cancel a supplier order",
+          "requiresAuth": true,
+          "permission": "ANNULER_COMMANDE",
+          "pathParams": ["id"]
+        },
+        {
+          "name": "Validate Commande",
+          "method": "PUT",
+          "path": "/api/v1/commandes/{id}/valider",
+          "description": "Validate a supplier order",
+          "requiresAuth": true,
+          "permission": "VALIDER_COMMANDE",
+          "pathParams": ["id"]
+        }
+      ]
+    },
+    {
+      "group": "Fournisseurs",
+      "endpoints": [
+        {
+          "name": "Create Fournisseur",
+          "method": "POST",
+          "path": "/api/v1/fournisseurs",
+          "description": "Create a supplier",
+          "requiresAuth": true,
+          "permission": "CREER_FOURNISSEUR",
+          "requestBody": {
+            "raisonSociale": "string",
+            "ice": "string",
+            "email": "string",
+            "telephone": "string",
+            "adresse": "string",
+            "ville": "string"
+          }
+        },
+        {
+          "name": "List All Fournisseurs",
+          "method": "GET",
+          "path": "/api/v1/fournisseurs",
+          "description": "List all suppliers",
+          "requiresAuth": true,
+          "permission": "CONSULTER_FOURNISSEUR"
+        },
+        {
+          "name": "Get Fournisseur by ID",
+          "method": "GET",
+          "path": "/api/v1/fournisseurs/{id}",
+          "description": "Get supplier by ID",
+          "requiresAuth": true,
+          "permission": "CONSULTER_FOURNISSEUR",
+          "pathParams": ["id"]
+        },
+        {
+          "name": "Update Fournisseur",
+          "method": "PUT",
+          "path": "/api/v1/fournisseurs/{id}",
+          "description": "Update a supplier",
+          "requiresAuth": true,
+          "permission": "MODIFIER_FOURNISSEUR",
+          "pathParams": ["id"],
+          "requestBody": {
+            "raisonSociale": "string",
+            "ice": "string",
+            "email": "string",
+            "telephone": "string",
+            "adresse": "string",
+            "ville": "string"
+          }
+        },
+        {
+          "name": "Delete Fournisseur",
+          "method": "DELETE",
+          "path": "/api/v1/fournisseurs/{id}",
+          "description": "Delete a supplier",
+          "requiresAuth": true,
+          "permission": "SUPPRIMER_FOURNISSEUR",
+          "pathParams": ["id"]
+        },
+        {
+          "name": "Search Fournisseurs",
+          "method": "GET",
+          "path": "/api/v1/fournisseurs/search",
+          "description": "Search suppliers by ville or raison sociale",
+          "requiresAuth": true,
+          "permission": "CONSULTER_FOURNISSEUR",
+          "queryParams": {
+            "ville": "string (optional)",
+            "raisonSociale": "string (optional)"
+          }
+        },
+        {
+          "name": "Get Fournisseur by Email",
+          "method": "GET",
+          "path": "/api/v1/fournisseurs/email/{email}",
+          "description": "Get supplier by email",
+          "requiresAuth": true,
+          "permission": "CONSULTER_FOURNISSEUR",
+          "pathParams": ["email"]
+        },
+        {
+          "name": "Get Fournisseur by ICE",
+          "method": "GET",
+          "path": "/api/v1/fournisseurs/ice/{ice}",
+          "description": "Get supplier by ICE",
+          "requiresAuth": true,
+          "permission": "CONSULTER_FOURNISSEUR",
+          "pathParams": ["ice"]
+        },
+        {
+          "name": "Test Filtered Fournisseurs",
+          "method": "GET",
+          "path": "/api/v1/fournisseurs/test",
+          "description": "Test endpoint for filtered suppliers",
+          "requiresAuth": true,
+          "permission": "CONSULTER_FOURNISSEUR"
+        }
+      ]
+    },
+    {
+      "group": "Produits",
+      "endpoints": [
+        {
+          "name": "Create Produit",
+          "method": "POST",
+          "path": "/api/produits",
+          "description": "Create a product",
+          "requiresAuth": true,
+          "permission": "CREER_PRODUIT",
+          "requestBody": {
+            "reference": "string",
+            "designation": "string",
+            "unite": "string",
+            "prixUnitaire": "decimal",
+            "seuilAlerte": "int"
+          }
+        },
+        {
+          "name": "List All Produits",
+          "method": "GET",
+          "path": "/api/produits",
+          "description": "List all products",
+          "requiresAuth": true,
+          "permission": "CONSULTER_PRODUIT"
+        },
+        {
+          "name": "Update Produit",
+          "method": "PUT",
+          "path": "/api/produits/{id}",
+          "description": "Update a product",
+          "requiresAuth": true,
+          "permission": "MODIFIER_PRODUIT",
+          "pathParams": ["id"],
+          "requestBody": {
+            "reference": "string",
+            "designation": "string",
+            "unite": "string",
+            "prixUnitaire": "decimal",
+            "seuilAlerte": "int"
+          }
+        },
+        {
+          "name": "Delete Produit",
+          "method": "DELETE",
+          "path": "/api/produits/{id}",
+          "description": "Delete a product",
+          "requiresAuth": true,
+          "permission": "SUPPRIMER_PRODUIT",
+          "pathParams": ["id"]
+        },
+        {
+          "name": "Get Produit by ID",
+          "method": "GET",
+          "path": "/api/produits/{id}",
+          "description": "Get product by ID",
+          "requiresAuth": true,
+          "permission": "CONSULTER_PRODUIT",
+          "pathParams": ["id"]
+        },
+        {
+          "name": "Get Produit Stock",
+          "method": "GET",
+          "path": "/api/produits/{id}/stock",
+          "description": "Get product stock level",
+          "requiresAuth": true,
+          "permission": "CONSULTER_PRODUIT",
+          "pathParams": ["id"]
+        }
+      ]
+    },
+    {
+      "group": "Stock & Lots",
+      "endpoints": [
+        {
+          "name": "Get Global Stock State",
+          "method": "GET",
+          "path": "/api/v1/stock",
+          "description": "Get global stock state",
+          "requiresAuth": true,
+          "permission": "CONSULTER_STOCK"
+        },
+        {
+          "name": "Get Stock by Product (FIFO)",
+          "method": "GET",
+          "path": "/api/v1/stock/produit/{id}",
+          "description": "Get product stock with FIFO lots",
+          "requiresAuth": true,
+          "permission": "CONSULTER_STOCK",
+          "pathParams": ["id"]
+        },
+        {
+          "name": "Search Stock Movements",
+          "method": "GET",
+          "path": "/api/v1/stock/mouvements",
+          "description": "Search stock movements with filters",
+          "requiresAuth": true,
+          "permission": "CONSULTER_MOUVEMENTS",
+          "queryParams": {
+            "produitId": "long (optional)",
+            "reference": "string (optional)",
+            "type": "TypeMouvement (optional)",
+            "numeroLot": "string (optional)",
+            "dateDebut": "date (optional)",
+            "dateFin": "date (optional)",
+            "page": "int (default: 0)",
+            "size": "int (default: 20)"
+          }
+        },
+        {
+          "name": "Get Movements by Product",
+          "method": "GET",
+          "path": "/api/v1/stock/mouvements/produit/{id}",
+          "description": "Get stock movements for a product",
+          "requiresAuth": true,
+          "permission": "CONSULTER_MOUVEMENTS",
+          "pathParams": ["id"]
+        },
+        {
+          "name": "Get Stock Alerts",
+          "method": "GET",
+          "path": "/api/v1/stock/alertes",
+          "description": "Get stock alerts for low inventory",
+          "requiresAuth": true,
+          "permission": "CONSULTER_STOCK"
+        },
+        {
+          "name": "Get Stock Valuation (FIFO)",
+          "method": "GET",
+          "path": "/api/v1/stock/valorisation",
+          "description": "Get FIFO stock valuation",
+          "requiresAuth": true,
+          "permission": "VOIR_VALORISATION"
+        }
+      ]
+    }
+  ],
+  "permissions": [
+    "GERER_UTILISATEURS",
+    "VIEW_AUDIT_LOGS",
+    "CREER_BON_SORTIE",
+    "CONSULTER_BON_SORTIE",
+    "VALIDER_BON_SORTIE",
+    "ANNULER_BON_SORTIE",
+    "CREER_COMMANDE",
+    "CONSULTER_COMMANDE",
+    "MODIFIER_COMMANDE",
+    "ANNULER_COMMANDE",
+    "RECEPTIONNER_COMMANDE",
+    "VALIDER_COMMANDE",
+    "CREER_FOURNISSEUR",
+    "CONSULTER_FOURNISSEUR",
+    "MODIFIER_FOURNISSEUR",
+    "SUPPRIMER_FOURNISSEUR",
+    "CREER_PRODUIT",
+    "CONSULTER_PRODUIT",
+    "MODIFIER_PRODUIT",
+    "SUPPRIMER_PRODUIT",
+    "CONSULTER_STOCK",
+    "CONSULTER_MOUVEMENTS",
+    "VOIR_VALORISATION"
+  ]
+}
