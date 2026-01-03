@@ -34,6 +34,7 @@ public class SecurityConfig {
     private final UserDetailsService userDetailsService;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final HybridJwtAuthenticationFilter hybridJwtAuthenticationFilter;
+    private final AuthorizationDebugFilter authorizationDebugFilter;
     private final CorsConfigurationSource corsConfigurationSource;
 
     @Autowired(required = false)
@@ -49,10 +50,12 @@ public class SecurityConfig {
             UserDetailsService userDetailsService,
             JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint,
             @Lazy HybridJwtAuthenticationFilter hybridJwtAuthenticationFilter,
+            AuthorizationDebugFilter authorizationDebugFilter,
             CorsConfigurationSource corsConfigurationSource) {
         this.userDetailsService = userDetailsService;
         this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
         this.hybridJwtAuthenticationFilter = hybridJwtAuthenticationFilter;
+        this.authorizationDebugFilter = authorizationDebugFilter;
         this.corsConfigurationSource = corsConfigurationSource;
     }
 
@@ -106,7 +109,8 @@ public class SecurityConfig {
                         .requestMatchers("/v3/api-docs/**").permitAll()
                         .requestMatchers("/login/**", "/oauth2/**").permitAll()
                         .anyRequest().authenticated())
-                .addFilterBefore(hybridJwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(hybridJwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(authorizationDebugFilter, UsernamePasswordAuthenticationFilter.class);
 
         if (oauth2LoginSuccessHandler != null) {
             http.oauth2Login(oauth2 -> oauth2.successHandler(oauth2LoginSuccessHandler));
