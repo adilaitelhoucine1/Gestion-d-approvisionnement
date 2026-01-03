@@ -2,8 +2,10 @@ package com.tricol.gestionstock.security;
 
 import com.tricol.gestionstock.security.jwt.JwtAuthenticationEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -33,25 +35,25 @@ public class SecurityConfig {
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final HybridJwtAuthenticationFilter hybridJwtAuthenticationFilter;
     private final CorsConfigurationSource corsConfigurationSource;
-    private final OAuth2LoginSuccessHandler oauth2LoginSuccessHandler;
 
-    @Value("${keycloak.auth-server-url}")
     @Autowired(required = false)
     private OAuth2LoginSuccessHandler oauth2LoginSuccessHandler;
 
     @Value("${keycloak.auth-server-url:}")
+    private String keycloakServerUrl;
+
+    @Value("${keycloak.realm:}")
+    private String keycloakRealm;
 
     public SecurityConfig(
-    @Value("${keycloak.realm:}")
+            UserDetailsService userDetailsService,
             JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint,
             @Lazy HybridJwtAuthenticationFilter hybridJwtAuthenticationFilter,
-            CorsConfigurationSource corsConfigurationSource,
-            OAuth2LoginSuccessHandler oauth2LoginSuccessHandler) {
+            CorsConfigurationSource corsConfigurationSource) {
         this.userDetailsService = userDetailsService;
         this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
-            CorsConfigurationSource corsConfigurationSource) {
+        this.hybridJwtAuthenticationFilter = hybridJwtAuthenticationFilter;
         this.corsConfigurationSource = corsConfigurationSource;
-        this.oauth2LoginSuccessHandler = oauth2LoginSuccessHandler;
     }
 
     @Bean
@@ -73,17 +75,17 @@ public class SecurityConfig {
     }
 
     @Bean
+    @ConditionalOnProperty(name = "keycloak.auth-server-url")
     public JwtDecoder jwtDecoder() {
         String jwkSetUri = keycloakServerUrl + "/realms/" + keycloakRealm + "/protocol/openid-connect/certs";
-    @ConditionalOnProperty(name = "keycloak.auth-server-url")
+        return NimbusJwtDecoder.withJwkSetUri(jwkSetUri).build();
     }
 
     @Bean
+    @ConditionalOnProperty(name = "keycloak.auth-server-url")
     public JwtAuthenticationConverter jwtAuthenticationConverter() {
         JwtGrantedAuthoritiesConverter grantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
         grantedAuthoritiesConverter.setAuthoritiesClaimName("realm_access.roles");
-    @ConditionalOnProperty(name = "keycloak.auth-server-url")
-
         JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
         jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(grantedAuthoritiesConverter);
         return jwtAuthenticationConverter;
@@ -92,30 +94,24 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-
                 .cors(cors -> cors.configurationSource(corsConfigurationSource))
                 .csrf(AbstractHttpConfigurer::disable)
                 .exceptionHandling(exception -> exception
-                        .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-                )
+                        .authenticationEntryPoint(jwtAuthenticationEntryPoint))
                 .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                )
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**", "/ui-swagger").permitAll()
                         .requestMatchers("/swagger-ui/**", "/api-docs/**", "/swagger-ui.html").permitAll()
                         .requestMatchers("/v3/api-docs/**").permitAll()
                         .requestMatchers("/login/**", "/oauth2/**").permitAll()
-                        .anyRequest().authenticated()
-                )
-                .oauth2Login(oauth2 -> oauth2
-                        .successHandler(oauth2LoginSuccessHandler)
-                );
+                        .anyRequest().authenticated())
+                .addFilterBefore(hybridJwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
-        // Removed OAuth2 login configuration - uncomment when Keycloak is running and configured
-        // if (oauth2LoginSuccessHandler != null) {
-        //     http.oauth2Login(oauth2 -> oauth2
-        //             .successHandler(oauth2LoginSuccessHandler)
-        //     );
-        // }
+        if (oauth2LoginSuccessHandler != null) {
+            http.oauth2Login(oauth2 -> oauth2.successHandler(oauth2LoginSuccessHandler));
+        }
 
+        return http.build();
+    }
+}

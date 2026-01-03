@@ -1,6 +1,7 @@
 package com.tricol.gestionstock.security;
 
 import com.tricol.gestionstock.security.jwt.JwtUtils;
+import com.tricol.gestionstock.service.auth.OAuth2UserSyncService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,6 +22,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Map;
 
 @Component
 public class HybridJwtAuthenticationFilter extends OncePerRequestFilter {
@@ -31,6 +33,7 @@ public class HybridJwtAuthenticationFilter extends OncePerRequestFilter {
     private final UserDetailsService userDetailsService;
     private JwtDecoder jwtDecoder;
     private JwtAuthenticationConverter jwtAuthenticationConverter;
+    private OAuth2UserSyncService oAuth2UserSyncService;
 
     public HybridJwtAuthenticationFilter(
             JwtUtils customJwtUtils,
@@ -47,6 +50,11 @@ public class HybridJwtAuthenticationFilter extends OncePerRequestFilter {
     @Autowired(required = false)
     public void setJwtAuthenticationConverter(JwtAuthenticationConverter jwtAuthenticationConverter) {
         this.jwtAuthenticationConverter = jwtAuthenticationConverter;
+    }
+
+    @Autowired
+    public void setOAuth2UserSyncService(OAuth2UserSyncService oAuth2UserSyncService) {
+        this.oAuth2UserSyncService = oAuth2UserSyncService;
     }
 
     @Override
@@ -84,7 +92,7 @@ public class HybridJwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private void authenticateWithKeycloakJwt(String jwt) {
-        // Skip Keycloak authentication if JwtDecoder is not available
+
         if (jwtDecoder == null || jwtAuthenticationConverter == null) {
             logger.debug("Keycloak JWT decoder not available, skipping Keycloak authentication");
             return;
@@ -92,6 +100,14 @@ public class HybridJwtAuthenticationFilter extends OncePerRequestFilter {
 
         try {
             Jwt decodedJwt = jwtDecoder.decode(jwt);
+            Map<String, Object> claims = decodedJwt.getClaims();
+            logger.debug("JWT claims: {}", claims);
+
+
+            if (oAuth2UserSyncService != null) {
+                oAuth2UserSyncService.syncKeycloakJwtUser(claims);
+            }
+
             var authentication = jwtAuthenticationConverter.convert(decodedJwt);
             SecurityContextHolder.getContext().setAuthentication(authentication);
             logger.debug("✅ Keycloak JWT authenticated: {}", decodedJwt.getSubject());
