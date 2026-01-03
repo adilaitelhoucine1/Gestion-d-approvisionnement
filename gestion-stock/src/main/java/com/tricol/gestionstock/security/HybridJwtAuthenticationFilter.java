@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,17 +29,23 @@ public class HybridJwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtUtils customJwtUtils;
     private final UserDetailsService userDetailsService;
-    private final JwtDecoder jwtDecoder;
-    private final JwtAuthenticationConverter jwtAuthenticationConverter;
+    private JwtDecoder jwtDecoder;
+    private JwtAuthenticationConverter jwtAuthenticationConverter;
 
     public HybridJwtAuthenticationFilter(
             JwtUtils customJwtUtils,
-            UserDetailsService userDetailsService,
-            JwtDecoder jwtDecoder,
-            JwtAuthenticationConverter jwtAuthenticationConverter) {
+            UserDetailsService userDetailsService) {
         this.customJwtUtils = customJwtUtils;
         this.userDetailsService = userDetailsService;
+    }
+
+    @Autowired(required = false)
+    public void setJwtDecoder(JwtDecoder jwtDecoder) {
         this.jwtDecoder = jwtDecoder;
+    }
+
+    @Autowired(required = false)
+    public void setJwtAuthenticationConverter(JwtAuthenticationConverter jwtAuthenticationConverter) {
         this.jwtAuthenticationConverter = jwtAuthenticationConverter;
     }
 
@@ -56,7 +63,7 @@ public class HybridJwtAuthenticationFilter extends OncePerRequestFilter {
                 }
             }
         } catch (Exception e) {
-            logger.debug("Authentication failed: {}", e.getMessage());
+            logger.debug("Authentication failed", e);
         }
 
         filterChain.doFilter(request, response);
@@ -72,18 +79,24 @@ public class HybridJwtAuthenticationFilter extends OncePerRequestFilter {
             SecurityContextHolder.getContext().setAuthentication(authentication);
             logger.debug("✅ Custom JWT authenticated: {}", username);
         } catch (Exception e) {
-            logger.debug("Custom JWT failed: {}", e.getMessage());
+            logger.debug("Custom JWT failed", e);
         }
     }
 
     private void authenticateWithKeycloakJwt(String jwt) {
+        // Skip Keycloak authentication if JwtDecoder is not available
+        if (jwtDecoder == null || jwtAuthenticationConverter == null) {
+            logger.debug("Keycloak JWT decoder not available, skipping Keycloak authentication");
+            return;
+        }
+
         try {
             Jwt decodedJwt = jwtDecoder.decode(jwt);
             var authentication = jwtAuthenticationConverter.convert(decodedJwt);
             SecurityContextHolder.getContext().setAuthentication(authentication);
             logger.debug("✅ Keycloak JWT authenticated: {}", decodedJwt.getSubject());
         } catch (Exception e) {
-            logger.debug("Keycloak JWT failed: {}", e.getMessage());
+            logger.debug("Keycloak JWT failed", e);
         }
     }
 

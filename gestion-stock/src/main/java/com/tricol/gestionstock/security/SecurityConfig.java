@@ -1,9 +1,10 @@
 package com.tricol.gestionstock.security;
 
 import com.tricol.gestionstock.security.jwt.JwtAuthenticationEntryPoint;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -35,20 +36,20 @@ public class SecurityConfig {
     private final OAuth2LoginSuccessHandler oauth2LoginSuccessHandler;
 
     @Value("${keycloak.auth-server-url}")
-    private String keycloakServerUrl;
+    @Autowired(required = false)
+    private OAuth2LoginSuccessHandler oauth2LoginSuccessHandler;
 
-    @Value("${keycloak.realm}")
-    private String keycloakRealm;
+    @Value("${keycloak.auth-server-url:}")
 
     public SecurityConfig(
-            UserDetailsService userDetailsService,
+    @Value("${keycloak.realm:}")
             JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint,
-            HybridJwtAuthenticationFilter hybridJwtAuthenticationFilter,
+            @Lazy HybridJwtAuthenticationFilter hybridJwtAuthenticationFilter,
             CorsConfigurationSource corsConfigurationSource,
             OAuth2LoginSuccessHandler oauth2LoginSuccessHandler) {
         this.userDetailsService = userDetailsService;
         this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
-        this.hybridJwtAuthenticationFilter = hybridJwtAuthenticationFilter;
+            CorsConfigurationSource corsConfigurationSource) {
         this.corsConfigurationSource = corsConfigurationSource;
         this.oauth2LoginSuccessHandler = oauth2LoginSuccessHandler;
     }
@@ -74,14 +75,14 @@ public class SecurityConfig {
     @Bean
     public JwtDecoder jwtDecoder() {
         String jwkSetUri = keycloakServerUrl + "/realms/" + keycloakRealm + "/protocol/openid-connect/certs";
-        return NimbusJwtDecoder.withJwkSetUri(jwkSetUri).build();
+    @ConditionalOnProperty(name = "keycloak.auth-server-url")
     }
 
     @Bean
     public JwtAuthenticationConverter jwtAuthenticationConverter() {
         JwtGrantedAuthoritiesConverter grantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
         grantedAuthoritiesConverter.setAuthoritiesClaimName("realm_access.roles");
-        grantedAuthoritiesConverter.setAuthorityPrefix("ROLE_");
+    @ConditionalOnProperty(name = "keycloak.auth-server-url")
 
         JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
         jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(grantedAuthoritiesConverter);
@@ -111,10 +112,10 @@ public class SecurityConfig {
                         .successHandler(oauth2LoginSuccessHandler)
                 );
 
-        http.authenticationProvider(authenticationProvider());
-        http.addFilterBefore(hybridJwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-
-        return http.build();
-    }
-}
+        // Removed OAuth2 login configuration - uncomment when Keycloak is running and configured
+        // if (oauth2LoginSuccessHandler != null) {
+        //     http.oauth2Login(oauth2 -> oauth2
+        //             .successHandler(oauth2LoginSuccessHandler)
+        //     );
+        // }
 

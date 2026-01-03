@@ -100,6 +100,47 @@ services:
     networks:
       - gestion-stock-network
 
+  # Keycloak (Authentication and Authorization)
+  keycloak:
+    image: quay.io/keycloak/keycloak:23.0.3
+    container_name: gestion-stock-keycloak
+    restart: unless-stopped
+    command: start-dev --import-realm
+    environment:
+      # Admin credentials
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN:-admin}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-admin123}
+
+      # Database configuration (using MySQL)
+      KC_DB: mysql
+      KC_DB_URL: jdbc:mysql://mysql:3306/keycloak?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false
+      KC_DB_USERNAME: root
+      KC_DB_PASSWORD: ${DB_ROOT_PASSWORD:-adiladil123}
+
+      # HTTP configuration
+      KC_HTTP_ENABLED: "true"
+      KC_HTTP_PORT: 8080
+      KC_HOSTNAME_STRICT: "false"
+      KC_HOSTNAME_STRICT_HTTPS: "false"
+
+      # Logging
+      KC_LOG_LEVEL: INFO
+    ports:
+      - "${KEYCLOAK_PORT:-8180}:8080"
+    networks:
+      - gestion-stock-network
+    volumes:
+      - ./gestion-stock-realm.json:/opt/keycloak/data/import/gestion-stock-realm.json:ro
+    depends_on:
+      mysql:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "exec 3<>/dev/tcp/localhost/8080 && echo -e 'GET /health/ready HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\r\\n\\r\\n' >&3 && cat <&3 | grep -q '200 OK'"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 90s
+
 networks:
   gestion-stock-network:
     driver: bridge
@@ -110,4 +151,6 @@ volumes:
     name: gestion-stock-mysql-data
   app_logs:
     name: gestion-stock-app-logs
+  keycloak_data:
+    name: gestion-stock-keycloak-data
 
