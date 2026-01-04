@@ -1,5 +1,6 @@
 package com.tricol.gestionstock.security;
 
+import com.tricol.gestionstock.entity.security.UserApp;
 import com.tricol.gestionstock.security.jwt.JwtUtils;
 import com.tricol.gestionstock.service.auth.OAuth2UserSyncService;
 import jakarta.servlet.FilterChain;
@@ -75,7 +76,7 @@ public class HybridJwtAuthenticationFilter extends OncePerRequestFilter {
                     authenticateWithCustomJwt(jwt, request);
                 } else {
                     logger.info(">>> Custom JWT validation failed, trying Keycloak");
-                    authenticateWithKeycloakJwt(jwt);
+                    authenticateWithKeycloakJwt(jwt, request);
                 }
             } else {
                 logger.info(">>> No JWT token found in request (Authorization header: {})",
@@ -102,28 +103,75 @@ public class HybridJwtAuthenticationFilter extends OncePerRequestFilter {
         }
     }
 
-    private void authenticateWithKeycloakJwt(String jwt) {
+    private void authenticateWithKeycloakJwt(String jwt, HttpServletRequest request) {
 
-        if (jwtDecoder == null || jwtAuthenticationConverter == null) {
-            logger.debug("Keycloak JWT decoder not available, skipping Keycloak authentication");
+        if (jwtDecoder == null) {
+            logger.warn(">>> ⚠️  Keycloak JWT decoder not available, skipping Keycloak authentication");
             return;
         }
 
         try {
+            logger.info(">>> Attempting to decode Keycloak JWT...");
             Jwt decodedJwt = jwtDecoder.decode(jwt);
             Map<String, Object> claims = decodedJwt.getClaims();
-            logger.debug("JWT claims: {}", claims);
+            logger.info(">>> ✅ Keycloak JWT decoded successfully");
+            logger.debug(">>> JWT claims: {}", claims);
 
+            // Get username from Keycloak claims
+            String username = (String) claims.get("preferred_username");
+            if (username == null) {
+                username = decodedJwt.getSubject();
+            }
+            logger.info(">>> Extracted username from JWT: {}", username);
 
+            // Sync user from Keycloak to local database FIRST
             if (oAuth2UserSyncService != null) {
-                oAuth2UserSyncService.syncKeycloakJwtUser(claims);
+                try {
+                    logger.info(">>> Syncing user to local database...");
+                    logger.info(">>> Email: {}, Username: {}", claims.get("email"), username);
+                    UserApp syncedUser = oAuth2UserSyncService.syncKeycloakJwtUser(claims);
+                    logger.info(">>> ✅ User synced successfully: {} (id: {})", syncedUser.getUsername(), syncedUser.getId());
+                } catch (Exception syncException) {
+                    logger.error(">>> ❌ CRITICAL: Failed to sync user to database!");
+                    logger.error(">>> Exception type: {}", syncException.getClass().getName());
+                    logger.error(">>> Exception message: {}", syncException.getMessage());
+                    logger.error(">>> Full stack trace:", syncException);
+                    // Continue without sync - will try JWT converter as fallback
+                }
+            } else {
+                logger.warn(">>> ⚠️  OAuth2UserSyncService not available");
             }
 
-            var authentication = jwtAuthenticationConverter.convert(decodedJwt);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            logger.debug("✅ Keycloak JWT authenticated: {}", decodedJwt.getSubject());
+            // Load user from local database to get CustomUserDetails with permissions
+            try {
+                logger.info(">>> Loading user from local database: {}", username);
+                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                        userDetails, null, userDetails.getAuthorities());
+                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+                logger.info(">>> ✅ Keycloak JWT authenticated with local user: {}", username);
+                logger.debug(">>> Authorities: {}", userDetails.getAuthorities());
+            } catch (Exception e) {
+                // User not found locally, use JWT converter as fallback
+                logger.warn(">>> ⚠️  User {} not found in local database: {}", username, e.getMessage());
+                if (jwtAuthenticationConverter != null) {
+                    logger.info(">>> Using JWT authentication converter as fallback...");
+                    var authentication = jwtAuthenticationConverter.convert(decodedJwt);
+                    if (authentication != null) {
+                        SecurityContextHolder.getContext().setAuthentication(authentication);
+                        logger.info(">>> ✅ Keycloak JWT authenticated with JWT converter: {}", decodedJwt.getSubject());
+                        logger.debug(">>> Authorities from JWT: {}", authentication.getAuthorities());
+                    } else {
+                        logger.error(">>> ❌ JWT authentication converter returned null");
+                    }
+                } else {
+                    logger.error(">>> ❌ JWT authentication converter not available");
+                }
+            }
         } catch (Exception e) {
-            logger.debug("Keycloak JWT failed", e);
+            logger.error(">>> ❌ Keycloak JWT authentication failed: {} - {}", e.getClass().getSimpleName(), e.getMessage());
+            logger.debug(">>> Full exception:", e);
         }
     }
 

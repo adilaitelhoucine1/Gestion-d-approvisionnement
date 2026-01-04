@@ -66,6 +66,10 @@ services:
       LOGGING_LEVEL_COM_TRICOL_GESTIONSTOCK: ${LOG_LEVEL:-INFO}
       LOGGING_LEVEL_ORG_HIBERNATE_SQL: ${SQL_LOG_LEVEL:-WARN}
 
+      # Keycloak Configuration
+      KEYCLOAK_AUTH_SERVER_URL: http://keycloak:8080
+      KEYCLOAK_REALM: ${KEYCLOAK_REALM:-gestion-stock-realm}
+
       # Timezone
       TZ: Africa/Casablanca
       JAVA_OPTS: "-Xms512m -Xmx1024m -Duser.timezone=Africa/Casablanca"

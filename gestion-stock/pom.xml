@@ -98,6 +98,12 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!-- Add support for JOSE (Nimbus) to ensure JWK/JWT decoding for Keycloak RS256 tokens -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-oauth2-jose</artifactId>
+        </dependency>
+
         <!-- ========================================= -->
         <!-- DATABASE                                  -->
         <!-- ========================================= -->

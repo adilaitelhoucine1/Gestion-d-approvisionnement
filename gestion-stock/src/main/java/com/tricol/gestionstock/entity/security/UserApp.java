@@ -41,9 +41,8 @@ public class UserApp {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @NotBlank
     @Size(max = 255)
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String password;
 
     @NotBlank

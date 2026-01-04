@@ -3,7 +3,6 @@ package com.tricol.gestionstock.security;
 import com.tricol.gestionstock.security.jwt.JwtAuthenticationEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
@@ -81,17 +80,24 @@ public class SecurityConfig {
     }
 
     @Bean
-    @ConditionalOnProperty(name = "keycloak.auth-server-url")
     public JwtDecoder jwtDecoder() {
-        String jwkSetUri = keycloakServerUrl + "/realms/" + keycloakRealm + "/protocol/openid-connect/certs";
-        return NimbusJwtDecoder.withJwkSetUri(jwkSetUri).build();
+        if (keycloakServerUrl == null || keycloakServerUrl.isEmpty() ||
+            keycloakRealm == null || keycloakRealm.isEmpty()) {
+            return null;
+        }
+        try {
+            String jwkSetUri = keycloakServerUrl + "/realms/" + keycloakRealm + "/protocol/openid-connect/certs";
+            return NimbusJwtDecoder.withJwkSetUri(jwkSetUri).build();
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Bean
-    @ConditionalOnProperty(name = "keycloak.auth-server-url")
     public JwtAuthenticationConverter jwtAuthenticationConverter() {
         JwtGrantedAuthoritiesConverter grantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
         grantedAuthoritiesConverter.setAuthoritiesClaimName("realm_access.roles");
+        grantedAuthoritiesConverter.setAuthorityPrefix("ROLE_");
         JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
         jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(grantedAuthoritiesConverter);
         return jwtAuthenticationConverter;

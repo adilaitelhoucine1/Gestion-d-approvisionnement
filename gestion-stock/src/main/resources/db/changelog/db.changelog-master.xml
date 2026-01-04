@@ -28,4 +28,7 @@
     <!-- Audit tables -->
     <include file="db/changelog/017-create-table-auth-audit-logs.xml"/>
 
+    <!-- Keycloak support -->
+    <include file="db/changelog/018-make-password-nullable.xml"/>
+
 </databaseChangeLog>

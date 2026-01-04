@@ -93,44 +93,82 @@ public class OAuth2UserSyncService {
 
     @Transactional
     public UserApp syncKeycloakJwtUser(Map<String, Object> claims) {
-        String email = (String) claims.get("email");
-        String username = extractUsernameFromClaims(claims);
+        try {
+            String email = (String) claims.get("email");
+            String username = extractUsernameFromClaims(claims);
 
-        logger.info("Syncing Keycloak JWT user: {} (sub: {})", username, claims.get("sub"));
+            logger.info("Syncing Keycloak JWT user: {} (email: {}, sub: {})", username, email, claims.get("sub"));
 
-        return userAppRepository.findByEmail(email)
-                .map(existingUser -> {
+            // Try to find by email first (if email is provided)
+            if (email != null && !email.isEmpty()) {
+                var existingByEmail = userAppRepository.findByEmail(email);
+                if (existingByEmail.isPresent()) {
+                    UserApp existingUser = existingByEmail.get();
                     existingUser.setLastLogin(LocalDateTime.now());
-                    logger.info("Updated existing user from JWT: {}", existingUser.getUsername());
+                    logger.info("Updated existing user from JWT (by email): {}", existingUser.getUsername());
                     return userAppRepository.save(existingUser);
-                })
-                .orElseGet(() -> createNewUserFromJwt(claims, username, email));
+                }
+            }
+
+            // Try to find by username
+            var existingByUsername = userAppRepository.findByUsername(username);
+            if (existingByUsername.isPresent()) {
+                UserApp existingUser = existingByUsername.get();
+                existingUser.setLastLogin(LocalDateTime.now());
+                logger.info("Updated existing user from JWT (by username): {}", existingUser.getUsername());
+                return userAppRepository.save(existingUser);
+            }
+
+            // User doesn't exist, create new one
+            return createNewUserFromJwt(claims, username, email);
+        } catch (Exception e) {
+            logger.error("Failed to sync Keycloak JWT user: {}", e.getMessage(), e);
+            throw new RuntimeException("Failed to sync Keycloak user", e);
+        }
     }
 
     private UserApp createNewUserFromJwt(Map<String, Object> claims, String username, String email) {
-        RoleApp defaultRole = roleAppRepository.findByName("USER")
-                .orElseThrow(() -> new RuntimeException("Default role USER not found"));
+        try {
+            // Try to find USER role, but don't fail if it doesn't exist
+            RoleApp defaultRole = roleAppRepository.findByName("USER").orElse(null);
 
-        String firstName = (String) claims.getOrDefault("given_name", username);
-        String lastName = (String) claims.getOrDefault("family_name", "");
+            if (defaultRole == null) {
+                logger.warn("⚠️  Default role USER not found in database. Creating user without role.");
+            } else {
+                logger.info("✅ Found USER role (id: {})", defaultRole.getId());
+            }
 
-        UserApp newUser = UserApp.builder()
-                .username(username)
-                .email(email)
-                .password(null)
-                .firstName(firstName)
-                .lastName(lastName)
-                .enabled(true)
-                .accountNonExpired(true)
-                .accountNonLocked(true)
-                .credentialsNonExpired(true)
-                .role(defaultRole)
-                .lastLogin(LocalDateTime.now())
-                .build();
+            String firstName = (String) claims.getOrDefault("given_name", username);
+            String lastName = (String) claims.getOrDefault("family_name", "");
 
-        UserApp savedUser = userAppRepository.save(newUser);
-        logger.info("Created new user from JWT: {}", username);
-        return savedUser;
+            // Ensure email is not null
+            if (email == null || email.isEmpty()) {
+                email = username + "@keycloak.local";
+                logger.warn("No email in JWT claims, using generated email: {}", email);
+            }
+
+            UserApp newUser = UserApp.builder()
+                    .username(username)
+                    .email(email)
+                    .password(null)
+                    .firstName(firstName)
+                    .lastName(lastName)
+                    .enabled(true)
+                    .accountNonExpired(true)
+                    .accountNonLocked(true)
+                    .credentialsNonExpired(true)
+                    .role(defaultRole)  // Can be null
+                    .lastLogin(LocalDateTime.now())
+                    .build();
+
+            UserApp savedUser = userAppRepository.save(newUser);
+            logger.info("✅ Created new user from JWT: {} (id: {}, role: {})",
+                username, savedUser.getId(), defaultRole != null ? defaultRole.getName() : "NONE");
+            return savedUser;
+        } catch (Exception e) {
+            logger.error("Failed to create new user from JWT: {}", e.getMessage(), e);
+            throw new RuntimeException("Failed to create new user", e);
+        }
     }
 
     private String extractUsernameFromClaims(Map<String, Object> claims) {
