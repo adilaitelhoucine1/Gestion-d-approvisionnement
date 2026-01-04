@@ -6,6 +6,104 @@
   },
   "item": [
     {
+      "name": "Keycloak",
+      "item": [
+        {
+          "name": "Get Token (Password Grant)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "grant_type",
+                  "value": "password",
+                  "type": "text"
+                },
+                {
+                  "key": "client_id",
+                  "value": "gestion-stock-client",
+                  "type": "text"
+                },
+                {
+                  "key": "client_secret",
+                  "value": "ezMvgKBzVJt32BH53QGye9lfQ1cWlHl7",
+                  "type": "text"
+                },
+                {
+                  "key": "username",
+                  "value": "admin",
+                  "type": "text"
+                },
+                {
+                  "key": "password",
+                  "value": "admin123",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:8180/realms/gestion-stock-realm/protocol/openid-connect/token",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8180",
+              "path": ["realms", "gestion-stock-realm", "protocol", "openid-connect", "token"]
+            }
+          }
+        },
+        {
+          "name": "Refresh Token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "grant_type",
+                  "value": "refresh_token",
+                  "type": "text"
+                },
+                {
+                  "key": "client_id",
+                  "value": "gestion-stock-client",
+                  "type": "text"
+                },
+                {
+                  "key": "client_secret",
+                  "value": "ezMvgKBzVJt32BH53QGye9lfQ1cWlHl7",
+                  "type": "text"
+                },
+                {
+                  "key": "refresh_token",
+                  "value": "{{refresh_token}}",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:8180/realms/gestion-stock-realm/protocol/openid-connect/token",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8180",
+              "path": ["realms", "gestion-stock-realm", "protocol", "openid-connect", "token"]
+            }
+          }
+        }
+      ]
+    },
+    {
       "name": "Authentication",
       "item": [
         {

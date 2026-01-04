@@ -62,16 +62,27 @@ public class HybridJwtAuthenticationFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         try {
+            String headerAuth = request.getHeader("Authorization");
+            logger.info(">>> Processing request: {} {} | Auth header present: {}",
+                    request.getMethod(), request.getRequestURI(), headerAuth != null);
+
             String jwt = parseJwt(request);
+
             if (jwt != null) {
+                logger.info(">>> JWT token found, length: {}", jwt.length());
                 if (customJwtUtils.validateToken(jwt)) {
+                    logger.info(">>> Custom JWT validation successful");
                     authenticateWithCustomJwt(jwt, request);
                 } else {
+                    logger.info(">>> Custom JWT validation failed, trying Keycloak");
                     authenticateWithKeycloakJwt(jwt);
                 }
+            } else {
+                logger.info(">>> No JWT token found in request (Authorization header: {})",
+                        headerAuth != null ? headerAuth.substring(0, Math.min(20, headerAuth.length())) + "..." : "null");
             }
         } catch (Exception e) {
-            logger.debug("Authentication failed", e);
+            logger.error(">>> Authentication failed: {}", e.getMessage(), e);
         }
 
         filterChain.doFilter(request, response);

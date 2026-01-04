@@ -146,17 +146,39 @@ public class AuthService {
     }
 
     public UserInfoDTO getCurrentUser() {
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if (authentication == null || !authentication.isAuthenticated()) {
+        if (authentication == null || !authentication.isAuthenticated()
+                || "anonymousUser".equals(authentication.getPrincipal())) {
             throw new RuntimeException("No authenticated user found!");
         }
 
-        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-        UserApp user = userAppRepository.findByUsername(userDetails.getUsername())
-                .orElseThrow(() -> new RuntimeException("User not found!"));
+        Object principal = authentication.getPrincipal();
 
-        return buildUserInfo(userDetails, user);
+        // Handle CustomUserDetails (local JWT authentication)
+        if (principal instanceof CustomUserDetails) {
+            CustomUserDetails userDetails = (CustomUserDetails) principal;
+            UserApp user = userAppRepository.findByUsername(userDetails.getUsername())
+                    .orElseThrow(() -> new RuntimeException("User not found!"));
+            return buildUserInfo(userDetails, user);
+        }
+
+        // Handle Keycloak JWT authentication (principal is Jwt)
+        if (principal instanceof org.springframework.security.oauth2.jwt.Jwt) {
+            org.springframework.security.oauth2.jwt.Jwt jwt = (org.springframework.security.oauth2.jwt.Jwt) principal;
+            return buildUserInfoFromJwt(jwt, authentication);
+        }
+
+        // Handle String username (fallback)
+        if (principal instanceof String) {
+            String username = (String) principal;
+            UserApp user = userAppRepository.findByUsername(username)
+                    .orElseThrow(() -> new RuntimeException("User not found!"));
+            return buildUserInfoFromUserApp(user, authentication);
+        }
+
+        throw new RuntimeException("Invalid authentication principal type: " + principal.getClass().getName());
     }
 
     private UserInfoDTO buildUserInfo(CustomUserDetails userDetails, UserApp user) {
@@ -172,6 +194,51 @@ public class AuthService {
                         .map(auth -> auth.substring(5)) // Remove "ROLE_" prefix
                         .collect(Collectors.toSet()))
                 .permissions(userDetails.getAuthorities().stream()
+                        .map(GrantedAuthority::getAuthority)
+                        .filter(auth -> !auth.startsWith("ROLE_"))
+                        .collect(Collectors.toSet()))
+                .build();
+    }
+
+    private UserInfoDTO buildUserInfoFromJwt(org.springframework.security.oauth2.jwt.Jwt jwt, Authentication authentication) {
+        String username = jwt.getClaimAsString("preferred_username");
+        if (username == null) {
+            username = jwt.getSubject();
+        }
+
+        UserApp user = userAppRepository.findByUsername(username).orElse(null);
+
+        return UserInfoDTO.builder()
+                .id(user != null ? user.getId() : null)
+                .username(username)
+                .email(jwt.getClaimAsString("email"))
+                .firstName(jwt.getClaimAsString("given_name"))
+                .lastName(jwt.getClaimAsString("family_name"))
+                .roles(authentication.getAuthorities().stream()
+                        .map(GrantedAuthority::getAuthority)
+                        .filter(auth -> auth.startsWith("ROLE_"))
+                        .map(auth -> auth.substring(5))
+                        .collect(Collectors.toSet()))
+                .permissions(authentication.getAuthorities().stream()
+                        .map(GrantedAuthority::getAuthority)
+                        .filter(auth -> !auth.startsWith("ROLE_"))
+                        .collect(Collectors.toSet()))
+                .build();
+    }
+
+    private UserInfoDTO buildUserInfoFromUserApp(UserApp user, Authentication authentication) {
+        return UserInfoDTO.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .roles(authentication.getAuthorities().stream()
+                        .map(GrantedAuthority::getAuthority)
+                        .filter(auth -> auth.startsWith("ROLE_"))
+                        .map(auth -> auth.substring(5))
+                        .collect(Collectors.toSet()))
+                .permissions(authentication.getAuthorities().stream()
                         .map(GrantedAuthority::getAuthority)
                         .filter(auth -> !auth.startsWith("ROLE_"))
                         .collect(Collectors.toSet()))

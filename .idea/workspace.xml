@@ -4,15 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f0aab8c4-5dfe-4656-9a8f-f351bfd01ea0" name="Changes" comment="feat: update application properties and enhance JWT handling with Keycloak integration, including user synchronization">
+    <list default="true" id="f0aab8c4-5dfe-4656-9a8f-f351bfd01ea0" name="Changes" comment="feat : add the SonarQube config in docker compose">
       <change afterPath="$PROJECT_DIR$/AUTHORIZATION_WORKFLOW.md" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/KEYCLOAK_PERMISSIONS_WORKFLOW.md" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/PROJECT_DOCUMENTATION.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/security/AuthorizationDebugFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/security/CustomAcessDeniedHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gestion-stock/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/docker-compose.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gestion-stock/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/exception/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/exception/GlobalExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/security/HybridJwtAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/security/HybridJwtAuthenticationFilter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/security/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/service/auth/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/java/com/tricol/gestionstock/service/auth/AuthService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gestion-stock/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gestion-stock/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/postman-collection.json" beforeDir="false" afterPath="$PROJECT_DIR$/postman-collection.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -74,45 +78,51 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Unnamed.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.CommandeFournisseurServiceTest.testReceptionCreeLotAutomatiquement.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.GestionStockApplicationTests.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;Notification.DisplayName-DoNotAsk-DatabaseConfigFileWatcher.found&quot;: &quot;New/updated database configurations found&quot;,
-    &quot;Notification.DoNotAsk-DatabaseConfigFileWatcher.found&quot;: &quot;true&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Spring Boot.GestionStockApplication.executor&quot;: &quot;Run&quot;,
-    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultAutoModeForALLUsers.v1&quot;: &quot;true&quot;,
-    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;oauth2&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/ad/Desktop/Youcode Project/Gestion-d-approvisionnement&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;advanced.settings&quot;,
-    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Unnamed.executor": "Run",
+    "JUnit.CommandeFournisseurServiceTest.testReceptionCreeLotAutomatiquement.executor": "Run",
+    "JUnit.GestionStockApplicationTests.executor": "Run",
+    "Maven.gestion-stock [clean,package].executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Notification.DisplayName-DoNotAsk-DatabaseConfigFileWatcher.found": "New/updated database configurations found",
+    "Notification.DoNotAsk-DatabaseConfigFileWatcher.found": "true",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Spring Boot.GestionStockApplication.executor": "Run",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultAutoModeForALLUsers.v1": "true",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "oauth2",
+    "junie.onboarding.icon.badge.shown": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/ad/Desktop/Youcode Project/Gestion-d-approvisionnement",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "advanced.settings",
+    "to.speed.mode.migration.done": "true",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/gestion-stock/src/documentation" />
       <recent name="$PROJECT_DIR$/gestion-stock/src" />
       <recent name="$PROJECT_DIR$/gestion-stock/src/main/documentation" />
     </key>
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="mvn clean package" />
+    </option>
   </component>
   <component name="RunManager" selected="Spring Boot.GestionStockApplication">
     <configuration name="CommandeFournisseurServiceTest.testReceptionCreeLotAutomatiquement" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
@@ -239,7 +249,8 @@
       <workItem from="1767342347864" duration="9207000" />
       <workItem from="1767432182716" duration="18224000" />
       <workItem from="1767456944262" duration="3277000" />
-      <workItem from="1767460536845" duration="1019000" />
+      <workItem from="1767460536845" duration="1297000" />
+      <workItem from="1767518918975" duration="6335000" />
     </task>
     <task id="LOCAL-00001" summary="Feat : initialize the Entities &amp; Lombok dependencies">
       <option name="closed" value="true" />
@@ -353,7 +364,15 @@
       <option name="project" value="LOCAL" />
       <updated>1767448844707</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="feat : add the SonarQube config in docker compose">
+      <option name="closed" value="true" />
+      <created>1767461780488</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1767461780489</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -432,7 +451,8 @@
     <MESSAGE value="feat: implement dual authentication with Keycloak OAuth2 and local JWT, add user sync, hybrid JWT filter, and documentation" />
     <MESSAGE value="fix : fix the keyclock config by adding adding  teh real secret key" />
     <MESSAGE value="feat: update application properties and enhance JWT handling with Keycloak integration, including user synchronization" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: update application properties and enhance JWT handling with Keycloak integration, including user synchronization" />
+    <MESSAGE value="feat : add the SonarQube config in docker compose" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat : add the SonarQube config in docker compose" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

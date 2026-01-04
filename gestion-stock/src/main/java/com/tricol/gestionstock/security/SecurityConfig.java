@@ -34,6 +34,7 @@ public class SecurityConfig {
     private final UserDetailsService userDetailsService;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final HybridJwtAuthenticationFilter hybridJwtAuthenticationFilter;
+    private final CustomAcessDeniedHandler customAcessDeniedHandler;
     private final AuthorizationDebugFilter authorizationDebugFilter;
     private final CorsConfigurationSource corsConfigurationSource;
 
@@ -51,12 +52,14 @@ public class SecurityConfig {
             JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint,
             @Lazy HybridJwtAuthenticationFilter hybridJwtAuthenticationFilter,
             AuthorizationDebugFilter authorizationDebugFilter,
+            CustomAcessDeniedHandler customAcessDeniedHandler,
             CorsConfigurationSource corsConfigurationSource) {
         this.userDetailsService = userDetailsService;
         this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
         this.hybridJwtAuthenticationFilter = hybridJwtAuthenticationFilter;
         this.authorizationDebugFilter = authorizationDebugFilter;
         this.corsConfigurationSource = corsConfigurationSource;
+        this.customAcessDeniedHandler=customAcessDeniedHandler;
     }
 
     @Bean
@@ -100,10 +103,13 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource))
                 .csrf(AbstractHttpConfigurer::disable)
                 .exceptionHandling(exception -> exception
-                        .authenticationEntryPoint(jwtAuthenticationEntryPoint))
+                        .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                         .accessDeniedHandler(customAcessDeniedHandler))
+
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/auth/me").authenticated()
                         .requestMatchers("/api/auth/**", "/ui-swagger").permitAll()
                         .requestMatchers("/swagger-ui/**", "/api-docs/**", "/swagger-ui.html").permitAll()
                         .requestMatchers("/v3/api-docs/**").permitAll()
